@@ -28,7 +28,10 @@ body {
   display: block;
   color: #000;
   /* text-align: center; */
-  padding: 14px 16px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 3px;
+  padding-right: 14px;
   text-decoration: none;
   font-size: 17px;
   /* background: white; */
@@ -75,8 +78,8 @@ body {
 }
 
 #icon {
-  width: 100px;
-  height: 100px;
+  width: 125px;
+  height: 125px;
   margin-bottom: 5%;
   margin-top: 15%;
   /* background: blue; */

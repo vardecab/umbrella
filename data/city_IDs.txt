@@ -1,0 +1,50 @@
+verify: https://openweathermap.org/city/3081368
+Wroclaw:
+  "id": 3081368,
+  "name": "Wroclaw",
+  "country": "PL",
+  "coord": {
+    "lon": 17.033331,
+    "lat": 51.099998
+  
+"id": 2220957,
+    "name": "Yaounde",
+    "country": "CM",
+    "coord": {
+      "lon": 11.51667,
+      "lat": 3.86667
+
+"id": 3176203,
+    "name": "Genzano di Roma",
+    "country": "IT",
+    "coord": {
+      "lon": 12.69178,
+      "lat": 41.701321
+
+"id": 1819729,
+    "name": "Hong Kong",
+    "country": "HK",
+    "coord": {
+      "lon": 114.157692,
+      "lat": 22.285521
+
+ "id": 5368361,
+    "name": "Los Angeles",
+    "country": "US",
+    "coord": {
+      "lon": -118.243683,
+      "lat": 34.052231
+
+  "id": 6453366,
+    "name": "Oslo",
+    "country": "NO",
+    "coord": {
+      "lon": 10.73367,
+      "lat": 59.911831
+
+  "id": 2643743,
+    "name": "London",
+    "country": "GB",
+    "coord": {
+      "lon": -0.12574,
+      "lat": 51.50853

@@ -1,10 +1,11 @@
 # Umbrella
  
- Simple website to tell if you need to take an umbrella ☔
+ Simple [website](https://vardecab.github.io/umbrella/umbrella.html) to tell if you need to take an umbrella _(currently works only in Wroclaw)_ ☔
 
 ## Versions:
 
     v0.1: Initial release.
+    v0.2: Added early code for winter.
 
 ## API: 
 - https://openweathermap.org/api

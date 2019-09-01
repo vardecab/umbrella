@@ -76,11 +76,21 @@ function drawWeather(data_from_api) {
     document.body.style.background =
       "linear-gradient(360deg, rgba(86,235,134,1) 25%, rgba(154,243,183,1) 85%) no-repeat center center fixed";
     document.getElementById("icon").src = "./images/svg/clouds.svg";
-  } else {
-    document.getElementById("clothes").innerHTML = "Ubierz się cieplej ⛄";
+  } else if ((temperatures_avg <= 16) & (temperatures_avg > 10)) {
+    document.getElementById("clothes").innerHTML = "Ubierz się ciepło 🤗";
     document.getElementById("icon").src = "./images/svg/cold.svg";
     document.body.style.background =
       "linear-gradient(0deg, rgba(29,171,179,1) 33%, rgba(33,192,201,1) 90%) no-repeat center center fixed";
+  } else if ((temperatures_avg <= 10) & (temperatures_avg > 0)) {
+    document.getElementById("icon").src = "./images/svg/santa-hat.svg"; // TODO: change icon
+    document.getElementById("icon").src = "./images/svg/cold.svg";
+    // document.body.style.background =
+    //   "linear-gradient(0deg, rgba(29,171,179,1) 33%, rgba(33,192,201,1) 90%) no-repeat center center fixed"; // TODO: change background
+  } else {
+    document.getElementById("clothes").innerHTML = "Mróz 🥶";
+    document.getElementById("icon").src = "./images/svg/santa-hat.svg";
+    // document.body.style.background =
+    // "linear-gradient(0deg, rgba(29,171,179,1) 33%, rgba(33,192,201,1) 90%) no-repeat center center fixed"; // TODO: change background
   }
 
   // 🌍 convert time (first data update) from UTC to local (UTC+2)

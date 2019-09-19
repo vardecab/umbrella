@@ -1,12 +1,13 @@
 # Umbrella
  
- Simple [website](https://vardecab.github.io/umbrella/umbrella.html) to tell if you need to take an umbrella _(currently works only in Wroclaw, Warsaw, Cracow)_ ☔
+ Simple [website](https://vardecab.github.io/umbrella/umbrella.html) to tell if you need to take an umbrella _(currently works only in Wrocław, Warsaw, Tarnów, Kraków)_ ☔
 
 ## Versions:
 
     v0.1: Initial release.
     v0.2: Added early code for winter.
     v0.3: Added new icons, changed backgrounds, polished code, added (MVP) city selector.
+    v0.3.1: Added new city - Tarnów.
 
 ## API: 
 - https://openweathermap.org/api

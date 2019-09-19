@@ -15,14 +15,14 @@ body {
   margin: 0;
 }
 
-.navbar {
+#bottom_navbar {
   overflow: hidden;
   position: fixed;
   bottom: 0;
   width: 100%;
 }
 
-.navbar p,
+#bottom_navbar p,
 a {
   float: right;
   display: block;

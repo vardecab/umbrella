@@ -46,6 +46,15 @@ a {
   margin-top: 15%;
 }
 
+#more_details {
+  margin-bottom: 5%;
+  display: none;
+}
+
+#temperature:hover + #more_details {
+  display: block;
+}
+
 #temperature {
   font-size: 4rem;
   font-weight: normal;

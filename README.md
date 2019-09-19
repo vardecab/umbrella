@@ -8,6 +8,7 @@
     v0.2: Added early code for winter.
     v0.3: Added new icons, changed backgrounds, polished code, added (MVP) city selector.
     v0.3.1: Added new city - Tarnów.
+    v0.3.2: Changed backgrounds, added wind & sunrise/sunset while hovering over temperature.
 
 ## API: 
 - https://openweathermap.org/api

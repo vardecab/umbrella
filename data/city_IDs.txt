@@ -48,3 +48,17 @@ Wroclaw:
     "coord": {
       "lon": -0.12574,
       "lat": 51.50853
+
+  "id": 3094802,
+    "name": "Krakow",
+    "country": "PL",
+    "coord": {
+      "lon": 19.91667,
+      "lat": 50.083328
+
+  "id": 756135,
+    "name": "Warsaw",
+    "country": "PL",
+    "coord": {
+      "lon": 21.01178,
+      "lat": 52.229771

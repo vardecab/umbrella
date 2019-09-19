@@ -53,6 +53,7 @@ function drawWeather(data_from_api) {
 		temperatures.push(single_temperature_float); // add to list
 		single_temperature = 0; // reset variable
 		idema++; // let's get next data update
+		// NOTE: [0] is first update in the JSON file, [1] is the 2nd and so on 
 	}
 	// console.log(temperatures); // debug ✅
 
@@ -82,32 +83,24 @@ function drawWeather(data_from_api) {
 	} else if ((temperatures_avg < 24) & (temperatures_avg > 16)) {
 		document.getElementById("clothes").innerHTML = "Długie spodnie i bluza 👖";
 		document.body.style.background =
-			"linear-gradient(360deg, rgba(86,235,134,1) 25%, rgba(154,243,183,1) 85%) no-repeat center center fixed";
+			"linear-gradient(180deg, rgba(131,240,167,1) 10%, rgba(222,251,232,1) 80%) no-repeat center center fixed";
 		document.getElementById("icon").src = "../images/svg/clouds.svg";
 	} else if ((temperatures_avg <= 16) & (temperatures_avg > 10)) {
 		document.getElementById("clothes").innerHTML = "Ubierz się ciepło 🤗";
 		document.getElementById("icon").src = "../images/svg/wind.svg";
 		document.body.style.background =
-			"linear-gradient(0deg, rgba(29,171,179,1) 33%, rgba(33,192,201,1) 90%) no-repeat center center fixed";
+			"linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
 	} else if ((temperatures_avg <= 10) & (temperatures_avg > 0)) {
 		document.getElementById("clothes").innerHTML = "Kurtka, bluza, szalik 🧣";
 		document.getElementById("icon").src = "../images/svg/cold.svg";
 		document.body.style.background =
-			"linear-gradient(184deg, rgba(228,157,228,1) 20%, rgba(195,53,195,1) 80%) no-repeat center center fixed";
+			"linear-gradient(0deg, rgba(245,217,245,1) 20%, rgba(228,157,228,1) 90%) no-repeat center center fixed";
 	} else {
 		document.getElementById("clothes").innerHTML = "Mróz 🥶";
 		document.getElementById("icon").src = "../images/svg/santa-hat.svg";
 		document.body.style.background =
-			"linear-gradient(184deg, rgba(254,249,254,1) 30%, rgba(245,238,245,1) 70%) no-repeat center center fixed";
+			"linear-gradient(0deg, rgba(249,254,254,1) 20%, rgba(227,250,250,1) 70%) no-repeat center center fixed";
 	}
-
-	// 🌍 convert time (first data update) from UTC to local (UTC+2)
-	// var time_of_data = data_from_api.list[0].dt_txt;
-	// var utcTime = time_of_data;
-	// var local_time = moment
-	//   .utc(utcTime)
-	//   .local()
-	//   .format("dddd DD, HH:mm"); // time of update should be in local time now
 
 	// debug start --->
 
@@ -140,7 +133,7 @@ function drawWeather(data_from_api) {
 	// === Part 3 ===
 	// ☔ check if it's gonna rain logic
 
-	var weather_description = data_from_api.list[0].weather[0].main; // first data TODO: check 1st, 2nd, 3rd data update to be more reliable
+	// var weather_description = data_from_api.list[0].weather[0].main; // first data TODO: check 1st, 2nd, 3rd data update to be more reliable
 
 	var raining = [
 		"Rain",
@@ -178,7 +171,7 @@ function drawWeather(data_from_api) {
 	} else document.getElementById("umbrella").innerHTML = "Bez deszczu";
 
 	// === Part 4 ===
-	// get weather details from API to HTML
+	// get weather details from API and push to HTML
 
 	// 🔥 temperature
 	document.getElementById("temperature").innerHTML =
@@ -189,20 +182,26 @@ function drawWeather(data_from_api) {
 	// document.getElementById("city").innerHTML = data_from_api.city.name;
 
 	// 🍃 wind
-	// var wind = document.getElementById("wind"); // not used now
-	// wind.textContent += data_from_api.list[0].wind.speed + " m/s"; // not used now
+	var wind_raw = data_from_api.list[1].wind.speed; // get wind
+	wind_kph = parseFloat(wind_raw) * 3.6; // convert m/s to km/h
+	wind = Math.round(wind_kph, 2);
 
-	// 🕕 time of data update
-	// var update_time = document.getElementById("time");
-	// update_time.textContent += local_time;
+	var wind_in_html = document.getElementById("wind"); 
+	wind_in_html.textContent += wind + " km/h"; // add to HTML
 
 	// 📔 description
 	document.getElementById("weather_description").innerHTML =
 		data_from_api.list[0].weather[0].main;
 
-	// 🌞 sunrise
-	// TODO: convert from UNIX to UTC+2
+	// ☀️ sunrise
+	var sunrise_local = moment.unix(data_from_api.city.sunrise).format('H:mm');
 
-	// ⛅ sunset
-	// TODO: convert from UNIX to UTC+2
+	var sunrise_in_html = document.getElementById("sunrise");
+	sunrise_in_html.textContent += sunrise_local;
+
+	// 🌗 sunset
+	var sunset_local = moment.unix(data_from_api.city.sunset).format('H:mm ');
+
+	var sunset_in_html = document.getElementById("sunset");
+	sunset_in_html.textContent += sunset_local;
 }

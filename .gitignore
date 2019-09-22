@@ -2,6 +2,7 @@ TODO
 data/api_key.js
 README.md
 offline_weather.appcache
+_old
 
 ### Visual Studio Code ###
 .vscode/*

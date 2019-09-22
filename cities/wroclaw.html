@@ -3,61 +3,61 @@
 
 <head>
 
-    <title>Umbrella</title>
+	<title>Umbrella</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/png" href="../images/png/rain.png" />
+	<link rel="icon" type="image/png" href="../images/umbrella.png" />
 
-    <link rel="stylesheet" href="../styles/styles.css">
-    <script src="../scripts/script.js"></script>
-    <script src="https://momentjs.com/downloads/moment.js"></script> <!-- time formats manipulation -->
+	<link rel="stylesheet" href="../styles/styles.css">
+	<script src="../scripts/script.js"></script>
+	<script src="https://momentjs.com/downloads/moment.js"></script> <!-- time formats manipulation -->
 
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="twelve columns">
+	<div class="container">
+		<div class="row">
+			<div class="twelve columns">
 
-                <img src="../images/svg/loading.svg" id="icon"></<img>
+				<img src="../images/loading.svg" id="icon"></<img>
 
-                <div id="temperature"></div>
+				<div id="temperature"></div>
 
-                <div id="more_details">
-                    <span id='sunrise'>☀️ </span>
-                    <span id="wind">🍃 </span>
-                    <span id='sunset'>🌗 </span>
-                </div>
+				<div id="more_details">
+					<span id='sunrise'>☀️ </span>
+					<span id="wind">🍃 </span>
+					<span id='sunset'>🌗 </span>
+				</div>
 
-                <div id='loading'>Loading data...</div>
+				<div id='loading'>Loading data...</div>
 
-                <div id='umbrella'></div>
-                <div id='clothes'></div>
+				<div id='umbrella'></div>
+				<div id='clothes'></div>
 
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
-    <div id="bottom_navbar">
-        <p id="weather_description"></p>
-        <p>•</p>
-        <p>
-            <select name="city" onchange="javascript:location.href = this.value;">
-                <option value="wroclaw.html" selected>Wrocław</option>
-                <option value="warszawa.html">Warszawa</option>
-                <option value="tarnow.html">Tarnów</option>
-                <option value="krakow.html">Kraków</option>
-            </select>
-        </p>
-    </div>
+	<div id="bottom_navbar">
+		<p id="weather_description"></p>
+		<p>•</p>
+		<p>
+			<select name="select_city" onchange="javascript:location.href = this.value;">
+				<option value="wroclaw.html" selected>Wrocław</option>
+				<option value="warszawa.html">Warszawa</option>
+				<option value="tarnow.html">Tarnów</option>
+				<option value="krakow.html">Kraków</option>
+			</select>
+		</p>
+	</div>
 
-    <script>
-        window.onload = function () {
-            weatherBallon(3081368); // Wroclaw
-        };
-    </script>
+	<script>
+		window.onload = function () {
+			weatherBallon(3081368); // Wroclaw
+		};
+	</script>
 
 </body>
 

@@ -53,7 +53,7 @@ function drawWeather(data_from_api) {
 		temperatures.push(single_temperature_float); // add to list
 		single_temperature = 0; // reset variable
 		idema++; // let's get next data update
-		// NOTE: [0] is first update in the JSON file, [1] is the 2nd and so on 
+		// NOTE: [0] is first update in the JSON file, [1] is the 2nd and so on
 	}
 	// console.log(temperatures); // debug ✅
 
@@ -75,29 +75,29 @@ function drawWeather(data_from_api) {
 	console.log("med:", median); // debug ✅
 
 	// logic itself for showing appropriate icon and background depending on temperature
-	if (temperatures_avg >= 24) {
+	if (temperatures_avg >= 23) {
 		document.getElementById("clothes").innerHTML = "Króciutko 👕"; // 🩳: shorts emoji does work only on Windows: https://emojipedia.org/shorts/
 		document.body.style.background =
 			"linear-gradient(360deg, rgba(249, 224, 144, 1) 0%, rgba(255, 147, 92, 1) 100%) no-repeat center center fixed";
-		document.getElementById("icon").src = "../images/svg/sun.svg";
-	} else if ((temperatures_avg < 24) & (temperatures_avg > 16)) {
+		document.getElementById("icon").src = "../images/weather/sun.svg";
+	} else if ((temperatures_avg < 23) & (temperatures_avg > 16)) {
 		document.getElementById("clothes").innerHTML = "Długie spodnie i bluza 👖";
 		document.body.style.background =
 			"linear-gradient(180deg, rgba(131,240,167,1) 10%, rgba(222,251,232,1) 80%) no-repeat center center fixed";
-		document.getElementById("icon").src = "../images/svg/clouds.svg";
+		document.getElementById("icon").src = "../images/weather/clouds.svg";
 	} else if ((temperatures_avg <= 16) & (temperatures_avg > 10)) {
 		document.getElementById("clothes").innerHTML = "Ubierz się ciepło 🤗";
-		document.getElementById("icon").src = "../images/svg/wind.svg";
+		document.getElementById("icon").src = "../images/weather/wind.svg";
 		document.body.style.background =
 			"linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
 	} else if ((temperatures_avg <= 10) & (temperatures_avg > 0)) {
 		document.getElementById("clothes").innerHTML = "Kurtka, bluza, szalik 🧣";
-		document.getElementById("icon").src = "../images/svg/cold.svg";
+		document.getElementById("icon").src = "../images/weather/scarf.svg";
 		document.body.style.background =
 			"linear-gradient(0deg, rgba(245,217,245,1) 20%, rgba(228,157,228,1) 90%) no-repeat center center fixed";
 	} else {
 		document.getElementById("clothes").innerHTML = "Mróz 🥶";
-		document.getElementById("icon").src = "../images/svg/santa-hat.svg";
+		document.getElementById("icon").src = "../images/weather/freezing.svg";
 		document.body.style.background =
 			"linear-gradient(0deg, rgba(249,254,254,1) 20%, rgba(227,250,250,1) 70%) no-repeat center center fixed";
 	}
@@ -135,11 +135,10 @@ function drawWeather(data_from_api) {
 
 	// var weather_description = data_from_api.list[0].weather[0].main; // first data TODO: check 1st, 2nd, 3rd data update to be more reliable
 
+	// let's make a list of weather conditions that may indicate rain
 	var raining = [
 		"Rain",
 		"rain",
-		"snow",
-		"Snow",
 		"thunderstorm",
 		"Thunderstorm",
 		"thunderstorms",
@@ -147,17 +146,22 @@ function drawWeather(data_from_api) {
 		"Thunder",
 		"thunder",
 		"storm",
-		"Storm"
+		"Storm",
+		"Drizzle"
 	];
 
-	var raino = 0;
-	var weather_conditions = [];
+	// let's make a list of weather conditions that may indicate snow
+	var snowing = ["Snow", "snow"];
 
-	while (raino <= 1) {
-		// console.log(raino, data_from_api.list[raino].weather[0].main); // debug ✅
+	var weather_conditions = []; // list where we'll store actual weather conditions (descriptions) from API
+
+	var numero = 0; // just a counter for the loop below
+
+	while (numero <= 1) {
+		// console.log(numero, data_from_api.list[numero].weather[0].main); // debug ✅
 		// console.log(idema); // debug ✅
-		weather_conditions.push(data_from_api.list[raino].weather[0].main); // add to list
-		raino++; // let's get next data update
+		weather_conditions.push(data_from_api.list[numero].weather[0].main); // add to list
+		numero++; // let's get next data update
 	}
 	console.log("what's in 'raining' list:", raining); // debug ✅
 	console.log("weather conditions:", weather_conditions); // debug ✅; write next 4 weather conditions
@@ -165,9 +169,10 @@ function drawWeather(data_from_api) {
 	// check if actual raining weather is in definied 'raining' list
 	if (weather_conditions.some(r => raining.includes(r)) == true) {
 		document.getElementById("umbrella").innerHTML = "Weź parasol! ☔";
-		// document.body.style.background =
-		// "linear-gradient(360deg, rgba(39,168,230,1) 25%, rgba(108,196,238,1) 85%) no-repeat center center fixed";
-		document.getElementById("icon").src = "../images/svg/rain.svg";
+		document.getElementById("icon").src = "../images/weather/rain.svg";
+	} else if (weather_conditions.some(r => snowing.includes(r)) == true) {
+		document.getElementById("umbrella").innerHTML = "Pada śnieg ⛄";
+		document.getElementById("icon").src = "../images/weather/snowing.svg";
 	} else document.getElementById("umbrella").innerHTML = "Bez deszczu";
 
 	// === Part 4 ===
@@ -186,7 +191,7 @@ function drawWeather(data_from_api) {
 	wind_kph = parseFloat(wind_raw) * 3.6; // convert m/s to km/h
 	wind = Math.round(wind_kph, 2);
 
-	var wind_in_html = document.getElementById("wind"); 
+	var wind_in_html = document.getElementById("wind");
 	wind_in_html.textContent += wind + " km/h"; // add to HTML
 
 	// 📔 description
@@ -194,13 +199,13 @@ function drawWeather(data_from_api) {
 		data_from_api.list[0].weather[0].main;
 
 	// ☀️ sunrise
-	var sunrise_local = moment.unix(data_from_api.city.sunrise).format('H:mm');
+	var sunrise_local = moment.unix(data_from_api.city.sunrise).format("H:mm");
 
 	var sunrise_in_html = document.getElementById("sunrise");
 	sunrise_in_html.textContent += sunrise_local;
 
 	// 🌗 sunset
-	var sunset_local = moment.unix(data_from_api.city.sunset).format('H:mm ');
+	var sunset_local = moment.unix(data_from_api.city.sunset).format("H:mm ");
 
 	var sunset_in_html = document.getElementById("sunset");
 	sunset_in_html.textContent += sunset_local;

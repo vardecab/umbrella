@@ -30,7 +30,8 @@ select {
 	appearance: none;
 	font-family: "Fira Code", monospace;
 	color: #000;
-	font-size: 1.0625rem;
+    font-size: 1.0625rem;
+    text-decoration: underline;
 }
 
 select option {

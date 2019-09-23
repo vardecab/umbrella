@@ -74,23 +74,28 @@ function drawWeather(data_from_api) {
 	console.log("sum:", temperatures_sum, "avg:", temperatures_avg); // debug ✅
 	console.log("med:", median); // debug ✅
 
-	// logic itself for showing appropriate icon and background depending on temperature
-	if (temperatures_avg >= 23) {
-		document.getElementById("clothes").innerHTML = "Króciutko 👕"; // 🩳: shorts emoji does work only on Windows: https://emojipedia.org/shorts/
+	// logic itself for showing appropriate icon, background and text depending on temperature
+	if (temperatures_avg >= 25) {
+		document.getElementById("clothes").innerHTML = "Króciutko 👕"; // 🩳: shorts emoji does work only on Windows: https://emojipedia.org/shorts/ // text
 		document.body.style.background =
-			"linear-gradient(360deg, rgba(249, 224, 144, 1) 0%, rgba(255, 147, 92, 1) 100%) no-repeat center center fixed";
-		document.getElementById("icon").src = "../images/weather/sun.svg";
-	} else if ((temperatures_avg < 23) & (temperatures_avg > 16)) {
+			"linear-gradient(360deg, rgba(249, 224, 144, 1) 0%, rgba(255, 147, 92, 1) 100%) no-repeat center center fixed"; // gradient background
+		document.getElementById("icon").src = "../images/weather/sun.svg"; // icon
+	} else if ((temperatures_avg < 25) & (temperatures_avg >= 20)) {
+		document.getElementById("clothes").innerHTML = "Weź bluzę 🧥";
+		document.body.style.background =
+			"linear-gradient(180deg, rgba(255,241,114,1) 20%, rgba(255,249,191,1) 70%) no-repeat center center fixed";
+		document.getElementById("icon").src = "../images/weather/cloudy.svg";
+	} else if ((temperatures_avg < 20) & (temperatures_avg >= 15)) {
 		document.getElementById("clothes").innerHTML = "Długie spodnie i bluza 👖";
 		document.body.style.background =
 			"linear-gradient(180deg, rgba(131,240,167,1) 10%, rgba(222,251,232,1) 80%) no-repeat center center fixed";
 		document.getElementById("icon").src = "../images/weather/clouds.svg";
-	} else if ((temperatures_avg <= 16) & (temperatures_avg > 10)) {
+	} else if ((temperatures_avg < 15) & (temperatures_avg >= 10)) {
 		document.getElementById("clothes").innerHTML = "Ubierz się ciepło 🤗";
 		document.getElementById("icon").src = "../images/weather/wind.svg";
 		document.body.style.background =
 			"linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
-	} else if ((temperatures_avg <= 10) & (temperatures_avg > 0)) {
+	} else if ((temperatures_avg < 10) & (temperatures_avg >= 0)) {
 		document.getElementById("clothes").innerHTML = "Kurtka, bluza, szalik 🧣";
 		document.getElementById("icon").src = "../images/weather/scarf.svg";
 		document.body.style.background =
@@ -166,7 +171,7 @@ function drawWeather(data_from_api) {
 	console.log("what's in 'raining' list:", raining); // debug ✅
 	console.log("weather conditions:", weather_conditions); // debug ✅; write next 4 weather conditions
 
-	// check if actual raining weather is in definied 'raining' list
+	// check if actual raining weather is in definied 'raining' or 'snowing' lists
 	if (weather_conditions.some(r => raining.includes(r)) == true) {
 		document.getElementById("umbrella").innerHTML = "Weź parasol! ☔";
 		document.getElementById("icon").src = "../images/weather/rain.svg";
@@ -209,4 +214,11 @@ function drawWeather(data_from_api) {
 
 	var sunset_in_html = document.getElementById("sunset");
 	sunset_in_html.textContent += sunset_local;
+}
+
+// === Part 5 ===
+// check if browser is online or offline and if offline display offline.html
+
+if (navigator.onLine === false) {
+	window.location = "../offline.html";
 }

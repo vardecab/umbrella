@@ -3,6 +3,7 @@ data/api_key.js
 README.md
 offline_weather.appcache
 _old
+.ds_store
 
 ### Visual Studio Code ###
 .vscode/*

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+	<title>Umbrella</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="icon" type="image/png" href="../images/umbrella.png" />
+
+	<link rel="stylesheet" href="../styles/styles.css">
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="twelve columns">
+
+				<img src="./images/no-connection.svg" id="icon"></<img>
+
+				<div id='loading'>No Internet connection 😢</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+		if (navigator.onLine === true) {
+			window.location = "./umbrella.html";
+		}
+	</script>
+
+</body>
+
+</html>

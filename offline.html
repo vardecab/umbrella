@@ -3,35 +3,55 @@
 
 <head>
 
-	<title>Umbrella</title>
+    <title>Umbrella</title>
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="icon" type="image/png" href="./images/umbrella.png" />
+    <link rel="icon" type="image/png" href="./images/umbrella.png" />
 
-	<link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 
 </head>
 
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="twelve columns">
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
 
-				<img src="./images/no-connection.svg" id="icon"></<img>
+                <img src="./images/no-connection.svg" id="icon"></<img>
 
-				<div id='loading'>No Internet connection 😢</div>
+                <div id="temperature_offline"></div>
 
-			</div>
-		</div>
-	</div>
+                <div id='loading' style="font-weight: 300;">No Internet connection 😢</div>
 
-	<script>
-		if (navigator.onLine === true) {
-			window.location = "./umbrella.html";
-		}
-	</script>
+                <div id='clothes_offline'></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom_navbar">
+        <p id="weather_description_offline"></p>
+        <p>•</p>
+        <p id="time_of_update">Last data: </p>
+    </div>
+
+    <script>
+        var time_of_update = localStorage.getItem('localStorage_time_of_update_key');
+        var time_of_update_text = document.getElementById("time_of_update");
+        time_of_update_text.textContent += time_of_update;
+
+        var get_localStorage_temp = localStorage.getItem('localStorage_temp_key');
+        document.getElementById("temperature_offline").innerHTML = get_localStorage_temp + "&deg;";
+
+        var get_localStorage_description = localStorage.getItem('localStorage_description_key');
+        document.getElementById("weather_description_offline").innerHTML = get_localStorage_description;
+
+        if (navigator.onLine === true) {
+            window.location = "./umbrella.html";
+        }
+    </script>
 
 </body>
 

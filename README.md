@@ -11,6 +11,7 @@
     v0.3.2: Changed backgrounds, added wind & sunrise/sunset while hovering over temperature.
     v0.3.3: Added several comments, added a few icons, added "Snowing" logic, styled `<select>`. 
     v0.4: Added new page to load when browser is offline.
+    v0.5: Store & display weather data from `localStorage` when offline. Fixes for RWD.
 
 ## API: 
 - https://openweathermap.org/api

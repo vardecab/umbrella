@@ -77,17 +77,17 @@ a {
 	display: none;
 }
 
-#temperature:hover+#more_details {
+#temperature, #temperature_offline:hover+#more_details {
 	display: block;
 }
 
-#temperature {
+#temperature, #temperature_offline {
 	font-size: 4rem;
 	font-weight: normal;
 	margin-bottom: 5%;
 }
 
-#umbrella,
+#umbrella, #umbrella_offline,
 #loading {
 	font-size: 1.5rem;
 	font-weight: bold;
@@ -111,24 +111,16 @@ a {
 	box-sizing: border-box;
 }
 
-/* For devices larger than 400px */
-@media (min-width: 400px) {
-	.container {
-		width: 85%;
-		padding: 0;
-	}
-}
-
 /* For devices larger than 550px */
 @media (min-width: 550px) {
 	.container {
 		width: 80%;
 	}
 
-	.column,
-	.columns {
+	/* .column, */
+	/* .columns { */
 		/* margin-left: 4%; */
-	}
+	/* } */
 
 	.column:first-child,
 	.columns:first-child {
@@ -269,7 +261,7 @@ a {
 	}
 }
 
-/* Smaller than mobile */
+/* Small mobile */
 @media screen and (min-width: 300px) and (max-width: 450px) {
 	#icon {
 		margin-top: 40% !important;
@@ -277,27 +269,39 @@ a {
 }
 
 @media (max-width: 340px) {
-	#temperature {
+	#temperature, #temperature_offline {
 		font-size: 3rem !important;
 	}
 
-	#umbrella {
+	#umbrella, #umbrella_offline {
 		font-size: 1.3rem !important;
+	}
+}
+
+/* For devices larger than 400px */
+@media (min-width: 400px) {
+	.container {
+		width: 85%;
+		padding: 0;
 	}
 }
 
 /* Larger than phablet (also point when grid becomes active) */
 @media (min-width: 550px) {}
 
-/* Larger than tablet */
-@media (min-width: 750px) {}
+/* tablet (should cover both iPad and iPad Pro + browser 1/3 width size) */
+@media (min-width: 600px) and (max-width: 1025px) {
+    #icon {
+        margin-top: 35% !important;
+    }
+}
 
 /* Larger than desktop */
 @media (min-width: 1000px) {}
 
 /* Larger than Desktop HD */
 @media (min-width: 1500px) {
-	#icon-bulb {
-		margin-top: 15%;
+	#icon {
+		margin-top: 25%;
 	}
 }

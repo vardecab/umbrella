@@ -4,6 +4,7 @@ README.md
 offline_weather.appcache
 _old
 .ds_store
+scripts/service-worker.js
 
 ### Visual Studio Code ###
 .vscode/*

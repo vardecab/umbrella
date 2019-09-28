@@ -12,6 +12,7 @@
     v0.3.3: Added several comments, added a few icons, added "Snowing" logic, styled `<select>`. 
     v0.4: Added new page to load when browser is offline.
     v0.5: Store & display weather data from `localStorage` when offline. Fixes for RWD.
+    v0.6: Implemented Service Worker.  
 
 ## API: 
 - https://openweathermap.org/api

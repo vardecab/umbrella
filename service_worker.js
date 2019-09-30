@@ -2,11 +2,12 @@ self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open('airhorner').then(function (cache) {
             return cache.addAll([
-                // '/',
-                // 'cities/wroclaw.html',
-                // 'styles/styles.css',
-                // 'offline.html',
-                // 'scripts/script.js',
+                '/',
+                'cities/wroclaw.html',
+                'styles/styles.css',
+                'offline.html',
+                'scripts/script.js',
+                'images/'
                 // 'images/umbrella.png',
                 // 'images/no-connection.svg'
             ]);

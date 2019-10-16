@@ -13,6 +13,7 @@
     v0.4: Added new page to load when browser is offline.
     v0.5: Store & display weather data from `localStorage` when offline. Fixes for RWD.
     v0.6: Implemented Service Worker.  
+    v0.6.1: Tiny RWD fix.
 
 ## API: 
 - https://openweathermap.org/api

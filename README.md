@@ -18,6 +18,7 @@
 
 ## API: 
 - https://openweathermap.org/api
+- https://developer.airly.eu/api
 
 ## Based on:
 - https://bytemaster.io/fetch-weather-openweathermap-api-javascript

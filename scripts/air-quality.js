@@ -27,11 +27,12 @@ function airMask(lat, lng) {
 
             // 💨 air quality
             current_air_quality = data.current.indexes["0"].level; // get info about air quality 
-            console.log("Current air quality: ", current_air_quality);
+            console.log("Current air quality:", current_air_quality); // debug
+            console.log("^ Value: " + data.current.indexes["0"].value + "/100"); // debug
 
             var air_quality = [];
             air_quality.push(data.current.indexes["0"].level);
-            console.log("WH:", air_quality); // debug
+            // console.log("WH:", air_quality); // debug
 
             var good_air_quality = ["VERY_LOW", "LOW"];
             var medium_air_quality = ["MEDIUM"];

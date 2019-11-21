@@ -15,6 +15,10 @@ body {
 	margin: 0;
 }
 
+#air_quality {
+    margin-top: 3%;
+}
+
 #bottom_navbar {
 	overflow: hidden;
 	position: fixed;

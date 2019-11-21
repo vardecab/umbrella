@@ -5,6 +5,10 @@ offline_weather.appcache
 _old
 .ds_store
 scripts/service-worker.js
+# data/air_quality-GIOS
+# data/air_quality_Airly
+# scripts/air-quality.js
+data
 
 ### Visual Studio Code ###
 .vscode/*

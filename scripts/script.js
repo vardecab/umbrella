@@ -13,6 +13,8 @@ if (api_key == "") {
 // === Part 1 ===
 
 function weatherBallon(cityID) {
+    
+    // grab data from URL
     fetch(
             "https://api.openweathermap.org/data/2.5/forecast?id=" +
             cityID +

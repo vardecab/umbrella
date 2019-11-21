@@ -10,8 +10,10 @@
 
 	<link rel="icon" type="image/png" href="../images/umbrella.png" />
 
-	<link rel="stylesheet" href="../styles/styles.css">
-	<script src="../scripts/script.js"></script>
+    <link rel="stylesheet" href="../styles/styles.css">
+    
+    <script src="../scripts/script.js"></script>
+    <script src="../scripts/air-quality.js"></script>
 	<script src="https://momentjs.com/downloads/moment.js"></script> <!-- time formats manipulation -->
 
 </head>
@@ -26,15 +28,16 @@
 				<div id="temperature"></div>
 
 				<div id="more_details">
-					<span id='sunrise'>☀️ </span>
+					<span id="sunrise">☀️ </span>
 					<span id="wind">🍃 </span>
-					<span id='sunset'>🌗 </span>
+					<span id="sunset">🌗 </span>
 				</div>
 
-				<div id='loading'>Loading data...</div>
+				<div id="loading">Loading data...</div>
 
-				<div id='umbrella'></div>
-				<div id='clothes'></div>
+				<div id="umbrella"></div>
+                <div id="clothes"></div>
+                <div id="air_quality"></div>
 
 			</div>
 		</div>
@@ -55,7 +58,8 @@
 
 	<script>
 		window.onload = function () {
-			weatherBallon(7532542); // Tarnow
+            weatherBallon(7532542); // Tarnow
+            airMask(50.01,20.97); // Tarnow
 		};
 	</script>
 

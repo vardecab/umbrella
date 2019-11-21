@@ -14,6 +14,7 @@
     v0.5: Store & display weather data from `localStorage` when offline. Fixes for RWD.
     v0.6: Implemented Service Worker.  
     v0.6.1: Tiny RWD fix.
+    v0.7: Added air quality info from Airly API.
 
 ## API: 
 - https://openweathermap.org/api

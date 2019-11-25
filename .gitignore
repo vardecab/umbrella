@@ -9,6 +9,7 @@ scripts/service-worker.js
 # data/air_quality_Airly
 # scripts/air-quality.js
 data
+cities/london.html
 
 ### Visual Studio Code ###
 .vscode/*

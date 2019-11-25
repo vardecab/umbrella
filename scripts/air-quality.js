@@ -1,6 +1,7 @@
 // API: 
 // https://powietrze.gios.gov.pl/pjp/content/api NOTE: doesn't work because of CORS (Cross-Origin Resource Sharing)
 // https://developer.airly.eu/api
+// limits: Default rate limits per apikey are 1000 API requests per day and 50 API requests per minute for all users.
 
 // // === Part 0 ===
 
@@ -27,26 +28,18 @@ function airMask(lat, lng) {
 
             // 💨 air quality
             current_air_quality = data.current.indexes["0"].level; // get info about air quality 
-            console.log("Current air quality:", current_air_quality); // debug
-            console.log("^ Value: " + data.current.indexes["0"].value + "/100"); // debug
+            console.log("Current air quality is", current_air_quality, "with value of: " + data.current.indexes["0"].value + ". Medium starts at 50, bad starts at 75."); // debug
 
-            var air_quality = [];
-            air_quality.push(data.current.indexes["0"].level);
-            // console.log("WH:", air_quality); // debug
-
-            var good_air_quality = ["VERY_LOW", "LOW"];
-            var medium_air_quality = ["MEDIUM"];
-            var bad_air_quality = ["HIGH", "VERY_HIGH", "EXTREME", "AIRMAGEDDON"];
-
-            // depending on the air let's return appropriate emoji
-            if (air_quality.some(r => good_air_quality.includes(r)) == true) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: ✅";
-            } else if (air_quality.some(r => medium_air_quality.includes(r)) == true) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 😷";
-            } else if (air_quality.some(r => bad_air_quality.includes(r)) == true) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 🤬";
+            if ((data.current.indexes["0"].value < 50) & (data.current.indexes["0"].value >= 0)) {
+                document.getElementById("air_quality").innerHTML = "Powietrze: 🟢";
+            } else if ((data.current.indexes["0"].value >= 50) & (data.current.indexes["0"].value < 75)) {
+                document.getElementById("air_quality").innerHTML = "Powietrze: 🟡";
+            } else if ((data.current.indexes["0"].value >= 75) & (data.current.indexes["0"].value < 100)) {
+                document.getElementById("air_quality").innerHTML = "Powietrze: 🔴";
+            } else if (data.current.indexes["0"].value >= 100) {
+                document.getElementById("air_quality").innerHTML = "Powietrze: ⚫";
             } else {
-                console.error("Something went wrong and I can't get the air quality level 😭");
+                console.error("There is something wrong and I can't download air quality data.")
             }
 
         })

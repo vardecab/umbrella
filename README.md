@@ -15,6 +15,7 @@
     v0.6: Implemented Service Worker.  
     v0.6.1: Tiny RWD fix.
     v0.7: Added air quality info from Airly API.
+    v0.8: Updated some backgrounds to better align with standards. Added different background and icon for temperature +30.
 
 ## API: 
 - https://openweathermap.org/api

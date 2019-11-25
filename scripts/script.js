@@ -1,5 +1,6 @@
 // API:
 // https://openweathermap.org/forecast5 // 5 day forecast includes weather data every 3 hours
+// limits: Calls per minute (no more than): 60
 // https://api.openweathermap.org/data/2.5/forecast // current weather
 
 // === Part 0 ===
@@ -13,7 +14,7 @@ if (api_key == "") {
 // === Part 1 ===
 
 function weatherBallon(cityID) {
-    
+
     // grab data from URL
     fetch(
             "https://api.openweathermap.org/data/2.5/forecast?id=" +
@@ -43,18 +44,18 @@ function drawWeather(data_from_api) {
     } else console.log("loading not removed");
 
     // 👕 clothes
-    var idema = 0;
+    var just_a_counter = 0;
     var temperatures = []; // list of temperatures
 
     // output temperature from 2 consecutive data updates
-    while (idema <= 1) {
-        console.log(idema, Math.round(data_from_api.list[idema].main.temp, 0), "C");
-        // console.log(idema); // debug ✅
-        single_temperature = Math.round(data_from_api.list[idema].main.temp, 0);
+    while (just_a_counter <= 1) {
+        console.log(just_a_counter, Math.round(data_from_api.list[just_a_counter].main.temp, 0), "C");
+        // console.log(just_a_counter); // debug ✅
+        single_temperature = Math.round(data_from_api.list[just_a_counter].main.temp, 0);
         single_temperature_float = parseFloat(single_temperature); // convert to float
         temperatures.push(single_temperature_float); // add to list
         single_temperature = 0; // reset variable
-        idema++; // let's get next data update
+        just_a_counter++; // let's get next data update
         // NOTE: [0] is first update in the JSON file, [1] is the 2nd and so on
     }
     // console.log(temperatures); // debug ✅
@@ -77,11 +78,17 @@ function drawWeather(data_from_api) {
     console.log("med:", median); // debug ✅
 
     // logic itself for showing appropriate icon, background and text depending on temperature
-    if (temperatures_avg >= 25) {
-        document.getElementById("clothes").innerHTML = "Króciutko 👕"; // 🩳: shorts emoji does work only on Windows: https://emojipedia.org/shorts/ // text
+    // < 0, 0-10, 10-15, 15-20, 20-25, 25-30, 30+
+    if (temperatures_avg >= 30) {
+        document.getElementById("clothes").innerHTML = "Upał 🥵"; // text to be displayed
         document.body.style.background =
-            "linear-gradient(360deg, rgba(249, 224, 144, 1) 0%, rgba(255, 147, 92, 1) 100%) no-repeat center center fixed"; // gradient background
-        document.getElementById("icon").src = "../images/weather/sun.svg"; // icon
+            "linear-gradient(180deg, rgba(255,78,78,1) 27%, rgba(255,118,118,1) 69%) no-repeat center center fixed"; // gradient background
+        document.getElementById("icon").src = "../images/weather/fire.svg"; // icon to be displayed
+    } else if ((temperatures_avg >= 25) & (temperatures_avg < 30)) {
+        document.getElementById("clothes").innerHTML = "Króciutko 👕"; // 🩳: shorts emoji is not yet supported everywhere: https://emojipedia.org/shorts/ 
+        document.body.style.background =
+            "linear-gradient(360deg, rgba(249,224,144,1) 30%, rgba(255,147,92,1) 77%) no-repeat center center fixed";
+        document.getElementById("icon").src = "../images/weather/sun.svg";
     } else if ((temperatures_avg < 25) & (temperatures_avg >= 20)) {
         document.getElementById("clothes").innerHTML = "Weź bluzę 🧥";
         document.body.style.background =
@@ -96,12 +103,12 @@ function drawWeather(data_from_api) {
         document.getElementById("clothes").innerHTML = "Ubierz się ciepło 🤗";
         document.getElementById("icon").src = "../images/weather/wind.svg";
         document.body.style.background =
-            "linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
+            "linear-gradient(0deg, rgba(254,208,254,1) 20%, rgba(178,50,178,1) 95%) no-repeat center center fixed";
     } else if ((temperatures_avg < 10) & (temperatures_avg >= 0)) {
         document.getElementById("clothes").innerHTML = "Kurtka, bluza, szalik 🧣";
         document.getElementById("icon").src = "../images/weather/scarf.svg";
         document.body.style.background =
-            "linear-gradient(0deg, rgba(245,217,245,1) 20%, rgba(228,157,228,1) 90%) no-repeat center center fixed";
+            "linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
     } else {
         document.getElementById("clothes").innerHTML = "Mróz 🥶";
         document.getElementById("icon").src = "../images/weather/freezing.svg";
@@ -166,7 +173,7 @@ function drawWeather(data_from_api) {
 
     while (numero <= 1) {
         // console.log(numero, data_from_api.list[numero].weather[0].main); // debug ✅
-        // console.log(idema); // debug ✅
+        // console.log(just_a_counter); // debug ✅
         weather_conditions.push(data_from_api.list[numero].weather[0].main); // add to list
         numero++; // let's get next data update
     }

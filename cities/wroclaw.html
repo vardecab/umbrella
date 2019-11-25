@@ -10,7 +10,7 @@
 
     <link rel="icon" type="image/png" href="../images/umbrella.png" />
 
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles.css" />
 
     <script src="../scripts/script.js"></script>
     <script src="../scripts/air-quality.js"></script>
@@ -52,6 +52,7 @@
                 <option value="warszawa.html">Warszawa</option>
                 <option value="tarnow.html">Tarnów</option>
                 <option value="krakow.html">Kraków</option>
+                <!-- <option value="london.html">London</option> -->
             </select>
         </p>
     </div>
@@ -59,7 +60,7 @@
     <script>
         window.onload = function () {
             weatherBallon(3081368); // Wroclaw
-            airMask(51.09,17.02); // Wroclaw
+            airMask(51.09, 17.02); // Wroclaw
         };
 
         if ("serviceWorker" in navigator) {

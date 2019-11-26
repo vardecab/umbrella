@@ -27,8 +27,12 @@ function airMask(lat, lng) {
                 document.getElementById("air_quality").innerHTML = "Powietrze: ⛔"; // 🔴
             } else if (data.current.indexes["0"].value >= 100) {
                 document.getElementById("air_quality").innerHTML = "Powietrze: ⚫";
-            } else {
-                console.error("There is something wrong and I can't download air quality data.")
+            } else {}
+
+            if ((data.current.indexes["0"].value == null) || data.current.indexes["0"].level == "UNKNOWN") {
+                console.error("There is something wrong and I can't download air quality data. Probably I couldn't find any stations in 3 km radius.")
+                air_quality_element = document.getElementById("air_quality");
+                air_quality_element.style.display = "none";
             }
 
         })

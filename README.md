@@ -1,12 +1,10 @@
 # Umbrella
 
->A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html)¹ that tells you if you need to take an umbrella when going outside ☔
+>A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔
 
-It _doesn't_ show current the weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮².  
+It _doesn't_ show current the weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮¹.  
 
-¹ _Currently works only in Europe._
-
-² _Usually looking ~ 6 hours ahead._
+¹ _Usually looking ~ 6 hours ahead._
 
 ![](https://i.ibb.co/pwnX5wF/umbrella-1.png.png)
 
@@ -17,12 +15,13 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 ## Roadmap
 
 * Autocomplete location name (+ maybe a searchbar).
-* Ability to query both EU and US locations.
 * More elegant way to ask for location.
+* Geolocation.
+* <del>Be able to use any city - not only those predefinied.</del>
 
 ## Release History
 
-* 0.9: Added weather info support for most cities in Europe.
+* **0.9: Added weather info support for (probably) all cities**.
 * 0.8: Updated some backgrounds to better align with standards. Added different background and icon for temperature +30.
 * 0.7: Added air quality info from Airly API.
 * 0.6.1: Tiny RWD fix.

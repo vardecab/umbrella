@@ -46,20 +46,21 @@
     <div id="bottom_navbar">
         <p id="weather_description"></p>
         <p>•</p>
-        <p>
-            <select name="select_city" onchange="javascript:location.href = this.value;">
+        <p id="location">
+            <!-- <select name="select_city" onchange="javascript:location.href = this.value;">
                 <option value="wroclaw.html" selected>Wrocław</option>
                 <option value="warszawa.html">Warszawa</option>
                 <option value="tarnow.html">Tarnów</option>
-                <option value="krakow.html">Kraków</option>
+                <option value="krakow.html">Kraków</option> -->
                 <!-- <option value="london.html">London</option> -->
-            </select>
+            <!-- </select> --> 
         </p>
     </div>
 
     <script>
         window.onload = function () {
-            weatherBallon(3081368); // Wroclaw
+            // weatherBallon(3081368); // Wroclaw
+            weatherBallon(51.09, 17.02) // Wroclaw
             airMask(51.09, 17.02); // Wroclaw
         };
 

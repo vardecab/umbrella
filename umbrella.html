@@ -1,14 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-	<title>Umbrella</title>
+
+    <title>Umbrella</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="/images/umbrella.png" />
+
+    <link rel="stylesheet" href="/styles/styles.css" />
+
+    <script src="/scripts/script.js"></script>
+    <script src="/scripts/air-quality.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script> <!-- time formats manipulation -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+    <!-- lightweight JavaScript API for handling browser cookies -->
+
 </head>
 
 <body>
-	<script>
-		window.location.replace("cities/wroclaw.html");
-	</script>
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+
+                <img src="/images/loading.svg" id="icon"></<img>
+
+                <div id="temperature"></div>
+
+                <div id="more_details">
+                    <span id="sunrise">☀️ </span>
+                    <span id="wind">🍃 </span>
+                    <span id="sunset">🌗 </span>
+                </div>
+
+                <div id="loading">Loading data...</div>
+
+                <div id="umbrella"></div>
+                <div id="clothes"></div>
+                <div id="air_quality" title="🍏 Good; 🚧 Bad; ⛔ Terrible"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="bottom_navbar">
+        <p id="weather_description"></p>
+        <p>•</p>
+        <p id="location"></p>
+        <p>•</p>
+        <p id="change_location" onclick="Cookies.remove('umbrella_coord_lat'); location.reload();"
+            title="Clear 🍪 and change the location!">🔀</p>
+    </div>
+
+    <script>
+        window.onload = function () {
+
+            if ((Cookies.get("umbrella_coord_lat") == undefined) || (Cookies.get("umbrella_coord_lng") ==
+                    undefined)) {
+                query_input = prompt(
+                    "Dla jakiego miasta chcesz sprawdzić pogodę?"
+                    ); // if we don't know the location let's ask the user
+                console.log("City:", query_input); // debug
+
+                const liq_api_key = "a95509ae99d0ab";
+
+                // grab data from URL
+                fetch("https://eu1.locationiq.com/v1/search.php?key=" + liq_api_key + "&q=" + query_input +
+                        "&format=json")
+
+                    // convert data to JSON
+                    .then(function (res) {
+                        return res.json();
+                    })
+
+                    // use the data stored in object to do whatever
+                    .then(function (data) {
+                        console.error("LocationIQ", data); // debug: output everything stored in the object
+
+                        // get location name based on what was returned from API and cut it to just city
+                        liq_location = data[0].display_name.split(",")[0];
+                        // console.error(liq_location); // debug
+
+                        document.getElementById("location").innerHTML = liq_location;
+
+                        // set 🍪 for location name
+                        Cookies.set("umbrella_location", liq_location, {
+                            expires: 30,
+                            path: "/"
+                        })
+
+                        // get coords from API based on location user inputted 
+                        lat = data[0].lat;
+                        lng = data[0].lon;
+                        console.log("Coords: " + lat + ", " + lng); // debug
+
+                        // set 🍪 for latitude
+                        Cookies.set("umbrella_coord_lat", lat, {
+                            expires: 30,
+                            path: "/"
+                        })
+                        // set 🍪 for longitude
+                        Cookies.set("umbrella_coord_lng", lng, {
+                            expires: 30,
+                            path: "/"
+                        })
+                        console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" +
+                            Cookies.get(
+                                "umbrella_coord_lng")); // debug
+
+                        // variables with values from 🍪s
+                        cookie_lng = Cookies.get("umbrella_coord_lng");
+                        cookie_lat = Cookies.get("umbrella_coord_lat");
+
+                        weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                        airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+                    })
+            } else {
+                console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" + Cookies.get(
+                    "umbrella_coord_lng")); // debug
+
+                // variables with values from 🍪s
+                cookie_lng = Cookies.get("umbrella_coord_lng");
+                cookie_lat = Cookies.get("umbrella_coord_lat");
+                cookie_location = Cookies.get("umbrella_location");
+
+                document.getElementById("location").innerHTML = cookie_location;
+
+                weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+            }
+
+        }
+
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+                .register("service_worker.js")
+                .then(function () {
+                    console.log("Service Worker registered successfully :]");
+                });
+        }
+    </script>
+
 </body>
 
 </html>

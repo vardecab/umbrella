@@ -1,15 +1,8 @@
 TODO
-data/api_key.js
-README.md
-offline_weather.appcache
 _old
-.ds_store
-scripts/service-worker.js
-# data/air_quality-GIOS
-# data/air_quality_Airly
-# scripts/air-quality.js
+cities
 data
-cities/london.html
+umbrella-legacy.html
 
 ### Visual Studio Code ###
 .vscode/*

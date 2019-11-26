@@ -1,34 +1,25 @@
-// API:
-// https://openweathermap.org/forecast5 // 5 day forecast includes weather data every 3 hours
-// limits: Calls per minute (no more than): 60
-// https://api.openweathermap.org/data/2.5/forecast // current weather
-
-// === Part 0 ===
-
-const api_key = "4541406d253305e837d9ff9e415c7551";
-if (api_key == "") {
-    window.alert("API key missing!");
-    console.error("API key missing!");
-}
-
 // === Part 1 ===
+// get data from weather API and do stuff
 
-function weatherBallon(cityID) {
+// get JSON data from API and pass to drawWeather function
+function weatherBallon(lat, lng) {
+
+    const owm_api_key = "4541406d253305e837d9ff9e415c7551";
+    if (owm_api_key == "") {
+        window.alert("API key missing!");
+        console.error("API key missing!");
+    }
 
     // grab data from URL
-    fetch(
-            "https://api.openweathermap.org/data/2.5/forecast?id=" +
-            cityID +
-            "&appid=" +
-            api_key +
-            "&units=metric"
-        )
+    fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lng + "&appid=" + owm_api_key + "&units=metric")
+
         // convert data to JSON
         .then(function (resp) {
             return resp.json();
         })
         // get data to drawWeather function below
         .then(function (data) {
+            console.error("OpenWeatherMap", data);
             drawWeather(data);
         })
         // catch any errors
@@ -36,7 +27,9 @@ function weatherBallon(cityID) {
 }
 
 // === Part 2 ===
+// icon/text/background logic based on temperature
 
+// get data from weatherBallon and do magic 
 function drawWeather(data_from_api) {
     // loading screen
     if (data_from_api.city.name != "") {
@@ -49,8 +42,7 @@ function drawWeather(data_from_api) {
 
     // output temperature from 2 consecutive data updates
     while (just_a_counter <= 1) {
-        console.log(just_a_counter, Math.round(data_from_api.list[just_a_counter].main.temp, 0), "C");
-        // console.log(just_a_counter); // debug ✅
+        console.log("Update #" + just_a_counter + ": " + Math.round(data_from_api.list[just_a_counter].main.temp, 0) + "C");
         single_temperature = Math.round(data_from_api.list[just_a_counter].main.temp, 0);
         single_temperature_float = parseFloat(single_temperature); // convert to float
         temperatures.push(single_temperature_float); // add to list
@@ -74,8 +66,8 @@ function drawWeather(data_from_api) {
     let highMiddle = Math.ceil((temperatures.length - 1) / 2);
     let median = (temperatures[lowMiddle] + temperatures[highMiddle]) / 2;
 
-    console.log("sum:", temperatures_sum, "avg:", temperatures_avg); // debug ✅
-    console.log("med:", median); // debug ✅
+    // console.log("sum:", temperatures_sum, "avg:", temperatures_avg); // debug ✅
+    // console.log("med:", median); // debug ✅
 
     // logic itself for showing appropriate icon, background and text depending on temperature
     // < 0, 0-10, 10-15, 15-20, 20-25, 25-30, 30+
@@ -118,29 +110,29 @@ function drawWeather(data_from_api) {
 
     // debug start --->
 
-    var data_update_number = 0;
+    // var data_update_number = 0;
     console.log("City:", data_from_api.city.name);
-    console.log("Sunrise time:", data_from_api.city.sunrise, "(UNIX)");
-    console.log("Sunset time:", data_from_api.city.sunset, "(UNIX)");
-    while (data_update_number <= 8) {
-        // 8 should give 24 hrs; TODO: get number of updates in single .json
-        console.log("<<<--- data update:", data_update_number, "--->>>");
-        console.log(
-            "Weather:",
-            data_from_api.list[data_update_number].weather[0].main
-        );
-        console.log("Temp:", data_from_api.list[data_update_number].main.temp, "C");
-        time_of_data = data_from_api.list[data_update_number].dt_txt;
-        var utcTime = time_of_data;
-        var local_time = moment // uses moment.js
-            .utc(utcTime)
-            .local()
-            .format("M/DD, HH:mm"); // // time of update should be in local time now
-        console.log("Time of update:", local_time); // UTC, 2 hrs behind
-        // console.log("Wind:", data_from_api.list[data_update_number].wind.speed, "m/s"); // meter/sec
-        // console.log('Rain:', data_from_api.list[1].rain.3h) // The data is specified for the 3 hours time period from the timestamp in the response. FIX: `.3h` won't work
-        data_update_number++;
-    }
+    // console.log("Sunrise time:", data_from_api.city.sunrise, "(UNIX)");
+    // console.log("Sunset time:", data_from_api.city.sunset, "(UNIX)");
+    // while (data_update_number <= 8) {
+    //     // 8 should give 24 hrs; TODO: get number of updates in single .json
+    //     console.log("<<<--- data update:", data_update_number, "--->>>");
+    //     console.log(
+    //         "Weather:",
+    //         data_from_api.list[data_update_number].weather[0].main
+    //     );
+    //     console.log("Temp:", data_from_api.list[data_update_number].main.temp, "C");
+    //     time_of_data = data_from_api.list[data_update_number].dt_txt;
+    //     var utcTime = time_of_data;
+    //     var local_time = moment // uses moment.js
+    //         .utc(utcTime)
+    //         .local()
+    //         .format("M/DD, HH:mm"); // // time of update should be in local time now
+    //     console.log("Time of update:", local_time); // UTC, 2 hrs behind
+    //     // console.log("Wind:", data_from_api.list[data_update_number].wind.speed, "m/s"); // meter/sec
+    //     // console.log('Rain:', data_from_api.list[1].rain.3h) // The data is specified for the 3 hours time period from the timestamp in the response. FIX: `.3h` won't work
+    //     data_update_number++;
+    // }
 
     // <--- debug end
 
@@ -177,8 +169,8 @@ function drawWeather(data_from_api) {
         weather_conditions.push(data_from_api.list[numero].weather[0].main); // add to list
         numero++; // let's get next data update
     }
-    console.log("what's in 'raining' list:", raining); // debug ✅
-    console.log("weather conditions:", weather_conditions); // debug ✅; write next 4 weather conditions
+    // console.log("what's in 'raining' list:", raining); // debug ✅
+    // console.log("weather conditions:", weather_conditions); // debug ✅; write next 4 weather conditions
 
     // check if actual raining weather is in definied 'raining' or 'snowing' lists
     if (weather_conditions.some(r => raining.includes(r)) == true) {
@@ -198,7 +190,10 @@ function drawWeather(data_from_api) {
         Math.round(temperatures_avg, 0) + "&deg;";
 
     // 🏙 city name
-    // document.getElementById("city").innerHTML = data_from_api.city.name;
+    // document.getElementById("location").innerHTML = data_from_api.city.name;
+    if (document.getElementById("location").textContent == "null") { // works when user dismissed the alert without providing any location - fallback
+        document.getElementById("location").innerHTML = data_from_api.city.name;
+    }
 
     // 🍃 wind
     var wind_raw = data_from_api.list[1].wind.speed; // get wind

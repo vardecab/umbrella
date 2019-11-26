@@ -59,7 +59,7 @@ a {
     display: none;
 }
 
-#icon:hover+#more_details {
+#temperature:hover+#more_details {
     display: block;
 }
 

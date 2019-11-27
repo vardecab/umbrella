@@ -1,8 +1,10 @@
 TODO
+.ds_store
 _old
 cities
 data
 umbrella-legacy.html
+images/social-sharing
 
 ### Visual Studio Code ###
 .vscode/*

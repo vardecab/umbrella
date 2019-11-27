@@ -5,6 +5,12 @@
 
     <title>Umbrella</title>
 
+    <meta property="og:title" content="Umbrella">
+    <meta property="og:description" content="A simple weather page that tells you if you need to take an umbrella when going outside.">
+    <meta property="og:image" content="https://i.ibb.co/zG08Mns/facebook-ogimage.png">
+    <meta property="og:url" content="https://vardecab.github.io/umbrella/umbrella.html">
+    <meta name="twitter:card" content="summary_large_image">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -15,8 +21,7 @@
     <script src="./scripts/script.js"></script>
     <script src="./scripts/air-quality.js"></script>
     <script src="https://momentjs.com/downloads/moment.js"></script> <!-- time formats manipulation -->
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
-    <!-- lightweight JavaScript API for handling browser cookies -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
 
 </head>
 
@@ -57,6 +62,7 @@
     <script>
         window.onload = function () {
 
+            // if user doesn't have 🍪s then we need to take location from API and save it for later
             if ((Cookies.get("umbrella_coord_lat") == undefined) || (Cookies.get("umbrella_coord_lng") ==
                     undefined)) {
                 query_input = prompt(
@@ -117,7 +123,9 @@
                         weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                         airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
                     })
-            } else {
+            }
+            // looks like 🍪s are ready - let's use them
+            else {
                 console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" + Cookies.get(
                     "umbrella_coord_lng")); // debug
 

@@ -21,7 +21,8 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
-* **0.9: Added weather info support for (probably) all cities**.
+* 0.9.1: Added social media tags for sharing.
+* 0.9: Added weather info support for (probably) all cities.
 * 0.8: Updated some backgrounds to better align with standards. Added different background and icon for temperature +30.
 * 0.7: Added air quality info from Airly API.
 * 0.6.1: Tiny RWD fix.

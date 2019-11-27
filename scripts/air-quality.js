@@ -20,13 +20,13 @@ function airMask(lat, lng) {
             console.log("Current air quality is", current_air_quality, "with value of: " + data.current.indexes["0"].value + ". Medium starts at 50, bad starts at 75."); // debug
 
             if ((data.current.indexes["0"].value < 50) & (data.current.indexes["0"].value >= 0)) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 🍏"; // 🟢 not fully supported
+                document.getElementById("air_quality").innerHTML = "Powietrze: 😁"; // 🟢 not fully supported
             } else if ((data.current.indexes["0"].value >= 50) & (data.current.indexes["0"].value < 75)) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 🚧"; // 🟡 not fully supported
+                document.getElementById("air_quality").innerHTML = "Powietrze: 😷"; // 🟡 not fully supported
             } else if ((data.current.indexes["0"].value >= 75) & (data.current.indexes["0"].value < 100)) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: ⛔"; // 🔴
+                document.getElementById("air_quality").innerHTML = "Powietrze: 🤬"; // 🔴
             } else if (data.current.indexes["0"].value >= 100) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: ⚫";
+                document.getElementById("air_quality").innerHTML = "Powietrze: ⚰️"; // ⚫
             } else {}
 
             if ((data.current.indexes["0"].value == null) || data.current.indexes["0"].level == "UNKNOWN") {

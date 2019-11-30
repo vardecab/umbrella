@@ -191,8 +191,8 @@ function drawWeather(data_from_api) {
 
     // 🏙 city name
     // document.getElementById("location").innerHTML = data_from_api.city.name;
-    if (document.getElementById("location").textContent == "null") { // works when user dismissed the alert without providing any location - fallback
-        document.getElementById("location").innerHTML = data_from_api.city.name;
+    if (data_from_api.city.name == "Trnava") { // works when user dismissed the alert without providing any location - fallback; Trnava seems to be the default
+        document.getElementById("location").innerHTML = "🌍 " + data_from_api.city.name;
     }
 
     // 🍃 wind

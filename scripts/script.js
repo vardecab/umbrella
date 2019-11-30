@@ -34,7 +34,7 @@ function drawWeather(data_from_api) {
     // loading screen
     if (data_from_api.city.name != "") {
         document.getElementById("loading").remove();
-    } else console.log("loading not removed");
+    } else console.log("City in OWM is null!");
 
     // 👕 clothes
     var just_a_counter = 0;
@@ -111,7 +111,7 @@ function drawWeather(data_from_api) {
     // debug start --->
 
     // var data_update_number = 0;
-    console.log("City:", data_from_api.city.name);
+    // console.log("City:", data_from_api.city.name);
     // console.log("Sunrise time:", data_from_api.city.sunrise, "(UNIX)");
     // console.log("Sunset time:", data_from_api.city.sunset, "(UNIX)");
     // while (data_update_number <= 8) {
@@ -127,10 +127,10 @@ function drawWeather(data_from_api) {
     //     var local_time = moment // uses moment.js
     //         .utc(utcTime)
     //         .local()
-    //         .format("M/DD, HH:mm"); // // time of update should be in local time now
+    //         .format("D MMMM, H:mm"); // // time of update should be in local time now
     //     console.log("Time of update:", local_time); // UTC, 2 hrs behind
     //     // console.log("Wind:", data_from_api.list[data_update_number].wind.speed, "m/s"); // meter/sec
-    //     // console.log('Rain:', data_from_api.list[1].rain.3h) // The data is specified for the 3 hours time period from the timestamp in the response. FIX: `.3h` won't work
+    // // console.log("Rain:", data_from_api.list[1].rain["3h"]); // Rain volume for last 3 hours in mm
     //     data_update_number++;
     // }
 
@@ -204,8 +204,7 @@ function drawWeather(data_from_api) {
     wind_in_html.textContent += wind + " km/h"; // add to HTML
 
     // 📔 description
-    document.getElementById("weather_description").innerHTML =
-        data_from_api.list[0].weather[0].main;
+    // document.getElementById("weather_description").innerHTML = data_from_api.list[0].weather[0].main; // NOTE: if disabling in HTML you need to disable here as well - otherwise everything below won't be displayed 
 
     // ☀️ sunrise
     var sunrise_local = moment.unix(data_from_api.city.sunrise).format("H:mm");
@@ -213,8 +212,8 @@ function drawWeather(data_from_api) {
     var sunrise_in_html = document.getElementById("sunrise");
     sunrise_in_html.textContent += sunrise_local;
 
-    // 🌗 sunset
-    var sunset_local = moment.unix(data_from_api.city.sunset).format("H:mm ");
+    // 🌒 sunset
+    var sunset_local = moment.unix(data_from_api.city.sunset).format("H:mm");
 
     var sunset_in_html = document.getElementById("sunset");
     sunset_in_html.textContent += sunset_local;
@@ -223,8 +222,8 @@ function drawWeather(data_from_api) {
     // save data to localStorage for offline use
 
     // store data
-    var localStorage_temp = Math.round(data_from_api.list[0].main.temp, 0);
-    localStorage.setItem('localStorage_temp_key', localStorage_temp);
+    var localStorage_temperature = Math.round(data_from_api.list[0].main.temp, 0);
+    localStorage.setItem('localStorage_temperature_key', localStorage_temperature);
 
     var localStorage_description = data_from_api.list[0].weather[0].main;
     localStorage.setItem('localStorage_description_key', localStorage_description);

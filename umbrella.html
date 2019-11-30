@@ -22,7 +22,8 @@
 
     <script src="./scripts/script.js"></script>
     <script src="./scripts/air-quality.js"></script>
-    <script src="https://momentjs.com/downloads/moment.js"></script> <!-- time formats manipulation -->
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script> <!-- time formats manipulation -->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
 
 </head>
@@ -34,31 +35,26 @@
 
                 <img id="icon" src="./images/loading.svg">
 
-                <div id="temperature"></div>
+                <div id="temperature" title="Average temperature in the next 6 hours."></div>
 
                 <div id="more_details">
                     <span id="sunrise">☀️ </span>
                     <span id="wind">🍃 </span>
-                    <span id="sunset">🌗 </span>
+                    <span id="sunset">🌒 </span>
                 </div>
 
-                <div id="loading">Loading data...</div>
+                <div id="loading">Waiting for data...</div>
 
-                <div id="umbrella"></div>
-                <div id="clothes"></div>
-                <div id="air_quality" title="🍏 Good; 🚧 Bad; ⛔ Terrible"></div>
+                <div id="umbrella" title="Rain?"></div>
+                <div id="clothes" title="What should I wear? 🤔"></div>
+                <div id="air_quality" title="🤓 Good; 🤢 Bad; 🤬 Terrible; ⚰️ RIP"></div>
 
             </div>
         </div>
     </div>
 
     <div id="bottom_navbar">
-        <p id="weather_description"></p>
-        <p>•</p>
-        <p id="location"></p>
-        <p>•</p>
-        <p id="change_location" onclick="Cookies.remove('umbrella_coord_lat'); location.reload();"
-            title="Clear 🍪 and change the location!">🔀</p>
+        <p id="location" onclick="Cookies.remove('umbrella_coord_lat'); location.reload();" title="Change the location!">🌍 </p>    
     </div>
 
     <script>
@@ -91,7 +87,7 @@
                         liq_location = data[0].display_name.split(",")[0];
                         // console.error(liq_location); // debug
 
-                        document.getElementById("location").innerHTML = liq_location;
+                        document.getElementById("location").textContent += liq_location;
 
                         // set 🍪 for location name
                         Cookies.set("umbrella_location", liq_location, {
@@ -128,6 +124,8 @@
             }
             // looks like 🍪s are ready - let's use them
             else {
+                console.error("LocationIQ data not necessary - took data from 🍪s.");
+
                 console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" + Cookies.get(
                     "umbrella_coord_lng")); // debug
 
@@ -136,7 +134,7 @@
                 cookie_lat = Cookies.get("umbrella_coord_lat");
                 cookie_location = Cookies.get("umbrella_location");
 
-                document.getElementById("location").innerHTML = cookie_location;
+                document.getElementById("location").textContent += cookie_location;
 
                 weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                 airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
@@ -144,13 +142,13 @@
 
         }
 
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker
-                .register("service_worker.js")
-                .then(function () {
-                    console.log("Service Worker registered successfully :]");
-                });
-        }
+        // if ("serviceWorker" in navigator) {
+        //     navigator.serviceWorker
+        //         .register("service_worker.js")
+        //         .then(function () {
+        //             console.log("Service Worker registered successfully :]");
+        //         });
+        // }
     </script>
 
 </body>

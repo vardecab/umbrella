@@ -24,6 +24,7 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+* 0.9.3: `styles.css`: cleaned up, added comments, fixes for RWD, changed main font. Changed air quality emojis.
 * 0.9.2: Changed air quality emojis.
 * 0.9.1: Added social media tags for sharing.
 * 0.9: Added weather info support for (probably) all cities.
@@ -59,4 +60,4 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 * [Navbar tutorial](https://www.w3schools.com/howto/howto_js_bottom_nav_responsive.asp)
 * [Full background cover tutorial](https://css-tricks.com/perfect-full-page-background-image)
 * Icons from [Flaticon](https://www.flaticon.com)
-* Font used is [Fira Code](https://github.com/tonsky/FiraCode)
+* Fonts used: [Fira Code](https://fonts.google.com/specimen/Fira+Code) & [Reem Kufi](https://fonts.google.com/specimen/Reem+Kufi)

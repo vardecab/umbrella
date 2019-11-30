@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap");
+/* === fonts === */
+
+@import url('https://fonts.googleapis.com/css?family=Reem+Kufi&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Fira+Code&display=swap'); */
+
+/* === main styling === */
 
 body {
     background: linear-gradient(2deg,
@@ -8,15 +13,57 @@ body {
     -webkit-background-size: cover !important;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
-    font-family: "Fira Code", monospace;
+    font-family: "Reem Kufi", sans-serif;
     color: #000;
     text-align: center;
     height: 100vh;
     margin: 0;
 }
 
+/* === styling specific elements === */
+
+#icon {
+    width: 125px;
+    height: 125px;
+    margin-bottom: 3%;
+    margin-top: 15%;
+}
+
+#temperature,
+#temperature_offline {
+    font-size: 4rem;
+    /* font-family: "Fira Code", monospace; */
+    font-weight: normal;
+    margin-bottom: 3%;
+}
+
+#temperature:hover+#more_details {
+    display: block;
+}
+
+#more_details {
+    margin-top: -4%;
+    margin-bottom: 2.5%;
+    display: none;
+}
+
+#umbrella,
+#umbrella_offline,
+#loading {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: auto;
+    margin-bottom: 3%;
+    width: 65%;
+}
+
+#clothes {
+    margin-bottom: 3%;
+    font-size: 1.3rem;
+}
+
 #air_quality {
-    margin-top: 5%;
+    /* font-size: 1.1rem; */
 }
 
 #bottom_navbar {
@@ -36,49 +83,9 @@ a {
     padding-left: 3px;
     padding-right: 14px;
     text-decoration: none;
-    font-size: 1.0625rem;
 }
 
-@media screen and (min-height: 400px) and (max-height: 550px) and (min-width: 800px) {
-    #icon {
-        margin-top: 5% !important;
-    }
-}
-
-@media screen and (max-width: 600px) {}
-
-#icon {
-    width: 125px;
-    height: 125px;
-    margin-bottom: 5%;
-    margin-top: 15%;
-}
-
-#more_details {
-    margin-bottom: 5%;
-    display: none;
-}
-
-#temperature:hover+#more_details {
-    display: block;
-}
-
-#temperature,
-#temperature_offline {
-    font-size: 4rem;
-    font-weight: normal;
-    margin-bottom: 5%;
-}
-
-#umbrella,
-#umbrella_offline,
-#loading {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: auto;
-    margin-bottom: 5%;
-    width: 65%;
-}
+/* === layout === */
 
 .container {
     position: relative;
@@ -95,199 +102,49 @@ a {
     box-sizing: border-box;
 }
 
-/* For devices larger than 550px */
-@media (min-width: 550px) {
-    .container {
-        width: 80%;
-    }
+/* === RWD === */
 
-    .column:first-child,
-    .columns:first-child {
-        margin-left: 0;
-    }
-
-    .one.column,
-    .one.columns {
-        width: 4.66666666667%;
-    }
-
-    .two.columns {
-        width: 13.3333333333%;
-    }
-
-    .three.columns {
-        width: 22%;
-    }
-
-    .four.columns {
-        width: 30.6666666667%;
-    }
-
-    .five.columns {
-        width: 39.3333333333%;
-    }
-
-    .six.columns {
-        width: 48%;
-    }
-
-    .seven.columns {
-        width: 56.6666666667%;
-    }
-
-    .eight.columns {
-        width: 65.3333333333%;
-    }
-
-    .nine.columns {
-        width: 74%;
-    }
-
-    .ten.columns {
-        width: 82.6666666667%;
-    }
-
-    .eleven.columns {
-        width: 91.3333333333%;
-    }
-
-    .twelve.columns {
-        width: 100%;
-        margin-left: 0;
-    }
-
-    .one-third.column {
-        width: 30.6666666667%;
-    }
-
-    .two-thirds.column {
-        width: 65.3333333333%;
-    }
-
-    .one-half.column {
-        width: 48%;
-    }
-
-    /* Offsets */
-    .offset-by-one.column,
-    .offset-by-one.columns {
-        margin-left: 8.66666666667%;
-    }
-
-    .offset-by-two.column,
-    .offset-by-two.columns {
-        margin-left: 17.3333333333%;
-    }
-
-    .offset-by-three.column,
-    .offset-by-three.columns {
-        margin-left: 26%;
-    }
-
-    .offset-by-four.column,
-    .offset-by-four.columns {
-        margin-left: 34.6666666667%;
-    }
-
-    .offset-by-five.column,
-    .offset-by-five.columns {
-        margin-left: 43.3333333333%;
-    }
-
-    .offset-by-six.column,
-    .offset-by-six.columns {
-        margin-left: 52%;
-    }
-
-    .offset-by-seven.column,
-    .offset-by-seven.columns {
-        margin-left: 60.6666666667%;
-    }
-
-    .offset-by-eight.column,
-    .offset-by-eight.columns {
-        margin-left: 69.3333333333%;
-    }
-
-    .offset-by-nine.column,
-    .offset-by-nine.columns {
-        margin-left: 78%;
-    }
-
-    .offset-by-ten.column,
-    .offset-by-ten.columns {
-        margin-left: 86.6666666667%;
-    }
-
-    .offset-by-eleven.column,
-    .offset-by-eleven.columns {
-        margin-left: 95.3333333333%;
-    }
-
-    .offset-by-one-third.column,
-    .offset-by-one-third.columns {
-        margin-left: 34.6666666667%;
-    }
-
-    .offset-by-two-thirds.column,
-    .offset-by-two-thirds.columns {
-        margin-left: 69.3333333333%;
-    }
-
-    .offset-by-one-half.column,
-    .offset-by-one-half.columns {
-        margin-left: 52%;
+/* Small mobile phone, eg iPhone 4 */
+@media (max-width: 320px) and (max-height: 480px) {
+    #icon {
+        margin-top: 10% !important; /* NOTE: doesn't work without "important" */
     }
 }
 
-/* Small mobile */
+/* Mobile phone, eg SGS5, iPhones */
 @media (min-width: 300px) and (max-width: 450px) {
     #icon {
-        margin-top: 40% !important;
+        margin-top: 37%;
     }
 }
 
-@media (max-width: 340px) {
-
-    #temperature,
-    #temperature_offline {
-        font-size: 3rem !important;
-    }
-
-    #umbrella,
-    #umbrella_offline {
-        font-size: 1.3rem !important;
-    }
-}
-
-/* For devices larger than 400px */
-@media (min-width: 400px) {
-    .container {
-        width: 85%;
-        padding: 0;
-    }
-}
-
-/* Larger than phablet (also point when grid becomes active) */
-@media (min-height: 500px) and (max-height: 700px) {
-    #icon {
-        margin-top: 9%;
-    }
-}
-
-/* tablet (should cover both iPad and iPad Pro + browser 1/3 width size) */
+/* Should cover both iPad and iPad Pro */
 @media (min-width: 450px) and (max-width: 1025px) and (min-height: 1000px) {
     #icon {
-        margin-top: 35% !important;
+        margin-top: 45% !important;
     }
 }
 
-/* Larger than desktop */
-@media (min-width: 1000px) {}
-
-/* Larger than Desktop HD */
-@media (min-width: 1800px) {
+/* Browser at horizontally 1/3 size on laptop */
+@media (min-width: 500px) and (max-width: 600px) {
     #icon {
-        margin-top: 25%;
+        margin-top: 30%;
     }
+}
+
+/* My usual browser size on laptop */
+@media screen and (min-height: 400px) and (max-height: 650px) and (min-width: 800px) {
+    #icon {
+        margin-top: 5% !important;
+    }
+}
+
+/* Computer w/ Full HD screen */
+@media (min-width: 1800px) {
+    /* TODO: */
+}
+
+/* Computer w/ 4K screen */
+@media (min-width: 2560px) {
+    /* TODO: */
 }

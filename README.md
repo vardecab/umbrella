@@ -24,6 +24,7 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+* 0.10: Added air quality support for (probably) all cities.
 * 0.9.3: `styles.css`: cleaned up, added comments, fixes for RWD, changed main font. Changed air quality emojis.
 * 0.9.2: Changed air quality emojis.
 * 0.9.1: Added social media tags for sharing.
@@ -51,7 +52,7 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 
 ## Acknowledgements
 
-* APIs: [OpenWeatherMap](https://openweathermap.org/api) & [Airly](https://developer.airly.eu/api) & [LocationIQ](https://locationiq.com)
+* APIs: [OpenWeatherMap](https://openweathermap.org/api) & [Airly](https://developer.airly.eu/api) & [AQICN](https://aqicn.org/api/) & [LocationIQ](https://locationiq.com)
 * [Main tutorial that inspired me](https://bytemaster.io/fetch-weather-openweathermap-api-javascript)
 * [Moment.js](https://momentjs.com)
 * [JavaScript Cookie](https://github.com/js-cookie/js-cookie)

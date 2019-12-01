@@ -5,6 +5,7 @@ cities
 data
 umbrella-legacy.html
 images/social-sharing
+scripts/aqicn.js
 
 ### Visual Studio Code ###
 .vscode/*

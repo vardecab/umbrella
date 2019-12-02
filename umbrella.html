@@ -20,12 +20,12 @@
 
     <link rel="stylesheet" href="./styles/styles.css" />
 
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/air-quality.js"></script>
-    <!-- <script src="scripts/aqicn.js"></script> -->
+    <script src="./scripts/weather.js"></script>
+    <script src="./scripts/air_quality.js"></script>
+    <!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage -->
 
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script> <!-- time formats manipulation -->
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
+    <script src="./scripts/moment.min.js"></script> <!-- time formats manipulation -->
+    <script src="./scripts/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
 
 </head>
 
@@ -121,6 +121,7 @@
 
                         weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                         airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+                        // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
                     })
             }
             // looks like 🍪s are ready - let's use them
@@ -139,6 +140,7 @@
 
                 weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                 airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+                // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
             }
 
         }

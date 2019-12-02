@@ -6,6 +6,7 @@ data
 umbrella-legacy.html
 images/social-sharing
 scripts/aqicn.js
+scripts/allergy.js
 
 ### Visual Studio Code ###
 .vscode/*

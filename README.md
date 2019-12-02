@@ -24,6 +24,8 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+- 0.11: Added allergy API but then removed due to weak coverage.
+- 0.10.1: RWD fixes, switched fonts.
 - 0.10: Added air quality support for (probably) all cities.
 - 0.9.3: `styles.css`: cleaned up, added comments, fixes for RWD, changed main font. Changed air quality emojis.
 - 0.9.2: Changed air quality emojis.

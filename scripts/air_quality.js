@@ -17,7 +17,7 @@ function airMask(lat, lng) {
 
             // 💨 air quality
             current_air_quality = data.current.indexes["0"].level; // get info about air quality 
-            console.log("Current air quality is", current_air_quality, "with value of: " + data.current.indexes["0"].value + ". Medium starts at 50, bad starts at 75."); // debug
+            console.log("Current air quality is", current_air_quality, "with value of: " + data.current.indexes["0"].value + ". Medium starts at 50, bad starts at 75. Death starts at 100."); // debug
 
             // data from primary API - Airly
             air_quality_index = data.current.indexes["0"].value;

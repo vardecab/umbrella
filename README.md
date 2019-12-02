@@ -24,6 +24,7 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+- 0.11.1: Changed main font to [Mali](https://fonts.google.com/specimen/Mali).
 - 0.11: Added allergy API but then removed due to weak coverage.
 - 0.10.1: RWD fixes, switched fonts.
 - 0.10: Added air quality support for (probably) all cities.
@@ -63,4 +64,4 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 - [Navbar tutorial](https://www.w3schools.com/howto/howto_js_bottom_nav_responsive.asp)
 - [Full background cover tutorial](https://css-tricks.com/perfect-full-page-background-image)
 - Icons from [Flaticon](https://www.flaticon.com)
-- Fonts used: [Fira Code](https://fonts.google.com/specimen/Fira+Code) & [Reem Kufi](https://fonts.google.com/specimen/Reem+Kufi)
+- Fonts used: [Mali](https://fonts.google.com/specimen/Mali) & [Reem Kufi](https://fonts.google.com/specimen/Reem+Kufi)

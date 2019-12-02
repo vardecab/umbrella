@@ -1,7 +1,8 @@
 /* === fonts === */
 
 @import url('https://fonts.googleapis.com/css?family=Reem+Kufi&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap'); */
+@import url('https://fonts.googleapis.com/css?family=Mali:300,400,500,700&display=swap');
 
 /* === main styling === */
 
@@ -13,7 +14,7 @@ body {
     -webkit-background-size: cover !important;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
-    font-family: "Fira Code", monospace;
+    font-family: "Mali", sans-serif;
     color: #000;
     text-align: center;
     height: 100vh;
@@ -50,7 +51,7 @@ body {
 #umbrella,
 #umbrella_offline,
 #loading {
-    font-size: 2rem;
+    font-size: 1.9rem;
     font-weight: 500;
     margin: auto;
     margin-bottom: 3%;
@@ -59,7 +60,7 @@ body {
 
 #clothes {
     margin-bottom: 3%;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 400;
 }
 

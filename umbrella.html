@@ -131,7 +131,7 @@
                 }
 
                 function error() {
-                    alert("Unable to retrieve your location :(");
+                    alert("Wygląda na to, że nie mogę znaleźć Twojej lokalizacji... Prawdopodobnie masz wyłączony GPS :(");
                     query_input = prompt(
                         "Dla jakiego miasta chcesz sprawdzić pogodę?"
                     ); // if we don't know the location let's ask the user
@@ -213,7 +213,7 @@
             }
 
             if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser :(');
+                alert('Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :(');
             } else {
                 navigator.geolocation.getCurrentPosition(success, error);
             }
@@ -313,7 +313,7 @@
             }
 
             if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser :(');
+                alert('Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :(');
             } else {
                 var locating = document.querySelector("#findme");
                 locating.textContent = "Odśwież stronę :)";

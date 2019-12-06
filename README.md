@@ -11,19 +11,18 @@ It _doesn't_ show current the weather outside - you can check it yourself by loo
 
 ## How to use
 
-Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, air quality³ and overall description of the conditions. Location is saved in the 🍪. If you want to change the location, click on 🔀.
-
-³ _Supports: parts of UK, Belgium, Netherlands, Germany and most of Poland. [Map of sensors available here](https://airly.eu/map/en/)._
+Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, air quality and overall description of the conditions. Location is saved in the 🍪. If you want to change the location, click on 🌍. If you want to geolocate yourself, click on 📍.
 
 ## Roadmap
 
 - Autocomplete location name (+ maybe a search bar).
 - More elegant way to ask for location.
-- Geolocation.
-- <del>Be able to use any city - not only those predefinied.</del>
+- <del>_Geolocation._</del>
+- <del>_Be able to use any city - not only those predefinied._</del>
 
 ## Release History
 
+- 0.12: Added [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API).
 - 0.11.1: Changed main font to [Mali](https://fonts.google.com/specimen/Mali).
 - 0.11: Added allergy API but then removed due to weak coverage.
 - 0.10.1: RWD fixes, switched fonts.
@@ -59,6 +58,7 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 - [Main tutorial that inspired me](https://bytemaster.io/fetch-weather-openweathermap-api-javascript)
 - [Moment.js](https://momentjs.com)
 - [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
+- [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API)
 - Tools used for creating backgrounds: [ColorHexa](https://www.colorhexa.com) & [CSS Gradient](https://cssgradient.io)
 - RWD layout based on [Skeleton](http://getskeleton.com)
 - [Navbar tutorial](https://www.w3schools.com/howto/howto_js_bottom_nav_responsive.asp)

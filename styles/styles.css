@@ -34,7 +34,7 @@ body {
 #temperature_offline {
     font-size: 4rem;
     font-family: "Reem Kufi", sans-serif !important;
-    font-weight: normal;
+    /* font-weight: bold; */
     margin-bottom: 3%;
 }
 

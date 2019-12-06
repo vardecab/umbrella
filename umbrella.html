@@ -6,7 +6,8 @@
     <title>Umbrella</title>
 
     <meta property="og:title" content="Umbrella">
-    <meta property="og:description" content="A simple weather page that tells you if you need to take an umbrella when going outside.">
+    <meta property="og:description"
+        content="A simple weather page that tells you if you need to take an umbrella when going outside.">
     <meta property="og:image" content="https://i.ibb.co/zG08Mns/facebook-ogimage.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -24,8 +25,9 @@
     <script src="./scripts/air_quality.js"></script>
     <!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage -->
 
-    <script src="./scripts/moment.min.js"></script> <!-- time formats manipulation -->
-    <script src="./scripts/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
+    <script src="./scripts/libraries/moment.min.js"></script> <!-- time formats manipulation -->
+    <script src="./scripts/libraries/js.cookie.min.js"></script>
+    <!-- lightweight JavaScript API for handling browser cookies -->
 
 </head>
 
@@ -44,7 +46,7 @@
                     <span id="sunset">🌒 </span>
                 </div>
 
-                <div id="loading">Waiting for data...</div>
+                <div id="loading">Ładuję dane...</div>
 
                 <div id="umbrella" title="Rain?"></div>
                 <div id="clothes" title="What should I wear? 🤔"></div>
@@ -55,77 +57,144 @@
     </div>
 
     <div id="bottom_navbar">
-        <p id="location" onclick="Cookies.remove('umbrella_coord_lat'); location.reload();" title="Change the location!">🌍 </p>    
+        <p id="location"
+            onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
+            title="Change the location!">🌍 </p>
+        <p id="findme"
+            onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
+            title="Find me!">📍</p>
     </div>
 
     <script>
-        window.onload = function () {
+        window.onload = function geoLocator() {
 
-            // if user doesn't have 🍪s then we need to take location from API and save it for later
             if ((Cookies.get("umbrella_coord_lat") == undefined) || (Cookies.get("umbrella_coord_lng") ==
                     undefined)) {
-                query_input = prompt(
-                    "Dla jakiego miasta chcesz sprawdzić pogodę?"
-                ); // if we don't know the location let's ask the user
-                console.log("City:", query_input); // debug
 
-                const liq_api_key = "a95509ae99d0ab";
+                // get coords from geolocation (GPS/IP)
+                function success(position) {
+                    const geo_latitude = position.coords.latitude;
+                    const geo_longitude = position.coords.longitude;
 
-                // grab data from URL
-                fetch("https://eu1.locationiq.com/v1/search.php?key=" + liq_api_key + "&q=" + query_input +
-                        "&format=json")
-
-                    // convert data to JSON
-                    .then(function (res) {
-                        return res.json();
+                    // set 🍪 for latitude
+                    Cookies.set("umbrella_coord_lat", geo_latitude, {
+                        expires: 30,
+                        path: "/"
                     })
-
-                    // use the data stored in object to do whatever
-                    .then(function (data) {
-                        console.error("LocationIQ", data); // debug: output everything stored in the object
-
-                        // get location name based on what was returned from API and cut it to just city
-                        liq_location = data[0].display_name.split(",")[0];
-                        // console.error(liq_location); // debug
-
-                        document.getElementById("location").textContent += liq_location;
-
-                        // set 🍪 for location name
-                        Cookies.set("umbrella_location", liq_location, {
-                            expires: 30,
-                            path: "/"
-                        })
-
-                        // get coords from API based on location user inputted 
-                        lat = data[0].lat;
-                        lng = data[0].lon;
-                        console.log("Coords: " + lat + ", " + lng); // debug
-
-                        // set 🍪 for latitude
-                        Cookies.set("umbrella_coord_lat", lat, {
-                            expires: 30,
-                            path: "/"
-                        })
-                        // set 🍪 for longitude
-                        Cookies.set("umbrella_coord_lng", lng, {
-                            expires: 30,
-                            path: "/"
-                        })
-                        console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" +
-                            Cookies.get(
-                                "umbrella_coord_lng")); // debug
-
-                        // variables with values from 🍪s
-                        cookie_lng = Cookies.get("umbrella_coord_lng");
-                        cookie_lat = Cookies.get("umbrella_coord_lat");
-
-                        weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-                        airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
-                        // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+                    // set 🍪 for longitude
+                    Cookies.set("umbrella_coord_lng", geo_longitude, {
+                        expires: 30,
+                        path: "/"
                     })
-            }
-            // looks like 🍪s are ready - let's use them
-            else {
+                    console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" +
+                        Cookies.get(
+                            "umbrella_coord_lng")); // debug
+
+                    // variables with values from 🍪s
+                    cookie_lng = Cookies.get("umbrella_coord_lng");
+                    cookie_lat = Cookies.get("umbrella_coord_lat");
+
+                    // API key which we use in the next piece
+                    const liq_api_key = "a95509ae99d0ab"; 
+
+                    // we need to get city name from LocationIQ API
+                    fetch("https://eu1.locationiq.com/v1/reverse.php?key=" + liq_api_key + "&lat=" + cookie_lat +
+                            "&lon=" + cookie_lng +
+                            "&format=json")
+
+                        // convert data to JSON
+                        .then(function (res) {
+                            return res.json();
+                        })
+
+                        // use the data stored in object to do whatever
+                        .then(function (data) {
+                            console.error("LocationIQ",
+                                data); // debug: output everything stored in the object
+
+                            // get city name
+                            liq_location = data.address.city;
+
+                            // show city name on the website
+                            document.getElementById("location").textContent += liq_location;
+
+                            // set 🍪 for location name
+                            Cookies.set("umbrella_location", liq_location, {
+                                expires: 30,
+                                path: "/"
+                            })
+                        })
+
+                    weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                    airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+                    // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+                }
+
+                function error() {
+                    alert("Unable to retrieve your location :(");
+                    query_input = prompt(
+                        "Dla jakiego miasta chcesz sprawdzić pogodę?"
+                    ); // if we don't know the location let's ask the user
+                    console.log("City:", query_input); // debug
+
+                    const liq_api_key = "a95509ae99d0ab";
+
+                    // grab data from URL
+                    fetch("https://eu1.locationiq.com/v1/search.php?key=" + liq_api_key + "&q=" + query_input +
+                            "&format=json")
+
+                        // convert data to JSON
+                        .then(function (res) {
+                            return res.json();
+                        })
+
+                        // use the data stored in object to do whatever
+                        .then(function (data) {
+                            console.error("LocationIQ",
+                                data); // debug: output everything stored in the object
+
+                            // get location name based on what was returned from API and cut it to just city
+                            liq_location = data[0].display_name.split(",")[0];
+                            // console.error(liq_location); // debug
+
+                            document.getElementById("location").textContent += liq_location;
+
+                            // set 🍪 for location name
+                            Cookies.set("umbrella_location", liq_location, {
+                                expires: 30,
+                                path: "/"
+                            })
+
+                            // get coords from API based on location user inputted 
+                            lat = data[0].lat;
+                            lng = data[0].lon;
+                            console.log("Coords: " + lat + ", " + lng); // debug
+
+                            // set 🍪 for latitude
+                            Cookies.set("umbrella_coord_lat", lat, {
+                                expires: 30,
+                                path: "/"
+                            })
+                            // set 🍪 for longitude
+                            Cookies.set("umbrella_coord_lng", lng, {
+                                expires: 30,
+                                path: "/"
+                            })
+                            console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" +
+                                Cookies.get(
+                                    "umbrella_coord_lng")); // debug
+
+                            // variables with values from 🍪s
+                            cookie_lng = Cookies.get("umbrella_coord_lng");
+                            cookie_lat = Cookies.get("umbrella_coord_lat");
+
+                            weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                            airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+                            // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+                        })
+                   
+                }
+            } else {
                 console.error("LocationIQ data not necessary - took data from 🍪s.");
 
                 console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" + Cookies.get(
@@ -140,10 +209,120 @@
 
                 weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                 airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
-                // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+                // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
+            }
+
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser :(');
+            } else {
+                navigator.geolocation.getCurrentPosition(success, error);
             }
 
         }
+
+        function manualFinder() {
+            query_input = prompt(
+                "Dla jakiego miasta chcesz sprawdzić pogodę?"
+            ); // if we don't know the location let's ask the user
+            console.log("City:", query_input); // debug
+
+            const liq_api_key = "a95509ae99d0ab";
+
+            // grab data from URL
+            fetch("https://eu1.locationiq.com/v1/search.php?key=" + liq_api_key + "&q=" + query_input +
+                    "&format=json")
+
+                // convert data to JSON
+                .then(function (res) {
+                    return res.json();
+                })
+
+                // use the data stored in object to do whatever
+                .then(function (data) {
+                    console.error("LocationIQ",
+                        data); // debug: output everything stored in the object
+
+                    // get location name based on what was returned from API and cut it to just city
+                    liq_location = data[0].display_name.split(",")[0];
+                    // console.error(liq_location); // debug
+
+                    document.getElementById("location").textContent += liq_location;
+
+                    // set 🍪 for location name
+                    Cookies.set("umbrella_location", liq_location, {
+                        expires: 30,
+                        path: "/"
+                    })
+
+                    // get coords from API based on location user inputted 
+                    lat = data[0].lat;
+                    lng = data[0].lon;
+                    console.log("Coords: " + lat + ", " + lng); // debug
+
+                    // set 🍪 for latitude
+                    Cookies.set("umbrella_coord_lat", lat, {
+                        expires: 30,
+                        path: "/"
+                    })
+                    // set 🍪 for longitude
+                    Cookies.set("umbrella_coord_lng", lng, {
+                        expires: 30,
+                        path: "/"
+                    })
+                    console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" +
+                        Cookies.get(
+                            "umbrella_coord_lng")); // debug
+
+                    // variables with values from 🍪s
+                    cookie_lng = Cookies.get("umbrella_coord_lng");
+                    cookie_lat = Cookies.get("umbrella_coord_lat");
+
+                    weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                    airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+                    // apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+
+                    location.reload();
+                })
+        }
+
+        function findMe() {
+            function success(position) {
+                const geo_latitude = position.coords.latitude;
+                const geo_longitude = position.coords.longitude;
+
+                // set 🍪 for latitude
+                Cookies.set("umbrella_coord_lat", geo_latitude, {
+                    expires: 30,
+                    path: "/"
+                })
+                // set 🍪 for longitude
+                Cookies.set("umbrella_coord_lng", geo_longitude, {
+                    expires: 30,
+                    path: "/"
+                })
+                console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" +
+                    Cookies.get(
+                        "umbrella_coord_lng")); // debug
+
+                // variables with values from 🍪s
+                cookie_lng = Cookies.get("umbrella_coord_lng");
+                cookie_lat = Cookies.get("umbrella_coord_lat");
+
+                weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                airMask(cookie_lat, cookie_lng);
+            }
+
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser :(');
+            } else {
+                var locating = document.querySelector("#findme");
+                locating.textContent = "Odśwież stronę :)";
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        }
+
+        document.querySelector('#location').addEventListener('click', manualFinder);
+        document.querySelector('#findme').addEventListener('click', findMe);
 
         // if ("serviceWorker" in navigator) {
         //     navigator.serviceWorker

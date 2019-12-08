@@ -57,7 +57,7 @@ function drawWeather(data_from_api) {
         temperatures_sum = temperatures.reduce(function (a, b) {
             return a + b;
         });
-        // temperatures_avg = temperatures_sum / temperatures.length;
+        temperatures_avg = temperatures_sum / temperatures.length;
     }
 
     // let's get median of temperatures in the list

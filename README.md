@@ -22,6 +22,7 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+- 0.13: Added `theme-color` based on the background color for mobile Chromium-based browsers.
 - 0.12: Added [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API).
 - 0.11.1: Changed main font to [Mali](https://fonts.google.com/specimen/Mali).
 - 0.11: Added allergy API but then removed due to weak coverage.

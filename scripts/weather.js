@@ -57,7 +57,7 @@ function drawWeather(data_from_api) {
         temperatures_sum = temperatures.reduce(function (a, b) {
             return a + b;
         });
-        temperatures_avg = temperatures_sum / temperatures.length;
+        // temperatures_avg = temperatures_sum / temperatures.length;
     }
 
     // let's get median of temperatures in the list
@@ -76,36 +76,43 @@ function drawWeather(data_from_api) {
         document.body.style.background =
             "linear-gradient(180deg, rgba(255,78,78,1) 27%, rgba(255,118,118,1) 69%) no-repeat center center fixed"; // gradient background
         document.getElementById("icon").src = "./images/weather/fire.svg"; // icon to be displayed
+        document.head.querySelector('meta[name="theme-color"]').content = "#ED4A4B"; // change Chrome theme-color to match the background
     } else if ((temperatures_avg >= 25) & (temperatures_avg < 30)) {
         document.getElementById("clothes").innerHTML = "Króciutko 👕"; // 🩳: shorts emoji is not yet supported everywhere: https://emojipedia.org/shorts/ 
         document.body.style.background =
             "linear-gradient(360deg, rgba(249,224,144,1) 30%, rgba(255,147,92,1) 77%) no-repeat center center fixed";
         document.getElementById("icon").src = "./images/weather/sun.svg";
+        document.head.querySelector('meta[name="theme-color"]').content = "#F2925A";
     } else if ((temperatures_avg < 25) & (temperatures_avg >= 20)) {
         document.getElementById("clothes").innerHTML = "Weź bluzę 🧥";
         document.body.style.background =
             "linear-gradient(180deg, rgba(255,241,114,1) 20%, rgba(255,249,191,1) 70%) no-repeat center center fixed";
         document.getElementById("icon").src = "./images/weather/cloudy.svg";
+        document.head.querySelector('meta[name="theme-color"]').content = "#FFF072";
     } else if ((temperatures_avg < 20) & (temperatures_avg >= 15)) {
         document.getElementById("clothes").innerHTML = "Długie spodnie i bluza 👖";
         document.body.style.background =
             "linear-gradient(180deg, rgba(131,240,167,1) 10%, rgba(222,251,232,1) 80%) no-repeat center center fixed";
         document.getElementById("icon").src = "./images/weather/clouds.svg";
+        document.head.querySelector('meta[name="theme-color"]').content = "#83F1A8";
     } else if ((temperatures_avg < 15) & (temperatures_avg >= 10)) {
         document.getElementById("clothes").innerHTML = "Ubierz się ciepło 🤗";
         document.getElementById("icon").src = "./images/weather/wind.svg";
         document.body.style.background =
             "linear-gradient(0deg, rgba(254,208,254,1) 20%, rgba(178,50,178,1) 95%) no-repeat center center fixed";
+        document.head.querySelector('meta[name="theme-color"]').content = "#BE44C0";
     } else if ((temperatures_avg < 10) & (temperatures_avg >= 0)) {
         document.getElementById("clothes").innerHTML = "Kurtka, bluza, szalik 🧣";
         document.getElementById("icon").src = "./images/weather/scarf.svg";
         document.body.style.background =
             "linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
+        document.head.querySelector('meta[name="theme-color"]').content = "#54C5CC";
     } else {
         document.getElementById("clothes").innerHTML = "Mróz 🥶";
         document.getElementById("icon").src = "./images/weather/freezing.svg";
         document.body.style.background =
             "linear-gradient(0deg, rgba(249,254,254,1) 20%, rgba(227,250,250,1) 70%) no-repeat center center fixed";
+        document.head.querySelector('meta[name="theme-color"]').content = "#ffffff";
     }
 
     // debug start --->

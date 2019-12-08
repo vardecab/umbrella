@@ -112,7 +112,7 @@ function drawWeather(data_from_api) {
         document.getElementById("icon").src = "./images/weather/freezing.svg";
         document.body.style.background =
             "linear-gradient(0deg, rgba(249,254,254,1) 20%, rgba(227,250,250,1) 70%) no-repeat center center fixed";
-        document.head.querySelector('meta[name="theme-color"]').content = "#ffffff";
+        document.head.querySelector('meta[name="theme-color"]').content = "#E3FAFA";
     }
 
     // debug start --->
@@ -181,7 +181,7 @@ function drawWeather(data_from_api) {
 
     // check if actual raining weather is in definied 'raining' or 'snowing' lists
     if (weather_conditions.some(r => raining.includes(r)) == true) {
-        document.getElementById("umbrella").innerHTML = "Weź parasol! ☔";
+        document.getElementById("umbrella").innerHTML = "Weź parasol!";
         document.getElementById("icon").src = "./images/weather/rain.svg";
     } else if (weather_conditions.some(r => snowing.includes(r)) == true) {
         document.getElementById("umbrella").innerHTML = "Pada śnieg ⛄";

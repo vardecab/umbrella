@@ -22,10 +22,11 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
-- 0.13: Added `theme-color` based on the background color for mobile Chromium-based browsers.
+- 0.13.1: Country now displayed alongside city name.
+- 0.13: Added [theme-color meta tag](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android) based dynamically on the background color for mobile Chromium-based browsers.
 - 0.12: Added [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API).
 - 0.11.1: Changed main font to [Mali](https://fonts.google.com/specimen/Mali).
-- 0.11: Added allergy API but then removed due to weak coverage.
+- 0.11: Added allergy/pollen API but then removed due to its weak coverage.
 - 0.10.1: RWD fixes, switched fonts.
 - 0.10: Added air quality support for (probably) all cities.
 - 0.9.3: `styles.css`: cleaned up, added comments, fixes for RWD, changed main font. Changed air quality emojis.

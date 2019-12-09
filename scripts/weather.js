@@ -198,6 +198,7 @@ function drawWeather(data_from_api) {
 
     // 🏙 city name
     // document.getElementById("location").innerHTML = data_from_api.city.name;
+    document.getElementById("location").textContent += ", " + data_from_api.city.country;
     if (data_from_api.city.name == "Trnava") { // works when user dismissed the alert without providing any location - fallback; Trnava seems to be the default
         document.getElementById("location").innerHTML = "🌍 " + data_from_api.city.name;
     }

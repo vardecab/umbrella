@@ -60,7 +60,7 @@
     <div id="bottom_navbar">
         <p id="location"
             onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
-            title="Change the location!">🌍 </p>
+            title="Change the location!">🌍</p>
         <p id="findme"
             onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
             title="Find me!">📍</p>
@@ -117,7 +117,7 @@
                             liq_location = data.address.city;
 
                             // show city name on the website
-                            document.getElementById("location").textContent += liq_location;
+                            document.getElementById("location").textContent = "🌍 " + liq_location;
 
                             // set 🍪 for location name
                             Cookies.set("umbrella_location", liq_location, {
@@ -158,7 +158,7 @@
                             liq_location = data[0].display_name.split(",")[0];
                             // console.error(liq_location); // debug
 
-                            document.getElementById("location").textContent += liq_location;
+                            document.getElementById("location").textContent = "🌍 " + liq_location;
 
                             // set 🍪 for location name
                             Cookies.set("umbrella_location", liq_location, {
@@ -188,6 +188,7 @@
                             // variables with values from 🍪s
                             cookie_lng = Cookies.get("umbrella_coord_lng");
                             cookie_lat = Cookies.get("umbrella_coord_lat");
+                            alert(data.address.city);
 
                             weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                             airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
@@ -206,7 +207,7 @@
                 cookie_lat = Cookies.get("umbrella_coord_lat");
                 cookie_location = Cookies.get("umbrella_location");
 
-                document.getElementById("location").textContent += cookie_location;
+                document.getElementById("location").textContent = "🌍 " + cookie_location;
 
                 weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                 airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
@@ -247,7 +248,7 @@
                     liq_location = data[0].display_name.split(",")[0];
                     // console.error(liq_location); // debug
 
-                    document.getElementById("location").textContent += liq_location;
+                    document.getElementById("location").textContent = "🌍 " + liq_location;
 
                     // set 🍪 for location name
                     Cookies.set("umbrella_location", liq_location, {

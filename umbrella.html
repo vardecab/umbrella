@@ -114,7 +114,8 @@
                                 data); // debug: output everything stored in the object
 
                             // get city name
-                            liq_location = data.address.city;
+                            // liq_location = data.address.city;
+                            liq_location = data[0].display_name.split(",")[0];
 
                             // show city name on the website
                             document.getElementById("location").textContent = "🌍 " + liq_location;
@@ -188,7 +189,8 @@
                             // variables with values from 🍪s
                             cookie_lng = Cookies.get("umbrella_coord_lng");
                             cookie_lat = Cookies.get("umbrella_coord_lat");
-                            alert(data.address.city);
+                            // alert(data.address.city);
+                            alert(liq_location);
 
                             weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
                             airMask(cookie_lat, cookie_lng); // pass coords to get air quality info

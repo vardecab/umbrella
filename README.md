@@ -22,6 +22,7 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+- 0.13.3: Fixed a loading bug on first use.
 - 0.13.2: Changed favicon.
 - 0.13.1: Country now displayed alongside city name.
 - 0.13: Added [theme-color meta tag](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android) based dynamically on the background color for mobile Chromium-based browsers.

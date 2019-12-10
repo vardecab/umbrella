@@ -9,8 +9,8 @@ And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d
 ¹ _Usually looking ~ 6 hours ahead._
 ² _Weather info displayed in Polish for now._
 
-<img src="https://s5.gifyu.com/images/Screenshot_20191208-143750_Brave-ANIMATION.gif" wdith="400" height="400"/>
-<!-- <img src="https://i.ibb.co/Sr8H4Wv/Screenshot-20191208-143750-Brave-COLLAGE.jpg" wdith="400" height="400"/> -->
+<img src="https://s5.gifyu.com/images/umbrella.gif" height="400"/>
+<img src="https://i.ibb.co/X4CHyH4/umbrella.png"/>
 
 <!-- ![](https://i.ibb.co/Sr8H4Wv/Screenshot-20191208-143750-Brave-COLLAGE.jpg)
 ![](https://s5.gifyu.com/images/Screenshot_20191208-143750_Brave-ANIMATION.gif) -->

@@ -14,7 +14,7 @@ body {
     -webkit-background-size: cover !important;
     -moz-background-size: cover !important;
     -o-background-size: cover !important;
-    font-family: "Mali", sans-serif;
+    font-family: "Mali", monospace;
     color: #000;
     text-align: center;
     height: 100vh;
@@ -33,7 +33,7 @@ body {
 #temperature,
 #temperature_offline {
     font-size: 4rem;
-    font-family: "Reem Kufi", sans-serif !important;
+    font-family: "Reem Kufi", monospace !important;
     /* font-weight: bold; */
     margin-bottom: 3%;
 }

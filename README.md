@@ -22,6 +22,7 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
+- 0.13.4: Updates to `offline.html`, bug fixing and some cleanup in various places. Added new icon for a very low temperature.
 - 0.13.3: Fixed a loading bug on first use.
 - 0.13.2: Changed favicon.
 - 0.13.1: Country now displayed alongside city name.

@@ -4,19 +4,38 @@
 <head>
 
     <title>Umbrella</title>
+    <meta property="og:title" content="Umbrella">
+    <meta name="description" content="A simple weather page that tells you if you need to take an umbrella when going outside.">
+    <meta property="og:description" content="A simple weather page that tells you if you need to take an umbrella when going outside.">
+    <meta property="og:image" content="https://i.ibb.co/zG08Mns/facebook-ogimage.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://vardecab.github.io/umbrella/umbrella.html">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="theme-color" content="#000000"> <!-- default -->
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- <link rel="icon" type="image/png" href="./images/umbrella.png" /> -->
+    <link rel="icon" type="image/png" href="./images/umbrella-icon_blue-circle.png" />
 
-    <!-- <link rel="stylesheet" href="./styles/styles.css"> -->
+    <!-- <link rel="stylesheet" href="./styles/styles.css" /> -->
+
+    <!-- <script src="./scripts/weather.js"></script> -->
+    <!-- <script src="./scripts/air_quality.js"></script> -->
+    <!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage -->
+
+    <!-- <script src="./scripts/libraries/moment.min.js"></script> time formats manipulation -->
+    <!-- <script src="./scripts/libraries/js.cookie.min.js"></script> lightweight JavaScript API for handling browser cookies -->
 
 </head>
 
 <body>
     <style>
-        @import url("https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap");
+        @import url('https://fonts.googleapis.com/css?family=Reem+Kufi&display=swap');
+        /* @import url('https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap'); */
+        @import url('https://fonts.googleapis.com/css?family=Mali:300,400,500,700&display=swap');
 
         body {
             background: linear-gradient(2deg,
@@ -26,11 +45,58 @@
             -webkit-background-size: cover !important;
             -moz-background-size: cover !important;
             -o-background-size: cover !important;
-            font-family: "Fira Code", monospace;
+            font-family: "Mali", monospace;
             color: #000;
             text-align: center;
             height: 100vh;
             margin: 0;
+        }
+
+        /* === styling specific elements === */
+
+        #icon {
+            width: 125px;
+            height: 125px;
+            margin-bottom: 3%;
+            margin-top: 15%;
+        }
+
+        #temperature,
+        #temperature_offline {
+            font-size: 4rem;
+            font-family: "Reem Kufi", monospace !important;
+            /* font-weight: bold; */
+            margin-bottom: 3%;
+        }
+
+        #temperature:hover+#more_details {
+            display: block;
+        }
+
+        #more_details {
+            margin-top: -4%;
+            margin-bottom: 2.5%;
+            display: none;
+        }
+
+        #umbrella,
+        #umbrella_offline,
+        #loading {
+            font-size: 1.9rem;
+            font-weight: 500;
+            margin: auto;
+            margin-bottom: 3%;
+            width: 65%;
+        }
+
+        #clothes {
+            margin-bottom: 3%;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        #air_quality {
+            font-weight: 400;
         }
 
         #bottom_navbar {
@@ -38,28 +104,6 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-        }
-
-        select {
-            background: transparent;
-            border: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            font-family: "Fira Code", monospace;
-            color: #000;
-            font-size: 1.0625rem;
-            text-decoration: underline;
-        }
-
-        select option {
-            background: transparent;
-            font-size: 1.0625rem;
-        }
-
-        select option:hover {
-            background-color: #ffeeff;
-            background: #ffeeff;
         }
 
         #bottom_navbar p,
@@ -72,53 +116,9 @@
             padding-left: 3px;
             padding-right: 14px;
             text-decoration: none;
-            font-size: 1.0625rem;
         }
 
-        @media screen and (min-height: 400px) and (max-height: 550px) and (min-width: 800px) {
-
-            #icon,
-            #temperature_offline {
-                margin-top: 9% !important;
-            }
-        }
-
-        @media screen and (max-width: 600px) {}
-
-        #icon,
-        #temperature_offline {
-            /* width: 125px; */
-            /* height: 125px; */
-            margin-bottom: 5%;
-            margin-top: 25%;
-        }
-
-        #more_details {
-            margin-bottom: 5%;
-            display: none;
-        }
-
-        #temperature,
-        #temperature_offline:hover+#more_details {
-            display: block;
-        }
-
-        #temperature,
-        #temperature_offline {
-            font-size: 4rem;
-            font-weight: normal;
-            margin-bottom: 5%;
-        }
-
-        #umbrella,
-        #umbrella_offline,
-        #loading {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: auto;
-            margin-bottom: 5%;
-            width: 65%;
-        }
+        /* === layout === */
 
         .container {
             position: relative;
@@ -135,214 +135,63 @@
             box-sizing: border-box;
         }
 
-        /* For devices larger than 550px */
-        @media (min-width: 550px) {
-            .container {
-                width: 80%;
-            }
+        /* === RWD === */
 
-            /* .column, */
-            /* .columns { */
-            /* margin-left: 4%; */
-            /* } */
-
-            .column:first-child,
-            .columns:first-child {
-                margin-left: 0;
-            }
-
-            .one.column,
-            .one.columns {
-                width: 4.66666666667%;
-            }
-
-            .two.columns {
-                width: 13.3333333333%;
-            }
-
-            .three.columns {
-                width: 22%;
-            }
-
-            .four.columns {
-                width: 30.6666666667%;
-            }
-
-            .five.columns {
-                width: 39.3333333333%;
-            }
-
-            .six.columns {
-                width: 48%;
-            }
-
-            .seven.columns {
-                width: 56.6666666667%;
-            }
-
-            .eight.columns {
-                width: 65.3333333333%;
-            }
-
-            .nine.columns {
-                width: 74%;
-            }
-
-            .ten.columns {
-                width: 82.6666666667%;
-            }
-
-            .eleven.columns {
-                width: 91.3333333333%;
-            }
-
-            .twelve.columns {
-                width: 100%;
-                margin-left: 0;
-            }
-
-            .one-third.column {
-                width: 30.6666666667%;
-            }
-
-            .two-thirds.column {
-                width: 65.3333333333%;
-            }
-
-            .one-half.column {
-                width: 48%;
-            }
-
-            /* Offsets */
-            .offset-by-one.column,
-            .offset-by-one.columns {
-                margin-left: 8.66666666667%;
-            }
-
-            .offset-by-two.column,
-            .offset-by-two.columns {
-                margin-left: 17.3333333333%;
-            }
-
-            .offset-by-three.column,
-            .offset-by-three.columns {
-                margin-left: 26%;
-            }
-
-            .offset-by-four.column,
-            .offset-by-four.columns {
-                margin-left: 34.6666666667%;
-            }
-
-            .offset-by-five.column,
-            .offset-by-five.columns {
-                margin-left: 43.3333333333%;
-            }
-
-            .offset-by-six.column,
-            .offset-by-six.columns {
-                margin-left: 52%;
-            }
-
-            .offset-by-seven.column,
-            .offset-by-seven.columns {
-                margin-left: 60.6666666667%;
-            }
-
-            .offset-by-eight.column,
-            .offset-by-eight.columns {
-                margin-left: 69.3333333333%;
-            }
-
-            .offset-by-nine.column,
-            .offset-by-nine.columns {
-                margin-left: 78%;
-            }
-
-            .offset-by-ten.column,
-            .offset-by-ten.columns {
-                margin-left: 86.6666666667%;
-            }
-
-            .offset-by-eleven.column,
-            .offset-by-eleven.columns {
-                margin-left: 95.3333333333%;
-            }
-
-            .offset-by-one-third.column,
-            .offset-by-one-third.columns {
-                margin-left: 34.6666666667%;
-            }
-
-            .offset-by-two-thirds.column,
-            .offset-by-two-thirds.columns {
-                margin-left: 69.3333333333%;
-            }
-
-            .offset-by-one-half.column,
-            .offset-by-one-half.columns {
-                margin-left: 52%;
+        /* Small mobile phone, eg iPhone 4 */
+        @media (max-width: 320px) and (max-height: 480px) {
+            #icon {
+                height: 75px;
+                width: 75px;
+                margin-top: 10% !important;
+                /* NOTE: doesn't work without "important" */
             }
         }
 
-        /* Small mobile */
+        /* Mobile phone, eg SGS5, iPhones */
         @media (min-width: 300px) and (max-width: 450px) {
-
-            #icon,
-            #temperature_offline {
-                margin-top: 60% !important;
+            #icon {
+                margin-top: 30%;
             }
         }
 
-        @media (max-width: 340px) {
-
-            #temperature,
-            #temperature_offline {
-                font-size: 3rem !important;
-            }
-
-            #umbrella,
-            #umbrella_offline {
-                font-size: 1.3rem !important;
-            }
-        }
-
-        /* For devices larger than 400px */
-        @media (min-width: 400px) {
-            .container {
-                width: 85%;
-                padding: 0;
-            }
-        }
-
-        /* Larger than phablet (also point when grid becomes active) */
-        @media (min-width: 550px) {}
-
-        /* tablet (should cover both iPad and iPad Pro + browser 1/3 width size) */
+        /* Should cover both iPad and iPad Pro */
         @media (min-width: 450px) and (max-width: 1025px) and (min-height: 1000px) {
-
-            #icon,
-            #temperature_offline {
-                margin-top: 45% !important;
+            #icon {
+                margin-top: 35% !important;
             }
         }
 
-        @media (min-width: 880px) and (min-height: 500px) {
-            #temperature_offline {
-                margin-top: 20% !important;
+        /* Browser at horizontally 1/3 size on laptop */
+        @media (min-width: 500px) and (max-width: 600px) {
+            #icon {
+                margin-top: 30%;
             }
         }
 
-        /* Larger than desktop */
-        @media (min-width: 1000px) {}
+        /* My usual browser size on laptop */
+        @media screen and (min-height: 400px) and (max-height: 650px) and (min-width: 800px) {
+            #icon {
+                margin-top: 5% !important;
+            }
+        }
 
-        /* Larger than Desktop HD */
+        /* Computer w/ Full HD screen */
         @media (min-width: 1800px) {
-
-            #icon,
-            #temperature_offline {
+            #icon {
                 margin-top: 25%;
             }
+        }
+
+        /* Computer w/ Full HD screen - half size */
+        @media (min-width: 950px) and (min-height: 1000px) {
+            #icon {
+                margin-top: 30% !important;
+            }
+        }
+
+        /* Computer w/ 4K screen */
+        @media (min-width: 2560px) {
+            /* TODO: */
         }
     </style>
 
@@ -350,22 +199,20 @@
         <div class="row">
             <div class="twelve columns">
 
-                <!-- <img src="./images/status/no-connection.svg" id="icon"></<img> -->
+                <img src="./images/status/no-connection.svg" id="icon"></<img>
 
                 <div id="temperature_offline"></div>
 
                 <div id='loading' style="font-weight: 300;">No Internet connection 😢</div>
 
-                <div id='clothes_offline'></div>
+                <div id='description_offline' style="font-weight: bold;"></div>
 
             </div>
         </div>
     </div>
 
     <div id="bottom_navbar">
-        <p id="weather_description_offline"></p>
-        <p>•</p>
-        <p id="time_of_update">Last data: </p>
+        <p id="time_of_update">Last update: </p>
     </div>
 
     <script>
@@ -377,10 +224,10 @@
         document.getElementById("temperature_offline").innerHTML = get_localStorage_temp + "&deg;";
 
         var get_localStorage_description = localStorage.getItem('localStorage_description_key');
-        document.getElementById("weather_description_offline").innerHTML = get_localStorage_description;
+        document.getElementById("description_offline").innerHTML = get_localStorage_description;
 
         if (navigator.onLine === true) {
-            window.location = 'cities/wroclaw.html';
+            window.location = 'umbrella.html';
         }
     </script>
 

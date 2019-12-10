@@ -27,8 +27,7 @@
     <!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage -->
 
     <script src="./scripts/libraries/moment.min.js"></script> <!-- time formats manipulation -->
-    <script src="./scripts/libraries/js.cookie.min.js"></script>
-    <!-- lightweight JavaScript API for handling browser cookies -->
+    <script src="./scripts/libraries/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
 
 </head>
 
@@ -115,8 +114,8 @@
 
                             // get city name
                             // liq_location = data.address.city;
-                            liq_location = data[0].display_name.split(",")[0];
-
+                            // liq_location = data[0].display_name.split(",")[0];
+                            liq_location = data.address.town;
                             // show city name on the website
                             document.getElementById("location").textContent = "🌍 " + liq_location;
 
@@ -198,7 +197,9 @@
                         })
                    
                 }
-            } else {
+            } 
+            // cookies set so we'll use that
+            else {
                 console.error("LocationIQ data not necessary - took data from 🍪s.");
 
                 console.log("Cookie: " + "lat:" + Cookies.get("umbrella_coord_lat") + " lng:" + Cookies.get(
@@ -248,6 +249,7 @@
 
                     // get location name based on what was returned from API and cut it to just city
                     liq_location = data[0].display_name.split(",")[0];
+                    // liq_location = data.address.town;
                     // console.error(liq_location); // debug
 
                     document.getElementById("location").textContent = "🌍 " + liq_location;
@@ -289,6 +291,7 @@
                 })
         }
 
+        // find using GPS/IP when clicked on 📍
         function findMe() {
             function success(position) {
                 const geo_latitude = position.coords.latitude;
@@ -309,11 +312,11 @@
                         "umbrella_coord_lng")); // debug
 
                 // variables with values from 🍪s
-                cookie_lng = Cookies.get("umbrella_coord_lng");
-                cookie_lat = Cookies.get("umbrella_coord_lat");
+                // cookie_lng = Cookies.get("umbrella_coord_lng");
+                // cookie_lat = Cookies.get("umbrella_coord_lat");
 
-                weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-                airMask(cookie_lat, cookie_lng);
+                // weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+                // airMask(cookie_lat, cookie_lng);
             }
 
             if (!navigator.geolocation) {
@@ -321,6 +324,7 @@
             } else {
                 var locating = document.querySelector("#findme");
                 locating.textContent = "Odśwież stronę :)";
+                location.reload();
                 navigator.geolocation.getCurrentPosition(success, error);
             }
         }

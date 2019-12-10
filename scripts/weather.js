@@ -107,9 +107,15 @@ function drawWeather(data_from_api) {
         document.body.style.background =
             "linear-gradient(180deg, rgba(31,186,195,1) 10%, rgba(196,243,246,1) 80%) no-repeat center center fixed";
         document.head.querySelector('meta[name="theme-color"]').content = "#54C5CC";
+    } else if ((temperatures_avg < 0) & (temperatures_avg >= -10)) {
+        document.getElementById("clothes").innerHTML = "Zzzimno 😱";
+        document.getElementById("icon").src = "./images/weather/freezing.svg";
+        document.body.style.background =
+            "linear-gradient(0deg, rgba(249,254,254,1) 20%, rgba(227,250,250,1) 70%) no-repeat center center fixed";
+        document.head.querySelector('meta[name="theme-color"]').content = "#E3FAFA";
     } else {
         document.getElementById("clothes").innerHTML = "Mróz 🥶";
-        document.getElementById("icon").src = "./images/weather/freezing.svg";
+        document.getElementById("icon").src = "./images/weather/snowflake.svg";
         document.body.style.background =
             "linear-gradient(0deg, rgba(249,254,254,1) 20%, rgba(227,250,250,1) 70%) no-repeat center center fixed";
         document.head.querySelector('meta[name="theme-color"]').content = "#E3FAFA";
@@ -129,12 +135,9 @@ function drawWeather(data_from_api) {
     //         data_from_api.list[data_update_number].weather[0].main
     //     );
     //     console.log("Temp:", data_from_api.list[data_update_number].main.temp, "C");
-    //     time_of_data = data_from_api.list[data_update_number].dt_txt;
-    //     var utcTime = time_of_data;
-    //     var local_time = moment // uses moment.js
-    //         .utc(utcTime)
-    //         .local()
-    //         .format("D MMMM, H:mm"); // // time of update should be in local time now
+        // time_of_data = data_from_api.list[data_update_number].dt_txt;
+        // var utcTime = time_of_data;
+        // var local_time = moment.utc(utcTime).local().format("D MMMM, H:mm"); // time of update should be in local time now; uses moment.js
     //     console.log("Time of update:", local_time); // UTC, 2 hrs behind
     //     // console.log("Wind:", data_from_api.list[data_update_number].wind.speed, "m/s"); // meter/sec
     // // console.log("Rain:", data_from_api.list[1].rain["3h"]); // Rain volume for last 3 hours in mm
@@ -184,7 +187,7 @@ function drawWeather(data_from_api) {
         document.getElementById("umbrella").innerHTML = "Weź parasol!";
         document.getElementById("icon").src = "./images/weather/rain.svg";
     } else if (weather_conditions.some(r => snowing.includes(r)) == true) {
-        document.getElementById("umbrella").innerHTML = "Pada śnieg ⛄";
+        document.getElementById("umbrella").innerHTML = "Pada śnieg";
         document.getElementById("icon").src = "./images/weather/snowing.svg";
     } else document.getElementById("umbrella").innerHTML = "Bez deszczu";
 
@@ -196,11 +199,14 @@ function drawWeather(data_from_api) {
         // Math.round(data_from_api.list[0].main.temp, 0) + "&deg;"; // temperature in Celsius without comma
         Math.round(temperatures_avg, 0) + "&deg;";
 
-    // 🏙 city name
-    // document.getElementById("location").innerHTML = data_from_api.city.name;
-    document.getElementById("location").textContent += ", " + data_from_api.city.country;
+    // 🏙 city name (& country name)
+    if (data_from_api.city.country == undefined) {
+        // nothing
+    } else {
+        document.getElementById("location").textContent += ", " + data_from_api.city.country;
+    }
     if (data_from_api.city.name == "Trnava") { // works when user dismissed the alert without providing any location - fallback; Trnava seems to be the default
-        document.getElementById("location").innerHTML = "🌍 " + data_from_api.city.name;
+        document.getElementById("location").innerHTML = "🌍 " + data_from_api.city.name + ", " + data_from_api.city.country;
     }
 
     // 🍃 wind
@@ -236,8 +242,11 @@ function drawWeather(data_from_api) {
     var localStorage_description = data_from_api.list[0].weather[0].main;
     localStorage.setItem('localStorage_description_key', localStorage_description);
 
+    time_of_data = data_from_api.list[0].dt_txt;
+    var utcTime = time_of_data;
+    var local_time = moment.utc(utcTime).local().format("D MMMM, H:mm"); // time of update should be in local time now; uses moment.js
     var localStorage_time_of_update = local_time;
-    localStorage.setItem('localStorage_time_of_update_key', local_time);
+    localStorage.setItem('localStorage_time_of_update_key', localStorage_time_of_update);
 }
 
 // === Part 6 ===

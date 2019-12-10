@@ -2,16 +2,22 @@
 
 >A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔
 
-It _doesn't_ show current the weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮¹².  
+It _doesn't_ show current the weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮¹². 
+
+And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d7bd8c00000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
 
 ¹ _Usually looking ~ 6 hours ahead._
 ² _Weather info displayed in Polish for now._
 
-![](https://i.ibb.co/pwnX5wF/umbrella-1.png.png)
+<img src="https://s5.gifyu.com/images/Screenshot_20191208-143750_Brave-ANIMATION.gif" wdith="400" height="400"/>
+<!-- <img src="https://i.ibb.co/Sr8H4Wv/Screenshot-20191208-143750-Brave-COLLAGE.jpg" wdith="400" height="400"/> -->
+
+<!-- ![](https://i.ibb.co/Sr8H4Wv/Screenshot-20191208-143750-Brave-COLLAGE.jpg)
+![](https://s5.gifyu.com/images/Screenshot_20191208-143750_Brave-ANIMATION.gif) -->
 
 ## How to use
 
-Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, air quality and overall description of the conditions. Location is saved in the 🍪. If you want to change the location, click on 🌍. If you want to geolocate yourself, click on 📍.
+Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍.
 
 ## Roadmap
 

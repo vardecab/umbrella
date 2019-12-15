@@ -1,8 +1,8 @@
 # Umbrella
 
->A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔
+>A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
 
-It _doesn't_ show current the weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮¹². 
+It _doesn't_ show current weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮¹². 
 
 And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d7bd8c00000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
 
@@ -17,7 +17,7 @@ And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d
 
 ## How to use
 
-Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍.
+Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s for 30 days. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍.
 
 ## Roadmap
 

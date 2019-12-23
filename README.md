@@ -1,13 +1,10 @@
 # Umbrella
 
->A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
+>A simple [weather page](https://vardecab.github.io/umbrella/umbrella-en.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
 
-It _doesn't_ show current weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮¹². 
+It _doesn't_ show current weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮.
 
 And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d7bd8c00000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
-
-¹ _Usually looking ~ 6 hours ahead._
-² _Weather info displayed in Polish for now._
 
 <img src="https://s5.gifyu.com/images/umbrella.gif" height="400"/>
 <img src="https://i.ibb.co/X4CHyH4/umbrella.png"/>
@@ -17,7 +14,7 @@ And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d
 
 ## How to use
 
-Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s for 30 days. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍.
+Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-en.html) or [Umbrella (Polish version)](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s for 30 days. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍. If you want to change the language, click the flag.
 
 ## Roadmap
 
@@ -28,7 +25,8 @@ Go to [Umbrella](https://vardecab.github.io/umbrella/umbrella.html). For now it 
 
 ## Release History
 
-- 0.13.5; Bug fixes and refined backgrounds.
+- 0.14: [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-en.html) + [Umbrella (Polish version)](https://vardecab.github.io/umbrella/umbrella.html)
+- 0.13.5: Bug fixes and refined backgrounds.
 - 0.13.4: Updates to `offline.html`, bug fixing and some cleanup in various places. Added new icon for a very low temperature.
 - 0.13.3: Fixed a loading bug on first use.
 - 0.13.2: Changed favicon.

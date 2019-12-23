@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="pl">
+<html lang="en">
 
 <head>
 
     <title>Umbrella</title>
     <meta property="og:title" content="Umbrella">
-    <meta name="description" content="Prosta strona z informacjami pogdowymi, która informuje, czy musisz wziąć parasol, wychodząc na zewnątrz.">
-    <meta property="og:description" content="Prosta strona z informacjami pogdowymi, która informuje, czy musisz wziąć parasol, wychodząc na zewnątrz.">
+    <meta name="description" content="A simple weather page that tells you if you need to take an umbrella when going outside.">
+    <meta property="og:description" content="A simple weather page that tells you if you need to take an umbrella when going outside.">
     <meta property="og:image" content="https://i.ibb.co/zG08Mns/facebook-ogimage.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,8 +22,8 @@
 
     <link rel="stylesheet" href="./styles/styles.css" />
 
-    <script src="./scripts/weather.js"></script>
-    <script src="./scripts/air_quality.js"></script>
+    <script src="./scripts/weather-en.js"></script>
+    <script src="./scripts/air_quality-en.js"></script>
     <!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage -->
 
     <script src="./scripts/libraries/moment.min.js"></script> <!-- time formats manipulation -->
@@ -38,19 +38,19 @@
 
                 <img id="icon" src="./images/status/loading.svg">
 
-                <div id="temperature" title="Średnia temperatura w ciągu najbliższych ~ 6 godzin."></div>
+                <div id="temperature" title="Average temperature in the next ~ 6 hours."></div>
 
                 <div id="more_details">
-                    <span id="sunrise" title="Wschód słońca:">☀️ </span>
-                    <span id="wind" title="Prędkość wiatru:">🍃 </span>
-                    <span id="sunset" title="Zachód słońca:">🌒 </span>
+                    <span id="sunrise" title="Sunrise:">☀️ </span>
+                    <span id="wind" title="Wind speed:">🍃 </span>
+                    <span id="sunset" title="Sunset:">🌒 </span>
                 </div>
 
-                <div id="loading">Patrzę w chmury... 🧐</div>
+                <div id="loading">Looking at the clouds... 🧐</div>
 
-                <div id="umbrella" title="Deszcz?"></div>
-                <div id="clothes" title="Co by tu ubrać? 🤔"></div>
-                <div id="air_quality" title="🤓 Dobre; 🤢 Złe; 🤬 Szkodliwe; ⚰️ RIP"></div>
+                <div id="umbrella" title="Rain?"></div>
+                <div id="clothes" title="What should I wear? 🤔"></div>
+                <div id="air_quality" title="🤓 Good; 🤢 Bad; 🤬 Terrible; ⚰️ RIP"></div>
 
             </div>
         </div>
@@ -63,7 +63,7 @@
         <p id="findme"
             onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
             title="Find me!">📍</p>
-        <p onclick="window.location='umbrella-en.html'" title="Change language to English.">🇬🇧</p>
+        <p onclick="window.location='umbrella.html'" title="Zmień wersję językową na polską.">🇵🇱</p>
     </div>
 
     <script>
@@ -109,18 +109,18 @@
                         })
 
                         // use the data stored in object to do whatever
-                        .then(function (liq_data) {
+                        .then(function (data) {
                             console.error("LocationIQ",
-                                liq_data); // debug: output everything stored in the object
+                                data); // debug: output everything stored in the object
 
                             // get city name
                             // liq_location = data.address.city;
                             // liq_location = data[0].display_name.split(",")[0];
-                            if ((liq_data.address.town = "null") || (liq_data.address.town = "undefined") || (liq_data.address.town = "")) {
-                                liq_location = liq_data.address.city; 
+                            if ((data.address.town = "null") || (data.address.town = "undefined") || (data.address.town = "")) {
+                                liq_location = data.address.city; 
                             } 
                             else {
-                                liq_location = liq_data.address.town;
+                                liq_location = data.address.town;
                             }
                             
                             // show city name on the website
@@ -140,10 +140,10 @@
 
                 function error() {
                     alert(
-                        "Wygląda na to, że nie mogę znaleźć Twojej lokalizacji... Prawdopodobnie masz wyłączony GPS :(");
+                        "It looks like I can't find your location ... You probably have GPS turned off :(");
                     // if we don't know the location let's ask the user
                     query_input = prompt(
-                        "Dla jakiego miejsca chcesz sprawdzić pogodę?"
+                        "Where would you like to check the weather?"
                     ); 
                     console.log("User-requested city:", query_input); // debug
 
@@ -159,12 +159,12 @@
                         })
 
                         // use the data stored in object to do whatever
-                        .then(function (liq_data) {
+                        .then(function (data) {
                             console.error("LocationIQ",
-                                liq_data); // debug: output everything stored in the object
+                                data); // debug: output everything stored in the object
 
                             // get location name based on what was returned from API and cut it to just city
-                            liq_location = liq_data[0].display_name.split(",")[0];
+                            liq_location = data[0].display_name.split(",")[0];
                             // console.error(liq_location); // debug
 
                             document.getElementById("location").textContent = "🌍 " + liq_location;
@@ -176,8 +176,8 @@
                             })
 
                             // get coords from API based on location user inputted 
-                            lat = liq_data[0].lat;
-                            lng = liq_data[0].lon;
+                            lat = data[0].lat;
+                            lng = data[0].lon;
                             console.log("Coords: " + lat + ", " + lng); // debug
 
                             // set 🍪 for latitude
@@ -197,7 +197,7 @@
                             // variables with values from 🍪s
                             cookie_lng = Cookies.get("umbrella_coord_lng");
                             cookie_lat = Cookies.get("umbrella_coord_lat");
-                            // alert(liq_data.address.city); // debug
+                            // alert(data.address.city); // debug
                             // alert(liq_location); // debug
 
                             weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
@@ -231,7 +231,7 @@
             }
 
             if (!navigator.geolocation) {
-                alert('Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :(');
+                alert('Geolocation is not supported by your browser... :(');
             } else {
                 navigator.geolocation.getCurrentPosition(success, error);
             }
@@ -240,7 +240,7 @@
 
         function manualFinder() {
             query_input = prompt(
-                "Dla jakiego miejsca chcesz sprawdzić pogodę?"
+                "Where would you like to check the weather?"
             ); // if we don't know the location let's ask the user
             console.log("City:", query_input); // debug
 
@@ -256,13 +256,13 @@
                 })
 
                 // use the data stored in object to do whatever
-                .then(function (liq_data) {
+                .then(function (data) {
                     console.error("LocationIQ",
-                        liq_data); // debug: output everything stored in the object
+                        data); // debug: output everything stored in the object
 
                     // get location name based on what was returned from API and cut it to just city
-                    liq_location = liq_data[0].display_name.split(",")[0];
-                    // liq_location = liq_data.address.town;
+                    liq_location = data[0].display_name.split(",")[0];
+                    // liq_location = data.address.town;
                     // console.error(liq_location); // debug
 
                     document.getElementById("location").textContent = "🌍 " + liq_location;
@@ -274,8 +274,8 @@
                     })
 
                     // get coords from API based on location user inputted 
-                    lat = liq_data[0].lat;
-                    lng = liq_data[0].lon;
+                    lat = data[0].lat;
+                    lng = data[0].lon;
                     console.log("Coords: " + lat + ", " + lng); // debug
 
                     // set 🍪 for latitude
@@ -323,10 +323,10 @@
             }
 
             if (!navigator.geolocation) {
-                alert('Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :(');
+                alert('Geolocation is not supported by your browser... :(');
             } else {
                 var locating = document.querySelector("#findme");
-                locating.textContent = "Odśwież stronę :)";
+                locating.textContent = "Refresh the page :)";
                 location.reload();
                 navigator.geolocation.getCurrentPosition(success, error);
             }

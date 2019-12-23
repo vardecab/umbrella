@@ -1,4 +1,4 @@
-// 🇵🇱
+// 🇬🇧
 
 // API keys, well... ¯\_(ツ)_/¯ 
 const airly_api_key = "p1ukBMrlBEPfRD1SynGXU9iEcr0zzJrE";
@@ -25,13 +25,13 @@ function airMask(lat, lng) {
             air_quality_index = data_airly.current.indexes["0"].value;
 
             if ((air_quality_index >= 0) & (air_quality_index < 50)) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
+                document.getElementById("air_quality").innerHTML = "Air quality: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
             } else if ((air_quality_index >= 50) & (air_quality_index < 75)) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
+                document.getElementById("air_quality").innerHTML = "Air quality: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
             } else if ((air_quality_index >= 75) & (air_quality_index < 100)) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: 🤬"; // 🔴
+                document.getElementById("air_quality").innerHTML = "Air quality: 🤬"; // 🔴
             } else if (air_quality_index >= 100) {
-                document.getElementById("air_quality").innerHTML = "Powietrze: ⚰️"; // ⚫
+                document.getElementById("air_quality").innerHTML = "Air quality: ⚰️"; // ⚫
             } else {}
 
             // fallback call to different API (AQICN) when Airly is down (either lack of sensors around (3 km radius) or no requests available due to their limits)
@@ -56,13 +56,13 @@ function airMask(lat, lng) {
 
                         // NOTE: there must be a cleaner way to do it rather than copy-pasting from above... but this works for now 
                         if ((air_quality_index >= 0) & (air_quality_index < 50)) {
-                            document.getElementById("air_quality").innerHTML = "Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
+                            document.getElementById("air_quality").innerHTML = "Air quality: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
                         } else if ((air_quality_index >= 50) & (air_quality_index < 75)) {
-                            document.getElementById("air_quality").innerHTML = "Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
+                            document.getElementById("air_quality").innerHTML = "Air quality: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
                         } else if ((air_quality_index >= 75) & (air_quality_index < 100)) {
-                            document.getElementById("air_quality").innerHTML = "Powietrze: 🤬"; // 🔴
+                            document.getElementById("air_quality").innerHTML = "Air quality: 🤬"; // 🔴
                         } else if (air_quality_index >= 100) {
-                            document.getElementById("air_quality").innerHTML = "Powietrze: ⚰️"; // ⚫
+                            document.getElementById("air_quality").innerHTML = "Air quality: ⚰️"; // ⚫
                         } else {}
 
                     })

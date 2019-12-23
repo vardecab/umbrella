@@ -25,6 +25,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.14.1: Tiny fix to layout.
 - 0.14: [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-en.html) + [Umbrella (Polish version)](https://vardecab.github.io/umbrella/umbrella.html)
 - 0.13.5: Bug fixes and refined backgrounds.
 - 0.13.4: Updates to `offline.html`, bug fixing and some cleanup in various places. Added new icon for a very low temperature.

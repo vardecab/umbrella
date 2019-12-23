@@ -57,13 +57,16 @@
     </div>
 
     <div id="bottom_navbar">
-        <p id="location"
-            onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
-            title="Change the location.">🌍</p>
-        <p id="findme"
+        <div id="to_the_right">
+            <p id="findme"
             onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
             title="Find me!">📍</p>
-        <p onclick="window.location='umbrella-en.html'" title="Change language to English.">🇬🇧</p>
+            <p id="location"
+            onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');" title="Change the location.">🌍</p>
+        </div>
+        <div id="to_the_left">
+            <p onclick="window.location='umbrella-en.html'" title="Change language to English.">🇬🇧</p>
+        </div>
     </div>
 
     <script>
@@ -96,7 +99,7 @@
                     cookie_lat = Cookies.get("umbrella_coord_lat");
 
                     // API key which we use in the next piece
-                    const liq_api_key = "a95509ae99d0ab";
+                    const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
 
                     // we need to get city name from LocationIQ API
                     fetch("https://eu1.locationiq.com/v1/reverse.php?key=" + liq_api_key + "&lat=" + cookie_lat +
@@ -147,7 +150,7 @@
                     ); 
                     console.log("User-requested city:", query_input); // debug
 
-                    const liq_api_key = "a95509ae99d0ab";
+                    const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯ 
 
                     // grab data from URL
                     fetch("https://eu1.locationiq.com/v1/search.php?key=" + liq_api_key + "&q=" + query_input +
@@ -244,7 +247,7 @@
             ); // if we don't know the location let's ask the user
             console.log("City:", query_input); // debug
 
-            const liq_api_key = "a95509ae99d0ab";
+            const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯ 
 
             // grab data from URL
             fetch("https://eu1.locationiq.com/v1/search.php?key=" + liq_api_key + "&q=" + query_input +

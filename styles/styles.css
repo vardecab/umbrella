@@ -55,7 +55,7 @@ body {
     font-weight: 500;
     margin: auto;
     margin-bottom: 3%;
-    width: 65%;
+    /* width: 65%; */
 }
 
 #clothes {
@@ -71,20 +71,31 @@ body {
 #bottom_navbar {
     overflow: hidden;
     position: fixed;
-    bottom: 0;
+    bottom: 1%;
     width: 100%;
 }
 
 #bottom_navbar p,
 a {
-    float: right;
-    display: block;
+    /* float: right; */
+    /* display: block; */
+    display: inline;
     color: #000;
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 3px;
     padding-right: 14px;
     text-decoration: none;
+}
+
+#to_the_left {
+    float: left;
+    /* padding-left: 3%; */
+}
+
+#to_the_right {
+    float: right;
+    /* padding-right: 3%; */
 }
 
 /* === layout === */

@@ -1,6 +1,6 @@
 // 🇵🇱
 
-// API keys, well... ¯\_(ツ)_/¯ 
+// API keys, well... no way to hide it ¯\_(ツ)_/¯ 
 const airly_api_key = "p1ukBMrlBEPfRD1SynGXU9iEcr0zzJrE";
 const aqicn_api_key = "b2a31fc801f6e4e27353e44d13acf144189c4a0a";
 

@@ -6,7 +6,7 @@
 // get JSON data from API and pass to drawWeather function
 function weatherBallon(lat, lng) {
 
-    const owm_api_key = "4541406d253305e837d9ff9e415c7551"; // well... ¯\_(ツ)_/¯ 
+    const owm_api_key = "4541406d253305e837d9ff9e415c7551"; // well... no way to hide it ¯\_(ツ)_/¯ 
     // if (owm_api_key == "") {
     //     window.alert("API key missing!");
     //     console.error("API key missing!");

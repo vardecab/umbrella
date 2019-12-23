@@ -2,9 +2,13 @@
 
 >A simple [weather page](https://vardecab.github.io/umbrella/umbrella-en.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
 
+<img src="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png">
+
 It _doesn't_ show current weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮.
 
 And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d7bd8c00000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
+
+## Screenshots
 
 <img src="https://s5.gifyu.com/images/umbrella.gif" height="400"/>
 <img src="https://i.ibb.co/X4CHyH4/umbrella.png"/>

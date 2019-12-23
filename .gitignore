@@ -4,7 +4,8 @@ _old
 cities
 data
 umbrella-legacy.html
-images/social-sharing
+images/social-sharing/umbrella-background.png
+images/social-sharing/umbrella-facebook-ogimage.png
 scripts/aqicn.js
 scripts/allergy.js
 scripts/locate.js

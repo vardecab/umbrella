@@ -29,6 +29,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.15: Fixed a `null` bug in `offline.html`.
 - 0.14.2: Updated `og:image`. 
 - 0.14.1: Tiny fix to layout.
 - 0.14: [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-en.html) + [Umbrella (Polish version)](https://vardecab.github.io/umbrella/umbrella.html)

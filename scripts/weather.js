@@ -238,18 +238,24 @@ function drawWeather(owm_data) {
     // === Part 5 ===
     // save data to localStorage for offline use
 
-    // store data
+    // store temperature
     var localStorage_temperature = Math.round(owm_data.list[0].main.temp, 0);
     localStorage.setItem('localStorage_temperature_key', localStorage_temperature);
 
+    // store weather conditions
     var localStorage_description = owm_data.list[0].weather[0].main;
     localStorage.setItem('localStorage_description_key', localStorage_description);
 
+    // store time of last update
     time_of_data = owm_data.list[0].dt_txt;
     var utcTime = time_of_data;
     var local_time = moment.utc(utcTime).local().format("D MMMM, H:mm"); // time of update should be in local time now; uses moment.js
     var localStorage_time_of_update = local_time;
     localStorage.setItem('localStorage_time_of_update_key', localStorage_time_of_update);
+
+    // store location 
+    var localStorage_location = document.getElementById("location").textContent;
+    localStorage.setItem('localStorage_location_key', localStorage_location);
 }
 
 // === Part 6 ===

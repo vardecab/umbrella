@@ -150,7 +150,7 @@ a {
 /* My usual browser size on laptop */
 @media screen and (min-height: 400px) and (max-height: 650px) and (min-width: 800px) {
     #icon {
-        margin-top: 5% !important;
+        margin-top: 5% !important; /* FIX: messes up with 1366x632 */
     }
 }
 

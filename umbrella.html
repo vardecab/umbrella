@@ -119,11 +119,14 @@
                             // get city name
                             // liq_location = data.address.city;
                             // liq_location = data[0].display_name.split(",")[0];
-                            if ((liq_data.address.town = "null") || (liq_data.address.town = "undefined") || (liq_data.address.town = "")) {
-                                liq_location = liq_data.address.city; 
-                            } 
-                            else {
-                                liq_location = liq_data.address.town;
+                            if ((liq_data.address.town = "null") || (liq_data.address.town = "undefined") || (
+                                    liq_data.address.town = "")) { 
+                                if ((liq_data.address.city = "null") || (liq_data.address.city = "undefined") ||
+                                    (liq_data.address.city = "")) {
+                                    liq_location = liq_data.address.county;
+                                } else {
+                                    liq_location = liq_data.address.city;
+                                }
                             }
                             
                             // show city name on the website

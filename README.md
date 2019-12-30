@@ -6,7 +6,7 @@
 
 It _doesn't_ show current weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮.
 
-And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bbc7d7bd8c00000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
+And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bd3143278800000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
 
 ## Screenshots
 
@@ -29,6 +29,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.15.1: Fixed a `null` bug when geolocating.
 - 0.15: Fixed a `null` bug in `offline.html`.
 - 0.14.2: Updated `og:image`. 
 - 0.14.1: Tiny fix to layout.

@@ -113,18 +113,21 @@
                         })
 
                         // use the data stored in object to do whatever
-                        .then(function (data) {
+                        .then(function (liq_data) {
                             console.error("LocationIQ",
-                                data); // debug: output everything stored in the object
+                                liq_data); // debug: output everything stored in the object
 
                             // get city name
-                            // liq_location = data.address.city;
-                            // liq_location = data[0].display_name.split(",")[0];
-                            if ((data.address.town = "null") || (data.address.town = "undefined") || (data.address.town = "")) {
-                                liq_location = data.address.city; 
-                            } 
-                            else {
-                                liq_location = data.address.town;
+                            // liq_location = liq_data.address.city;
+                            // liq_location = liq_data[0].display_name.split(",")[0];
+                            if ((liq_data.address.town = "null") || (liq_data.address.town = "undefined") || (
+                                    liq_data.address.town = "")) { 
+                                if ((liq_data.address.city = "null") || (liq_data.address.city = "undefined") ||
+                                    (liq_data.address.city = "")) {
+                                    liq_location = liq_data.address.county;
+                                } else {
+                                    liq_location = liq_data.address.city;
+                                }
                             }
                             
                             // show city name on the website
@@ -163,12 +166,12 @@
                         })
 
                         // use the data stored in object to do whatever
-                        .then(function (data) {
+                        .then(function (liq_data) {
                             console.error("LocationIQ",
-                                data); // debug: output everything stored in the object
+                                liq_data); // debug: output everything stored in the object
 
                             // get location name based on what was returned from API and cut it to just city
-                            liq_location = data[0].display_name.split(",")[0];
+                            liq_location = liq_data[0].display_name.split(",")[0];
                             // console.error(liq_location); // debug
 
                             document.getElementById("location").textContent = "🌍 " + liq_location;
@@ -180,8 +183,8 @@
                             })
 
                             // get coords from API based on location user inputted 
-                            lat = data[0].lat;
-                            lng = data[0].lon;
+                            lat = liq_data[0].lat;
+                            lng = liq_data[0].lon;
                             console.log("Coords: " + lat + ", " + lng); // debug
 
                             // set 🍪 for latitude
@@ -201,7 +204,7 @@
                             // variables with values from 🍪s
                             cookie_lng = Cookies.get("umbrella_coord_lng");
                             cookie_lat = Cookies.get("umbrella_coord_lat");
-                            // alert(data.address.city); // debug
+                            // alert(liq_data.address.city); // debug
                             // alert(liq_location); // debug
 
                             weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
@@ -260,13 +263,13 @@
                 })
 
                 // use the data stored in object to do whatever
-                .then(function (data) {
+                .then(function (liq_data) {
                     console.error("LocationIQ",
-                        data); // debug: output everything stored in the object
+                        liq_data); // debug: output everything stored in the object
 
                     // get location name based on what was returned from API and cut it to just city
-                    liq_location = data[0].display_name.split(",")[0];
-                    // liq_location = data.address.town;
+                    liq_location = liq_data[0].display_name.split(",")[0];
+                    // liq_location = liq_data.address.town;
                     // console.error(liq_location); // debug
 
                     document.getElementById("location").textContent = "🌍 " + liq_location;
@@ -278,8 +281,8 @@
                     })
 
                     // get coords from API based on location user inputted 
-                    lat = data[0].lat;
-                    lng = data[0].lon;
+                    lat = liq_data[0].lat;
+                    lng = liq_data[0].lon;
                     console.log("Coords: " + lat + ", " + lng); // debug
 
                     // set 🍪 for latitude

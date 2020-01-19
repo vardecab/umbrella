@@ -6,7 +6,7 @@
 
 It _doesn't_ show current weather outside - you can check it yourself by looking out through a window 🙃 Umbrella will tell you the future 🔮.
 
-And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bd3143278800000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
+And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bef88ed9f800000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
 
 ## Screenshots
 

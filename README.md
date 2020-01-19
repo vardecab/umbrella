@@ -29,6 +29,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.16: Added alert when air pollution is really bad.
 - 0.15.1: Fixed a `null` bug when geolocating.
 - 0.15: Fixed a `null` bug in `offline.html`.
 - 0.14.2: Updated `og:image`. 

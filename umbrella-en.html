@@ -342,6 +342,17 @@
         document.querySelector('#location').addEventListener('click', manualFinder);
         document.querySelector('#findme').addEventListener('click', findMe);
 
+        function smogAlert() {
+            setTimeout(function () {
+                var air_quality_status = document.getElementById("air_quality").textContent;
+                if (air_quality_status == "Air quality: ⚰️") {
+                    alert("Better not leave the building and do not open the windows! Smog kills ☠️");
+                } else console.log("No alert, air is not so bad. Current: >", air_quality_status, "<");
+            }, 1500); // how many ms to wait until function is executed
+        }
+
+        smogAlert();
+
     </script>
 
 </body>

@@ -12,7 +12,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://vardecab.github.io/umbrella/umbrella.html">
     <meta name="twitter:card" content="summary_large_image">
-    
+
     <meta name="theme-color" content="#000000"> <!-- default -->
 
     <meta charset="utf-8">
@@ -59,10 +59,11 @@
     <div id="bottom_navbar">
         <div id="to_the_right">
             <p id="findme"
-            onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
-            title="Find me!">📍</p>
+                onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
+                title="Find me!">📍</p>
             <p id="location"
-            onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');" title="Change the location.">🌍</p>
+                onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
+                title="Change the location.">🌍</p>
         </div>
         <div id="to_the_left">
             <p onclick="window.location='umbrella-en.html'" title="Change language to English.">🇬🇧</p>
@@ -120,7 +121,7 @@
                             // liq_location = data.address.city;
                             // liq_location = data[0].display_name.split(",")[0];
                             if ((liq_data.address.town = "null") || (liq_data.address.town = "undefined") || (
-                                    liq_data.address.town = "")) { 
+                                    liq_data.address.town = "")) {
                                 if ((liq_data.address.city = "null") || (liq_data.address.city = "undefined") ||
                                     (liq_data.address.city = "")) {
                                     liq_location = liq_data.address.county;
@@ -128,7 +129,7 @@
                                     liq_location = liq_data.address.city;
                                 }
                             }
-                            
+
                             // show city name on the website
                             document.getElementById("location").textContent = "🌍 " + liq_location;
 
@@ -145,12 +146,9 @@
                 }
 
                 function error() {
-                    alert(
-                        "Wygląda na to, że nie mogę znaleźć Twojej lokalizacji... Prawdopodobnie masz wyłączony GPS :(");
+                    alert("Wygląda na to, że nie mogę znaleźć Twojej lokalizacji... Prawdopodobnie masz wyłączony GPS :(");
                     // if we don't know the location let's ask the user
-                    query_input = prompt(
-                        "Dla jakiego miejsca chcesz sprawdzić pogodę?"
-                    ); 
+                    query_input = prompt("Dla jakiego miejsca chcesz sprawdzić pogodę?");
                     console.log("User-requested city:", query_input); // debug
 
                     const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯ 
@@ -340,6 +338,17 @@
 
         document.querySelector('#location').addEventListener('click', manualFinder);
         document.querySelector('#findme').addEventListener('click', findMe);
+
+        function smogAlert() {
+            setTimeout(function () {
+                var air_quality_status = document.getElementById("air_quality").textContent;
+                if (air_quality_status == "Powietrze: ⚰️") {
+                    alert("Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️");
+                } else console.log("No alert, air is not so bad. Current: >", air_quality_status, "<");
+            }, 1500); // how many ms to wait until function is executed
+        }
+
+        smogAlert();
 
     </script>
 

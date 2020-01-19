@@ -29,6 +29,13 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.17: Big one: 
+    - Instead of showing the normal temperature, the "feels like" temperature will be shown. 
+    - Added air pressure info.
+    - Swapped way of showing smog alert from `alert()` to browser notification.
+    - More ⚰️s are shown when air pollution is extreme.
+    - Changed code formatting from [Beautify](https://marketplace.visualstudio.com/items?itemName=HookyQR.beautify) to [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode).
+    - Minified JS, CSS and HTML files.
 - 0.16: Added alert when air pollution is really bad.
 - 0.15.1: Fixed a `null` bug when geolocating.
 - 0.15: Fixed a `null` bug in `offline.html`.

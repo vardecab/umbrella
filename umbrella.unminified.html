@@ -1,4 +1,111 @@
-<!DOCTYPE html><html lang="en"><head><title>Umbrella</title><meta property="og:title" content="Umbrella"><meta name="description" content="A simple weather page that tells you if you need to take an umbrella when going outside."><meta property="og:description" content="A simple weather page that tells you if you need to take an umbrella when going outside."><meta property="og:image" content="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://vardecab.github.io/umbrella/umbrella-en.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#000000"><!-- default --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" type="image/png" href="./images/umbrella-icon_blue-circle.png"><link rel="stylesheet" href="./styles/styles.min.css"><script src="./scripts/weather-en.min.js"></script><script src="./scripts/air_quality-en.min.js"></script><!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage --><script src="./scripts/libraries/moment.min.js"></script><!-- time formats manipulation --><script src="./scripts/libraries/js.cookie.min.js"></script><!-- lightweight JavaScript API for handling browser cookies --></head><body><div class="container"><div class="row"><div class="twelve columns"><img id="icon" src="./images/status/loading.svg"><div id="temperature" title="Average 'feels like' temperature in the next ~ 6 hours."></div><div id="more_details"><span id="sunrise" title="Sunrise:">☀️ </span><span id="wind" title="Wind speed:">🍃 </span><span id="air_pressure" title="Ciśnienie:"></span> <span id="sunset" title="Sunset:">🌒</span></div><div id="loading">Looking at the clouds... 🧐</div><div id="umbrella" title="Rain?"></div><div id="clothes" title="What should I wear? 🤔"></div><div id="air_quality" title="🤓 Good; 🤢 Bad; 🤬 Terrible; ⚰️ RIP"></div></div></div></div><div id="bottom_navbar"><div id="to_the_right"><p id="findme" onclick="Cookies.remove(&#34;umbrella_coord_lat&#34;),Cookies.remove(&#34;umbrella_coord_lng&#34;),Cookies.remove(&#34;umbrella_location&#34;)" title="Find me!">📍</p><p id="location" onclick="Cookies.remove(&#34;umbrella_coord_lat&#34;),Cookies.remove(&#34;umbrella_coord_lng&#34;),Cookies.remove(&#34;umbrella_location&#34;)" title="Change the location.">🌍</p></div><div id="to_the_left"><p onclick="window.location=&#34;umbrella.html&#34;" title="Zmień wersję językową na polską.">🇵🇱</p></div></div><script>window.onload = function geoLocator() {
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<title>Umbrella</title>
+		<meta property="og:title" content="Umbrella" />
+		<meta
+			name="description"
+			content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz."
+		/>
+		<meta
+			property="og:description"
+			content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz."
+		/>
+		<meta
+			property="og:image"
+			content="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png"
+		/>
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta
+			property="og:url"
+			content="https://vardecab.github.io/umbrella/umbrella.html"
+		/>
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<meta name="theme-color" content="#000000" />
+		<!-- default -->
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link
+			rel="icon"
+			type="image/png"
+			href="./images/umbrella-icon_blue-circle.png"
+		/>
+
+		<link rel="stylesheet" href="./styles/styles.min.css" />
+
+		<script src="./scripts/weather.min.js"></script>
+		<script src="./scripts/air_quality.min.js"></script>
+		<!-- <script src="./scripts/allergy.js"></script> NOTE: API doesn't have good coverage -->
+
+		<script src="./scripts/libraries/moment.min.js"></script>
+		<!-- time formats manipulation -->
+		<script src="./scripts/libraries/js.cookie.min.js"></script>
+		<!-- lightweight JavaScript API for handling browser cookies -->
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="twelve columns">
+					<img id="icon" src="./images/status/loading.svg" />
+
+					<div
+						id="temperature"
+						title="Średnia odczuwalna temperatura w ciągu najbliższych ~ 6 godzin."
+					></div>
+
+					<div id="more_details">
+						<span id="sunrise" title="Wschód słońca:">☀️</span>
+						<span id="wind" title="Prędkość wiatru:">🍃</span>
+						<span id="air_pressure" title="Ciśnienie:"></span>
+						<span id="sunset" title="Zachód słońca:">🌒</span>
+					</div>
+
+					<div id="loading">Patrzę w chmury... 🧐</div>
+
+					<div id="umbrella" title="Deszcz?"></div>
+					<div id="clothes" title="Co by tu ubrać? 🤔"></div>
+					<div
+						id="air_quality"
+						title="🤓 Dobre; 🤢 Złe; 🤬 Szkodliwe; ⚰️ RIP"
+					></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="bottom_navbar">
+			<div id="to_the_right">
+				<p
+					id="findme"
+					onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
+					title="Find me!"
+				>
+					📍
+				</p>
+				<p
+					id="location"
+					onclick="Cookies.remove('umbrella_coord_lat'); Cookies.remove('umbrella_coord_lng'); Cookies.remove('umbrella_location');"
+					title="Change the location."
+				>
+					🌍
+				</p>
+			</div>
+			<div id="to_the_left">
+				<p
+					onclick="window.location='umbrella-en.html'"
+					title="Change language to English."
+				>
+					🇬🇧
+				</p>
+			</div>
+		</div>
+
+		<script>
+			window.onload = function geoLocator() {
 				if (
 					Cookies.get("umbrella_coord_lat") == undefined ||
 					Cookies.get("umbrella_coord_lng") == undefined
@@ -53,8 +160,8 @@
 								console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 								// get city name
-								// liq_location = liq_data.address.city;
-								// liq_location = liq_data[0].display_name.split(",")[0];
+								// liq_location = data.address.city;
+								// liq_location = data[0].display_name.split(",")[0];
 								if (
 									(liq_data.address.town = "null") ||
 									(liq_data.address.town = "undefined") ||
@@ -90,11 +197,11 @@
 
 					function error() {
 						alert(
-							"It looks like I can't find your location... You probably have GPS turned off :("
+							"Wygląda na to, że nie mogę znaleźć Twojej lokalizacji... Prawdopodobnie masz wyłączony GPS :("
 						);
 						// if we don't know the location let's ask the user
 						query_input = prompt(
-							"Where would you like to check the weather?"
+							"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 						);
 						console.log("User-requested city:", query_input); // debug
 
@@ -200,7 +307,9 @@
 				}
 
 				if (!navigator.geolocation) {
-					alert("Geolocation is not supported by your browser... :(");
+					alert(
+						"Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :("
+					);
 				} else {
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
@@ -208,7 +317,7 @@
 
 			function manualFinder() {
 				query_input = prompt(
-					"Where would you like to check the weather?"
+					"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 				); // if we don't know the location let's ask the user
 				console.log("City:", query_input); // debug
 
@@ -299,10 +408,12 @@
 				}
 
 				if (!navigator.geolocation) {
-					alert("Geolocation is not supported by your browser... :(");
+					alert(
+						"Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :("
+					);
 				} else {
 					var locating = document.querySelector("#findme");
-					locating.textContent = "Refresh the page :)";
+					locating.textContent = "Odśwież stronę :)";
 					location.reload();
 					navigator.geolocation.getCurrentPosition(success, error);
 				}
@@ -319,9 +430,9 @@
 						"air_quality"
 					).textContent;
 					if (
-						air_quality_status == "Air quality: ⚰️" ||
-						air_quality_status == "Air quality: ⚰️⚰️" ||
-						air_quality_status == "Air quality: ⚰️⚰️⚰️"
+						air_quality_status == "Powietrze: ⚰️" ||
+						air_quality_status == "Powietrze: ⚰️⚰️" ||
+						air_quality_status == "Powietrze: ⚰️⚰️⚰️"
 					) {
 						// alert("Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️"); // replaced with notification
 						// Let's check if the browser supports notifications
@@ -335,12 +446,12 @@
 						else if (Notification.permission === "granted") {
 							// If it's okay let's create a notification
 							var notification = new Notification(
-								"Smog kills ☠️",
+								"Smog zabija ☠️",
 								{
 									icon:
 										"./images/umbrella-icon_blue-circle.png",
 									body:
-										"Better not leave the building and do not open the windows!"
+										"Nie wychodź z budynku i nie otwieraj okien!"
 								}
 							);
 						}
@@ -353,12 +464,12 @@
 								// If the user accepts, let's create a notification
 								if (permission === "granted") {
 									var notification = new Notification(
-										"Smog kils ☠️",
+										"Smog zabija ☠️",
 										{
 											icon:
 												"./images/umbrella-icon_blue-circle.png",
 											body:
-												"Better not leave the building and do not open the windows!"
+												"Nie wychodź z budynku i nie otwieraj okien!"
 										}
 									);
 								}
@@ -368,4 +479,7 @@
 				}, 1500); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 			}
 
-			smogAlert();</script></body></html>
+			smogAlert();
+		</script>
+	</body>
+</html>

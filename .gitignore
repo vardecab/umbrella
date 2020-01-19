@@ -9,6 +9,7 @@ images/social-sharing/umbrella-facebook-ogimage.png
 scripts/aqicn.js
 scripts/allergy.js
 scripts/locate.js
+service_worker.js
 
 ### Visual Studio Code ###
 .vscode/*

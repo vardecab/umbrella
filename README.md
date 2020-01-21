@@ -82,6 +82,7 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 ## Acknowledgements
 
 - APIs: [OpenWeatherMap](https://openweathermap.org/api) & [Airly](https://developer.airly.eu/api) & [AQICN](https://aqicn.org/api/) & [LocationIQ](https://locationiq.com)
+- [Aktualna prognoza pylenia Claritine](https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/)
 - [Main tutorial that inspired me](https://bytemaster.io/fetch-weather-openweathermap-api-javascript)
 - [Moment.js](https://momentjs.com)
 - [JavaScript Cookie](https://github.com/js-cookie/js-cookie)

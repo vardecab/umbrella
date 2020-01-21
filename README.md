@@ -1,6 +1,6 @@
 # Umbrella
 
->A simple [weather page](https://vardecab.github.io/umbrella/umbrella-en.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
+>A simple [weather page](https://vardecab.github.io/umbrella/umbrella-en.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality. 
 
 <img src="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png">
 
@@ -29,6 +29,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.18: Another big one: implemented allergens/pollen info for selected Polish cities - I'm scraping those in Python from [this page](https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/). 
 - 0.17: Big one: 
     - Instead of showing the normal temperature, the "feels like" temperature will be shown. 
     - Added air pressure info.

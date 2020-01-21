@@ -69,6 +69,14 @@ body {
 
 #air_quality {
 	font-weight: 400;
+	/* margin-bottom: 3%; */
+}
+
+#allergy {
+	margin-top: 3%;
+	font-size: 0.9rem;
+	width: 85%;
+	display: inline-block;
 }
 
 #bottom_navbar {
@@ -157,8 +165,8 @@ a {
 	}
 }
 
-/* Computer w/ Full HD screen */
-@media (min-width: 1800px) {
+/* Computer w/ Full HD screen & MacBook Pro */
+@media (min-width: 1600px) {
 	#icon {
 		margin-top: 25%;
 	}

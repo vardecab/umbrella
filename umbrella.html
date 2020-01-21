@@ -73,6 +73,7 @@
 						id="air_quality"
 						title="🤓 Dobre; 🤢 Złe; 🤬 Szkodliwe; ⚰️ RIP"
 					></div>
+					<div id="allergy" title="Jakie pyłki są wokół?"></div>
 				</div>
 			</div>
 		</div>
@@ -434,52 +435,100 @@
 						air_quality_status == "Powietrze: ⚰️⚰️" ||
 						air_quality_status == "Powietrze: ⚰️⚰️⚰️"
 					) {
-						// alert("Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️"); // replaced with notification
-						// Let's check if the browser supports notifications
-						if (!("Notification" in window)) {
-							console.error(
-								"This browser does not support desktop notifications."
-							);
-						}
+						alert(
+							"Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️"
+						); // replaced with notification
+						// // Let's check if the browser supports notifications
+						// if (!("Notification" in window)) {
+						// 	console.error(
+						// 		"This browser does not support desktop notifications."
+						// 	);
+						// }
 
-						// Let's check whether notification permissions have already been granted
-						else if (Notification.permission === "granted") {
-							// If it's okay let's create a notification
-							var notification = new Notification(
-								"Smog zabija ☠️",
-								{
-									icon:
-										"./images/umbrella-icon_blue-circle.png",
-									body:
-										"Nie wychodź z budynku i nie otwieraj okien!"
-								}
-							);
-						}
+						// // Let's check whether notification permissions have already been granted
+						// else if (Notification.permission === "granted") {
+						// 	// If it's okay let's create a notification
+						// 	var notification = new Notification(
+						// 		"Smog zabija ☠️",
+						// 		{
+						// 			icon:
+						// 				"./images/umbrella-icon_blue-circle.png",
+						// 			body:
+						// 				"Nie wychodź z budynku i nie otwieraj okien!"
+						// 		}
+						// 	);
+						// }
 
-						// Otherwise, we need to ask the user for permission
-						else if (Notification.permission !== "denied") {
-							Notification.requestPermission().then(function(
-								permission
-							) {
-								// If the user accepts, let's create a notification
-								if (permission === "granted") {
-									var notification = new Notification(
-										"Smog zabija ☠️",
-										{
-											icon:
-												"./images/umbrella-icon_blue-circle.png",
-											body:
-												"Nie wychodź z budynku i nie otwieraj okien!"
-										}
-									);
-								}
-							});
-						}
+						// // Otherwise, we need to ask the user for permission
+						// else if (Notification.permission !== "denied") {
+						// 	Notification.requestPermission().then(function(
+						// 		permission
+						// 	) {
+						// 		// If the user accepts, let's create a notification
+						// 		if (permission === "granted") {
+						// 			var notification = new Notification(
+						// 				"Smog zabija ☠️",
+						// 				{
+						// 					icon:
+						// 						"./images/umbrella-icon_blue-circle.png",
+						// 					body:
+						// 						"Nie wychodź z budynku i nie otwieraj okien!"
+						// 				}
+						// 			);
+						// 		}
+						// 	});
+						// }
 					} else console.log("No alert/notification, air is not so bad. Current: >", air_quality_status, "<");
 				}, 1500); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 			}
-
 			smogAlert();
+
+			function checkPollen(lID) {
+				//  get description
+				fetch("./py/allergens-description-" + lID + ".txt")
+					.then(response => response.text())
+					.then(data_description => {
+						// alert(data_description); // debug
+						document.getElementById(
+							"allergy"
+						).textContent = data_description;
+					});
+
+				// get date range for which this update is available
+				fetch("../py/allergens-date_range.txt")
+					.then(response => response.text())
+					.then(data_dateRange => {
+						// alert(data_description); // debug
+						console.log(
+							"Allergy description date range:",
+							data_dateRange
+						);
+					});
+			}
+
+			setTimeout(function() {
+				var allergy_location = document.getElementById("location")
+					.textContent;
+				if (
+					// allergy_location == "Powietrze: ⚰️" ||
+					// allergy_location == "Powietrze" ||
+					allergy_location == "🌍 Wroclaw, PL"
+				) {
+					allergy_region = "R6DS";
+					checkPollen(allergy_region);
+				} else if (
+					allergy_location == "🌍 Tarnów, PL" ||
+					allergy_location == "🌍 Krakow, PL"
+				) {
+					allergy_region = "R7MP";
+					checkPollen(allergy_region);
+				} else if (allergy_location == "🌍 Warsaw, PL") {
+					allergy_region = "R5MZ";
+					checkPollen(allergy_region);
+				}
+				console.log("Allergy: not this region.");
+            }, 1500);
+            // TODO: add ^ to EN version
 		</script>
 	</body>
 </html>

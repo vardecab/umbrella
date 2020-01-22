@@ -134,3 +134,59 @@ function airMask(lat, lng) {
 		// catch any errors
 		.catch(function() {});
 }
+
+function smogAlert() {
+	setTimeout(function() {
+		var air_quality_status = document.getElementById("air_quality")
+			.textContent;
+		if (
+			air_quality_status == "Powietrze: ⚰️" ||
+			air_quality_status == "Powietrze: ⚰️⚰️" ||
+			air_quality_status == "Powietrze: ⚰️⚰️⚰️"
+		) {
+			alert(
+				"Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️"
+			); // replaced with notification
+			// // Let's check if the browser supports notifications
+			// if (!("Notification" in window)) {
+			// 	console.error(
+			// 		"This browser does not support desktop notifications."
+			// 	);
+			// }
+
+			// // Let's check whether notification permissions have already been granted
+			// else if (Notification.permission === "granted") {
+			// 	// If it's okay let's create a notification
+			// 	var notification = new Notification(
+			// 		"Smog zabija ☠️",
+			// 		{
+			// 			icon:
+			// 				"./images/umbrella-icon_blue-circle.png",
+			// 			body:
+			// 				"Nie wychodź z budynku i nie otwieraj okien!"
+			// 		}
+			// 	);
+			// }
+
+			// // Otherwise, we need to ask the user for permission
+			// else if (Notification.permission !== "denied") {
+			// 	Notification.requestPermission().then(function(
+			// 		permission
+			// 	) {
+			// 		// If the user accepts, let's create a notification
+			// 		if (permission === "granted") {
+			// 			var notification = new Notification(
+			// 				"Smog zabija ☠️",
+			// 				{
+			// 					icon:
+			// 						"./images/umbrella-icon_blue-circle.png",
+			// 					body:
+			// 						"Nie wychodź z budynku i nie otwieraj okien!"
+			// 				}
+			// 			);
+			// 		}
+			// 	});
+			// }
+		} else console.log("No alert/notification, air is not so bad. Current: >", air_quality_status, "<");
+	}, 1500); // how many ms to wait until function is executed; 1500 ms = 1.5 s
+}

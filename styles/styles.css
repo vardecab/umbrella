@@ -46,7 +46,7 @@ body {
 }
 
 #more_details {
-	margin-top: -4%;
+	margin-top: -2.5%;
 	margin-bottom: 2.5%;
 	display: none;
 }
@@ -73,7 +73,7 @@ body {
 }
 
 #allergy {
-	margin-top: 3%;
+	margin-top: 1.5%;
 	font-size: 0.9rem;
 	width: 85%;
 	display: inline-block;
@@ -168,7 +168,7 @@ a {
 /* Computer w/ Full HD screen & MacBook Pro */
 @media (min-width: 1600px) {
 	#icon {
-		margin-top: 25%;
+		margin-top: 20%;
 	}
 }
 

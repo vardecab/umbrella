@@ -10,11 +10,11 @@ scripts/aqicn.js
 scripts/allergy-apsik.js
 scripts/locate.js
 service_worker.js
-scripts/allergy.js
-scripts/allergy.min.js
 umbrella.min.html
 umbrella-en.min.html
 py/umbrellaallergensscraper-windowstaskscheduler.xml
+scripts/en
+umbrella-en.html
 
 ### Visual Studio Code ###
 .vscode/*

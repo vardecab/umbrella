@@ -18,7 +18,7 @@ function checkPollen(lID) {
 			});
 
 			// get date range for which this update is available
-			fetch("../py/allergens-date_range.txt")
+			fetch("./py/allergens-date_range.txt")
 				.then(response => response.text())
 				.then(data_dateRange => {
 					// alert(data_dateRange); // debug

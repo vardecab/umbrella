@@ -29,6 +29,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+-   0.19.1: Tiny fix to a file path.
 -   0.19: I hid allergens/pollen information behind _🤧👀_ emojis to improve UX + moved JS from main `umbrella.html` to separate files so it's easier to navigate. Also turned off EN version until I figure out how to easily maintain two languages.
 -   0.18: Another big one: implemented allergens/pollen info for selected Polish cities - I'm scraping those in Python from [this page](https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/).
 -   0.17: Big one:

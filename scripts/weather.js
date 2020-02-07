@@ -263,7 +263,7 @@ function drawWeather(owm_data) {
 
 	if (air_pressure < 1000) {
 		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
-	} else if ((air_pressure >= 1000) & (air_pressure <= 1030)) {
+	} else if ((air_pressure >= 1000) & (air_pressure <= 1025)) {
 		air_pressure_in_html.textContent += "👍🏼" + air_pressure + " hPa";
 	} else {
 		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";

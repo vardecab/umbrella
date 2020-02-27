@@ -17,6 +17,7 @@ scripts/en
 umbrella-en.html
 py/update.bat
 py/PollenInfoAutoUpdate.bat
+py/PollenInfoAutoUpdate.exe
 
 ### Visual Studio Code ###
 .vscode/*

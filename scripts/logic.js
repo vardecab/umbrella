@@ -282,17 +282,18 @@ setTimeout(function() {
 		allergy_region = "R6DS";
 		checkPollen(allergy_region);
 	} else if (
-		allergy_location == "🌍 Tarnów, PL" ||
-		allergy_location == "🌍 Krakow, PL"
-	) {
-		allergy_region = "R7MP";
-		checkPollen(allergy_region);
-	} else if (allergy_location == "🌍 Warsaw, PL") {
-		allergy_region = "R5MZ";
-		checkPollen(allergy_region);
-	} else {
-		console.log("Allergy: not this region.");
-		$("#allergy").hide();
-	}
+				allergy_location == "🌍 Tarnów, PL" ||
+				allergy_location == "🌍 Krakow, PL" ||
+				allergy_location == "🌍 Wola Rzędzińska, PL"
+			) {
+				allergy_region = "R7MP";
+				checkPollen(allergy_region);
+			} else if (allergy_location == "🌍 Warsaw, PL") {
+				allergy_region = "R5MZ";
+				checkPollen(allergy_region);
+			} else {
+				console.log("Allergy: not this region.");
+				$("#allergy").hide();
+			}
 }, 1500);
 // TODO: add ^ to EN version

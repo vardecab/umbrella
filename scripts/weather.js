@@ -12,15 +12,17 @@ function weatherBallon(lat, lng) {
 	// }
 
 	// grab data from URL
-	fetch(
+	var owm_url =
 		"https://api.openweathermap.org/data/2.5/forecast?lat=" +
-			lat +
-			"&lon=" +
-			lng +
-			"&appid=" +
-			owm_api_key +
-			"&units=metric"
-	)
+		lat +
+		"&lon=" +
+		lng +
+		"&appid=" +
+		owm_api_key +
+		"&units=metric" +
+		"&lang=pl";
+	console.log("Full API URL:", owm_url); // debug
+	fetch(owm_url)
 		// convert data to JSON
 		.then(function(resp) {
 			return resp.json();

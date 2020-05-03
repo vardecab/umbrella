@@ -45,7 +45,7 @@ with open(r"allergens-description-R5MZ.txt", "w", encoding="utf-8") as file:
 
 # === R6DS ===
 
-page_url= 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=6' # Dolny Śląsk
+page_url = 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=6' # Dolny Śląsk
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page

@@ -9,7 +9,7 @@ start = datetime.now()
 
 # === R5MZ ===
 
-page_url= 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=5' # Mazowsze
+page_url = 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=5' # Mazowsze
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
@@ -45,7 +45,7 @@ with open(r"allergens-description-R5MZ.txt", "w", encoding="utf-8") as file:
 
 # === R6DS ===
 
-page_url= 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=6' # Dolny Śląsk
+page_url = 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=6' # Dolny Śląsk
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
@@ -81,7 +81,7 @@ with open(r"allergens-description-R6DS.txt", "w", encoding="utf-8") as file:
 
 # === R7MP ===
 
-page_url= 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=7' # Małopolska
+page_url = 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=7' # Małopolska
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page

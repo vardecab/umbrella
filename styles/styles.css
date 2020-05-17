@@ -1,8 +1,10 @@
 /* === fonts === */
 
-@import url("https://fonts.googleapis.com/css?family=Reem+Kufi&display=swap");
-/* @import url('https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700&display=swap'); */
-@import url("https://fonts.googleapis.com/css?family=Mali:300,400,500,700&display=swap");
+@font-face {
+	/* Mali → https://fonts.google.com/specimen/Mali */
+	font-family: "Mali";
+	src: url("../fonts/Mali/Mali-Regular.woff");
+}
 
 /* === main styling === */
 
@@ -17,7 +19,7 @@ body {
 	-webkit-background-size: cover !important;
 	-moz-background-size: cover !important;
 	-o-background-size: cover !important;
-	font-family: "Mali", monospace;
+	font-family: "Mali", sans-serif;
 	color: #000;
 	text-align: center;
 	height: 100vh;
@@ -36,8 +38,8 @@ body {
 #temperature,
 #temperature_offline {
 	font-size: 4rem;
-	font-family: "Reem Kufi", monospace !important;
-	/* font-weight: bold; */
+	font-family: "Mali", sans-serif;
+	font-weight: 700; /* == bold */
 	margin-bottom: 3%;
 }
 

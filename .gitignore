@@ -19,7 +19,7 @@ py/update.bat
 py/PollenInfoAutoUpdate.bat
 py/PollenInfoAutoUpdate.exe
 fonts/jetbrainsmono
-umbrella.min.html
+styles/styles.css
 
 ### Visual Studio Code ###
 .vscode/*

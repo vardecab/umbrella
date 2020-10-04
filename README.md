@@ -1,6 +1,6 @@
 # Umbrella
 
-> A simple [weather page](https://vardecab.github.io/umbrella/umbrella-en.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
+> A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality.
 
 <img src="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png">
 
@@ -18,7 +18,7 @@ And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bef88
 
 ## How to use
 
-Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-en.html) or [Umbrella (Polish version)](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s for 30 days. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍. If you want to change the language, click the flag.
+Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it shows temperature, wind speed, sunrise & sunset, what to wear, air quality <del>and overall description of the conditions</del>. Location is saved in the 🍪s for 30 days. If you want to change the location, click on 🌍. If you want to geolocate yourself (GPS/IP), click on 📍.
 
 ## Roadmap
 
@@ -29,6 +29,7 @@ Go to [Umbrella (English version)](https://vardecab.github.io/umbrella/umbrella-
 
 ## Release History
 
+- 0.19.3: Translated remaining titles to PL.
 -   0.19.2: Removed `fonts.googleapis.com` calls by self-hosting the font.
 -   0.19.1: Tiny fix to a file path.
 -   0.19: I hid allergens/pollen information behind _🤧👀_ emojis to improve UX + moved JS from main `umbrella.html` to separate files so it's easier to navigate. Also turned off EN version until I figure out how to easily maintain two languages.

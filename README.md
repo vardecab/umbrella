@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.19.4: Added GitHub backlink.
 - 0.19.3: Translated remaining titles to PL.
 -   0.19.2: Removed `fonts.googleapis.com` calls by self-hosting the font.
 -   0.19.1: Tiny fix to a file path.

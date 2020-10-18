@@ -20,6 +20,7 @@ py/PollenInfoAutoUpdate.bat
 py/PollenInfoAutoUpdate.exe
 fonts/jetbrainsmono
 styles/styles.css
+modal-test*
 
 ### Visual Studio Code ###
 .vscode/*

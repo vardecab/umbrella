@@ -41,6 +41,7 @@ body {
 	font-family: "Mali", sans-serif;
 	font-weight: 700; /* == bold */
 	margin-bottom: 3%;
+	/* cursor: pointer; */
 }
 
 #temperature:hover + #more_details {
@@ -79,6 +80,7 @@ body {
 	font-size: 0.9rem;
 	width: 85%;
 	display: inline-block;
+	cursor: pointer;
 }
 
 #bottom_navbar {
@@ -103,12 +105,21 @@ a {
 
 #to_the_left {
 	float: left;
-	/* padding-left: 3%; */
+	padding-left: 1%;
+}
+
+#github-logo {
+	width: 18px;
+	height: 18px;
 }
 
 #to_the_right {
 	float: right;
 	/* padding-right: 3%; */
+}
+
+#findme, #location {
+	cursor: pointer;
 }
 
 /* === layout === */

@@ -52,7 +52,7 @@ function drawWeather(owm_data) {
 
 	// add temperature from 2 consecutive data updates to the list above ^
 	// let's look at "feels like" temperature, not "normal" one
-	while (just_a_counter <= 1) {
+	while (just_a_counter <= 1) { // * NOTE: 0 = now/next 3 hrs, 1 = next 6 hrs, 2 = next 9 hrs and so on
 		console.log(
 			"(feels like temp) Update #" +
 				just_a_counter +
@@ -78,7 +78,7 @@ function drawWeather(owm_data) {
 		just_a_counter++; // let's get next data update
 		// NOTE: [0] is first update in the JSON file, [1] is the 2nd and so on
 	}
-	// console.log(temperatures); // debug ✅
+	console.log("Temperatures, array: ", temperatures); // debug ✅
 
 	// let's get sum and average of temperatures in the list
 	if (temperatures.length) {
@@ -211,7 +211,7 @@ function drawWeather(owm_data) {
 
 	var numero = 0; // just a counter for the loop below
 
-	while (numero <= 1) {
+	while (numero <= 1) { /// * NOTE: 1 = next 6 hrs 
 		// console.log(numero, owm_data.list[numero].weather[0].main); // debug ✅
 		// console.log(just_a_counter); // debug ✅
 		weather_conditions.push(owm_data.list[numero].weather[0].main); // add to list
@@ -233,9 +233,12 @@ function drawWeather(owm_data) {
 	// get weather details from API and push to HTML
 
 	// 🔥 temperature
-	document.getElementById("temperature").innerHTML =
-		// Math.round(owm_data.list[0].main.temp, 0) + "&deg;"; // temperature in Celsius without comma
-		Math.round(temperatures_avg, 0) + "&deg;";
+	document.getElementById("temperature").innerHTML = Math.round(owm_data.list[0].main.feels_like, 0) + "&deg;";
+	// Math.round(owm_data.list[0].main.temp, 0) + "&deg;"; // temperature in Celsius without comma
+	
+	// var element = document.getElementById("temperature");
+	// element.classList.add("temperature_next_3hrs");
+	document.getElementById("temperature_next_6hrs").textContent += Math.round(temperatures_avg, 0) + "°"; // ! FIX: "&deg;" doesn't work
 
 	// 🏙 city name (& country name)
 	// TODO: `city == undefined`

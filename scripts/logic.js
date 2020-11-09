@@ -292,7 +292,7 @@ setTimeout(function() {
 				allergy_region = "R5MZ";
 				checkPollen(allergy_region);
 			} else {
-				console.log("Allergy: not this region.");
+				console.log("Allergy: this region is not supported.");
 				$("#allergy").hide();
 			}
 }, 1500);

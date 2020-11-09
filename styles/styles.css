@@ -40,16 +40,24 @@ body {
 	font-size: 4rem;
 	font-family: "Mali", sans-serif;
 	font-weight: 700; /* == bold */
-	margin-bottom: 3%;
-	/* cursor: pointer; */
+	/* margin-bottom: 3%; */
+	cursor: pointer;
 }
 
-#temperature:hover + #more_details {
+/* #temperature_next_6hrs {
+	font-size: 1.5rem;
+	font-family: "Mali", sans-serif; */
+	/* font-weight: 700; == bold */
+	/* margin-bottom: 5%; */
+	/* cursor: pointer; */
+/* } */
+
+#temperature_holder:hover + #more_details {
 	display: block;
 }
 
 #more_details {
-	margin-top: -2.5%;
+	margin-top: 1.5%;
 	margin-bottom: 2.5%;
 	display: none;
 }

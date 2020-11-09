@@ -35,6 +35,10 @@ body {
 	margin-top: 15%;
 }
 
+#temperature_holder {
+	margin-bottom: 3%;
+}
+
 #temperature,
 #temperature_offline {
 	font-size: 4rem;
@@ -57,7 +61,7 @@ body {
 }
 
 #more_details {
-	margin-top: 1.5%;
+	margin-top: -2%;
 	margin-bottom: 2.5%;
 	display: none;
 }

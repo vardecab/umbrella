@@ -170,7 +170,7 @@ a {
 /* Mobile phone, eg SGS5, iPhones */
 @media (min-width: 300px) and (max-width: 450px) {
 	#icon {
-		margin-top: 25%;
+		margin-top: 20%;
 	}
 	#umbrella {
 		margin-top: 15%;

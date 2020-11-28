@@ -35,7 +35,7 @@ body {
 	margin-top: 15%;
 }
 
-#temperature_holder {
+.data_holder {
 	margin-bottom: 3%;
 }
 
@@ -45,7 +45,7 @@ body {
 	font-family: "Mali", sans-serif;
 	font-weight: 700; /* == bold */
 	/* margin-bottom: 3%; */
-	cursor: pointer;
+	/* cursor: pointer; */
 }
 
 /* #temperature_next_6hrs {
@@ -56,11 +56,11 @@ body {
 	/* cursor: pointer; */
 /* } */
 
-#temperature_holder:hover + #more_details {
+.data_holder:hover + .more_details {
 	display: block;
 }
 
-#more_details {
+.more_details {
 	margin-top: -2%;
 	margin-bottom: 2.5%;
 	display: none;
@@ -93,6 +93,11 @@ body {
 	width: 85%;
 	display: inline-block;
 	cursor: pointer;
+	margin-top: -5%;
+}
+
+#allergy_description {
+	margin-top: 5%;
 }
 
 #bottom_navbar {
@@ -166,6 +171,18 @@ a {
 @media (min-width: 300px) and (max-width: 450px) {
 	#icon {
 		margin-top: 30%;
+	}
+	#umbrella {
+		margin-top: 15%;
+	}
+	#clothes {
+		margin-top: 7%;
+	}
+	#air_quality {
+		margin-top: 7%;
+	}
+	#allergy {
+		margin-top: 2%;
 	}
 }
 

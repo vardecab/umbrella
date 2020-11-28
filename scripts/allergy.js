@@ -1,7 +1,5 @@
 // scraper.py is getting data from https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/
 
-$("#allergy").hide();
-
 function checkPollen(lID) {
 	//  get description
 	fetch("./py/allergens-description-" + lID + ".txt")
@@ -9,12 +7,18 @@ function checkPollen(lID) {
 		.then(data_description => {
 			// alert(data_description); // debug
 			$("#allergy_placeholder").show();
-			$("#allergy").click(function() {
-				$("#allergy_placeholder").hide();
-				document.getElementById(
-					"allergy_description"
-				).textContent = data_description;
-				$("#allergy_description").show();
+			$("#allergy_description").hide();
+			document.getElementById("allergy_placeholder").textContent = "🤧 👀";
+
+			$("#allergy").click(function () {
+				if ($("#allergy_description").is(":hidden")) {
+					document.getElementById("allergy_description").textContent = data_description;
+					$("#allergy_placeholder").hide();
+					$("#allergy_description").show();
+				} else {
+					$("#allergy_description").hide();
+					$("#allergy_placeholder").show();
+				}
 			});
 
 			// get date range for which this update is available
@@ -28,4 +32,4 @@ function checkPollen(lID) {
 					);
 				});
 		});
-}
+};

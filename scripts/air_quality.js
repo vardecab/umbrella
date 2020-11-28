@@ -7,20 +7,20 @@ const aqicn_api_key = "b2a31fc801f6e4e27353e44d13acf144189c4a0a";
 function airMask(lat, lng) {
 	// grab data from URL
 	fetch(
-		"https://airapi.airly.eu/v2/measurements/point?indexType=AIRLY_CAQI&lat=" +
+			"https://airapi.airly.eu/v2/measurements/point?indexType=AIRLY_CAQI&lat=" +
 			lat +
 			"&lng=" +
 			lng +
 			"&apikey=" +
 			airly_api_key
-	)
+		)
 		// convert data to JSON
-		.then(function(res) {
+		.then(function (res) {
 			return res.json();
 		})
 
 		// use the data stored in object to do whatever
-		.then(function(data_airly) {
+		.then(function (data_airly) {
 			console.error("Airly", data_airly); // debug: output everything stored in the object
 
 			// 💨 air quality
@@ -29,32 +29,44 @@ function airMask(lat, lng) {
 				"Current air quality is",
 				current_air_quality,
 				"with value of: " +
-					data_airly.current.indexes["0"].value +
-					". Medium starts at 50, bad starts at 75. Death starts at 100."
+				data_airly.current.indexes["0"].value +
+				". Medium starts at 50, bad starts at 75. Death starts at 100."
 			); // debug
 
 			// data from primary API - Airly
 			air_quality_index = data_airly.current.indexes["0"].value;
 
-			if ((air_quality_index >= 0) & (air_quality_index < 50)) {
+			if ((air_quality_index >= 0) & (air_quality_index < 30)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
-			} else if ((air_quality_index >= 50) & (air_quality_index < 75)) {
+			} else if ((air_quality_index >= 30) & (air_quality_index < 50)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
-			} else if ((air_quality_index >= 75) & (air_quality_index < 100)) {
+			} else if ((air_quality_index >= 55) & (air_quality_index < 75)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: 🤬"; // 🔴
-			} else if ((air_quality_index >= 100) & (air_quality_index < 150)) {
+			} else if ((air_quality_index >= 75) & (air_quality_index < 100)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: ⚰️"; // ⚫
-			} else if ((air_quality_index >= 150) & (air_quality_index < 200)) {
+			} else if ((air_quality_index >= 100) & (air_quality_index < 125)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: ⚰️⚰️"; // ⚫⚫
-			} else if (air_quality_index >= 200) {
+			} else if (air_quality_index >= 125) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: ⚰️⚰️⚰️"; // ⚫⚫⚫
-			} else {
+			} else {}
+
+			// get info about PM2.5 & PM10
+			try {
+			console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
+			console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
+			pm25 = data_airly.current.values[1].value;
+			document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
+			pm10 = data_airly.current.values[2].value;
+			document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+			}
+			catch(err) {
+				console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
 			}
 
 			// fallback call to different API (AQICN) when Airly is down (either lack of sensors around (3 km radius) or no requests available due to their limits)
@@ -72,22 +84,22 @@ function airMask(lat, lng) {
 				);
 
 				fetch(
-					"https://api.waqi.info/feed/geo:" +
+						"https://api.waqi.info/feed/geo:" +
 						lat +
 						";" +
 						lng +
 						"/?token=" +
 						aqicn_api_key
-				)
+					)
 					// convert data to JSON
-					.then(function(res) {
+					.then(function (res) {
 						return res.json();
 					})
 
 					// use the data stored in object to do whatever
-					.then(function(data_aqicn) {
+					.then(function (data_aqicn) {
 						console.error("AQICN", data_aqicn); // debug: output everything stored in the object
-						console.log("AQI:", data_aqicn.data.aqi); // debug
+						console.log("AQICN:", data_aqicn.data.aqi); // debug
 
 						air_quality_index = data_aqicn.data.aqi;
 
@@ -100,43 +112,72 @@ function airMask(lat, lng) {
 								"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
 						} else if (
 							(air_quality_index >= 50) &
-							(air_quality_index < 75)
-						) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
-						} else if (
-							(air_quality_index >= 75) &
 							(air_quality_index < 100)
 						) {
 							document.getElementById("air_quality").innerHTML =
-								"Powietrze: 🤬"; // 🔴
+								"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
 						} else if (
 							(air_quality_index >= 100) &
 							(air_quality_index < 150)
 						) {
 							document.getElementById("air_quality").innerHTML =
-								"Powietrze: ⚰️"; // ⚫
+								"Powietrze: 🤬"; // 🔴
 						} else if (
 							(air_quality_index >= 150) &
 							(air_quality_index < 200)
 						) {
 							document.getElementById("air_quality").innerHTML =
+								"Powietrze: ⚰️"; // ⚫
+						} else if (
+							(air_quality_index >= 200) &
+							(air_quality_index < 300)
+						) {
+							document.getElementById("air_quality").innerHTML =
 								"Powietrze: ⚰️⚰️"; // ⚫⚫
-						} else if (air_quality_index >= 200) {
+						} else if (air_quality_index >= 300) {
 							document.getElementById("air_quality").innerHTML =
 								"Powietrze: ⚰️⚰️⚰️"; // ⚫⚫⚫
+						} else {}
+
+						// get info about PM2.5 & PM10
+						
+						if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
+							pm25 = data_aqicn.data.iaqi.pm25.v;
+							console.log("PM2.5:", pm25 + "μm" + "/25"); // debug
+							document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
 						} else {
+							pm25 = data_airly.current.values[1].value;
+							console.log("PM2.5:", pm25 + "μm" + "/25"); // debug 
 						}
+						if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
+							pm10 = data_aqicn.data.iaqi.pm10.v;
+							console.log("PM10:", pm10 + "μm" + "/50"); // debug
+							document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+						} else {
+							pm25 = data_airly.current.values[2].value;
+							console.log("PM10:", pm10 + "μm" + "/50"); // debug
+						}
+						// console.log("PM2.5:", data_airly.current.values[1].value + "/25"); // debug
+						// console.log("PM10:", data_airly.current.values[2].value + "/50"); // debug
+
+						// pm25 = data_aqicn.data.iaqi.pm25.v;
+						// // document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25" + " &";
+						// pm10 = data_aqicn.data.iaqi.pm10.v;
+						// console.log("pm10" + pm10);
+						// console.log("pm2.5" + pm25);
+						// document.getElementById("pm10").innerHTML = "PM10: " + pm10 + "μm" + "/50";
+
+
 					});
 			}
 		})
 
 		// catch any errors
-		.catch(function() {});
+		.catch(function () {});
 }
 
 function smogAlert() {
-	setTimeout(function() {
+	setTimeout(function () {
 		var air_quality_status = document.getElementById("air_quality")
 			.textContent;
 		if (

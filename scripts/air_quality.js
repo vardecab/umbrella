@@ -57,6 +57,7 @@ function airMask(lat, lng) {
 			} else {}
 
 			// get info about PM2.5 & PM10
+			
 			try {
 			console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
 			console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
@@ -157,17 +158,6 @@ function airMask(lat, lng) {
 							pm25 = data_airly.current.values[2].value;
 							console.log("PM10:", pm10 + "μm" + "/50"); // debug
 						}
-						// console.log("PM2.5:", data_airly.current.values[1].value + "/25"); // debug
-						// console.log("PM10:", data_airly.current.values[2].value + "/50"); // debug
-
-						// pm25 = data_aqicn.data.iaqi.pm25.v;
-						// // document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25" + " &";
-						// pm10 = data_aqicn.data.iaqi.pm10.v;
-						// console.log("pm10" + pm10);
-						// console.log("pm2.5" + pm25);
-						// document.getElementById("pm10").innerHTML = "PM10: " + pm10 + "μm" + "/50";
-
-
 					});
 			}
 		})

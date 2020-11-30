@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.20.1: Small fix to `air_quality.js`.
 - 0.19.6 & 0.20: Added: info about PM2.5 & PM10; it's now possible to hide allergy info. Changed: air quality scale is now more strict; modified spacing between elements on smartphones; clothing recommendations; emojis. Removed: info about weather in the next 6 hours.
 - 0.19.5: Changed primary temperature from next 6 hours to current. 
 - 0.19.4: Added GitHub backlink.

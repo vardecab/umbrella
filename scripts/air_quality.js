@@ -42,7 +42,7 @@ function airMask(lat, lng) {
 			} else if ((air_quality_index >= 30) & (air_quality_index < 50)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
-			} else if ((air_quality_index >= 55) & (air_quality_index < 75)) {
+			} else if ((air_quality_index >= 50) & (air_quality_index < 75)) {
 				document.getElementById("air_quality").innerHTML =
 					"Powietrze: 🤬"; // 🔴
 			} else if ((air_quality_index >= 75) & (air_quality_index < 100)) {

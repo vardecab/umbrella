@@ -22,7 +22,7 @@ function findMe() {
 		);
 	} else {
 		var locating = document.querySelector("#findme");
-		locating.textContent = "Odśwież stronę :)";
+		locating.textContent = "Szukam...";
 		location.reload();
 		navigator.geolocation.getCurrentPosition(success, error);
 	}

@@ -20,10 +20,10 @@ window.onload = function geoLocator() {
 			});
 			console.log(
 				"Cookie data: " +
-					"lat:" +
-					Cookies.get("umbrella_coord_lat") +
-					" lng:" +
-					Cookies.get("umbrella_coord_lng")
+				"lat:" +
+				Cookies.get("umbrella_coord_lat") +
+				" lng:" +
+				Cookies.get("umbrella_coord_lng")
 			); // debug
 
 			// variables with values from 🍪s
@@ -35,21 +35,21 @@ window.onload = function geoLocator() {
 
 			// we need to get city name from LocationIQ API
 			fetch(
-				"https://eu1.locationiq.com/v1/reverse.php?key=" +
+					"https://eu1.locationiq.com/v1/reverse.php?key=" +
 					liq_api_key +
 					"&lat=" +
 					cookie_lat +
 					"&lon=" +
 					cookie_lng +
 					"&format=json"
-			)
+				)
 				// convert data to JSON
-				.then(function(res) {
+				.then(function (res) {
 					return res.json();
 				})
 
 				// use the data stored in object to do whatever
-				.then(function(liq_data) {
+				.then(function (liq_data) {
 					console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 					// get city name
@@ -101,19 +101,19 @@ window.onload = function geoLocator() {
 
 			// grab data from URL
 			fetch(
-				"https://eu1.locationiq.com/v1/search.php?key=" +
+					"https://eu1.locationiq.com/v1/search.php?key=" +
 					liq_api_key +
 					"&q=" +
 					query_input +
 					"&format=json"
-			)
+				)
 				// convert data to JSON
-				.then(function(res) {
+				.then(function (res) {
 					return res.json();
 				})
 
 				// use the data stored in object to do whatever
-				.then(function(liq_data) {
+				.then(function (liq_data) {
 					console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 					// get location name based on what was returned from API and cut it to just city
@@ -146,10 +146,10 @@ window.onload = function geoLocator() {
 					});
 					console.log(
 						"Cookie: " +
-							"lat:" +
-							Cookies.get("umbrella_coord_lat") +
-							" lng:" +
-							Cookies.get("umbrella_coord_lng")
+						"lat:" +
+						Cookies.get("umbrella_coord_lat") +
+						" lng:" +
+						Cookies.get("umbrella_coord_lng")
 					); // debug
 
 					// variables with values from 🍪s
@@ -170,10 +170,10 @@ window.onload = function geoLocator() {
 
 		console.log(
 			"Cookie: " +
-				"lat:" +
-				Cookies.get("umbrella_coord_lat") +
-				" lng:" +
-				Cookies.get("umbrella_coord_lng")
+			"lat:" +
+			Cookies.get("umbrella_coord_lat") +
+			" lng:" +
+			Cookies.get("umbrella_coord_lng")
 		); // debug
 
 		// variables with values from 🍪s
@@ -210,19 +210,19 @@ function manualFinder() {
 
 	// grab data from URL
 	fetch(
-		"https://eu1.locationiq.com/v1/search.php?key=" +
+			"https://eu1.locationiq.com/v1/search.php?key=" +
 			liq_api_key +
 			"&q=" +
 			query_input +
 			"&format=json"
-	)
+		)
 		// convert data to JSON
-		.then(function(res) {
+		.then(function (res) {
 			return res.json();
 		})
 
 		// use the data stored in object to do whatever
-		.then(function(liq_data) {
+		.then(function (liq_data) {
 			console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 			// get location name based on what was returned from API and cut it to just city
@@ -256,10 +256,10 @@ function manualFinder() {
 			});
 			console.log(
 				"Cookie: " +
-					"lat:" +
-					Cookies.get("umbrella_coord_lat") +
-					" lng:" +
-					Cookies.get("umbrella_coord_lng")
+				"lat:" +
+				Cookies.get("umbrella_coord_lat") +
+				" lng:" +
+				Cookies.get("umbrella_coord_lng")
 			); // debug
 
 			// variables with values from 🍪s
@@ -276,24 +276,24 @@ function manualFinder() {
 
 smogAlert();
 
-setTimeout(function() {
+setTimeout(function () {
 	var allergy_location = document.getElementById("location").textContent;
-	if (allergy_location == "🌍 Wroclaw, PL") {
+	if (allergy_location == "🌍 Wroclaw, PL" || allergy_location == "🌍 Wrocław, PL") {
 		allergy_region = "R6DS";
 		checkPollen(allergy_region);
 	} else if (
-				allergy_location == "🌍 Tarnów, PL" ||
-				allergy_location == "🌍 Krakow, PL" ||
-				allergy_location == "🌍 Wola Rzędzińska, PL"
-			) {
-				allergy_region = "R7MP";
-				checkPollen(allergy_region);
-			} else if (allergy_location == "🌍 Warsaw, PL") {
-				allergy_region = "R5MZ";
-				checkPollen(allergy_region);
-			} else {
-				console.log("Allergy: this region is not supported.");
-				$("#allergy").hide();
-			}
+		allergy_location == "🌍 Tarnów, PL" ||
+		allergy_location == "🌍 Krakow, PL" ||
+		allergy_location == "🌍 Wola Rzędzińska, PL"
+	) {
+		allergy_region = "R7MP";
+		checkPollen(allergy_region);
+	} else if (allergy_location == "🌍 Warsaw, PL") {
+		allergy_region = "R5MZ";
+		checkPollen(allergy_region);
+	} else {
+		console.log("Allergy: this region is not supported.");
+		$("#allergy").hide();
+	}
 }, 1500);
 // TODO: add ^ to EN version

@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.21.1: Fixed font not working due to minification problem.
 - 0.21: Added an emoji distinction of wind strength + improved RWD in one specific case.
 - 0.20.2: Small fix to show pollen info for both `Wroclaw` & `Wrocław`. Changed text when geolocating.
 - 0.20.1: Small fix to `air_quality.js`.

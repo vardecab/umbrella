@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.21: Added an emoji distinction of wind strength + improved RWD in one specific case.
 - 0.20.2: Small fix to show pollen info for both `Wroclaw` & `Wrocław`. Changed text when geolocating.
 - 0.20.1: Small fix to `air_quality.js`.
 - 0.19.6 & 0.20: Added: info about PM2.5 & PM10; it's now possible to hide allergy info. Changed: air quality scale is now more strict; modified spacing between elements on smartphones; clothing recommendations; emojis. Removed: info about weather in the next 6 hours.

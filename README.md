@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.21.2: Fixed spacing between items in `more_details` section.
 - 0.21.1: Fixed font not working due to minification problem.
 - 0.21: Added an emoji distinction of wind strength + improved RWD in one specific case.
 - 0.20.2: Small fix to show pollen info for both `Wroclaw` & `Wrocław`. Changed text when geolocating.
@@ -103,4 +104,5 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 -   [Navbar tutorial](https://www.w3schools.com/howto/howto_js_bottom_nav_responsive.asp)
 -   [Full background cover tutorial](https://css-tricks.com/perfect-full-page-background-image)
 -   Icons from [Flaticon](https://www.flaticon.com)
--   Fonts used: [Mali](https://fonts.google.com/specimen/Mali) & [Reem Kufi](https://fonts.google.com/specimen/Reem+Kufi)
+-   Font used: [Mali](https://fonts.google.com/specimen/Mali)
+- [Wind strength scale](https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw)

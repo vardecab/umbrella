@@ -9,6 +9,7 @@ start = datetime.now()
 
 # === R5MZ ===
 
+# !FIX update 210101: source website's backend has changed (looks like URLs are dynamic now) and the script doesn't work
 page_url = 'https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/?region=5' # Mazowsze
 
 page = urlopen(page_url)

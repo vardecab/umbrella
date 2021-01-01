@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.21.3: Information on allergens/pollen has been disabled due to backend change on the site from which the data was collected.
 - 0.21.2: Fixed spacing between items in `more_details` section.
 - 0.21.1: Fixed font not working due to minification problem.
 - 0.21: Added an emoji distinction of wind strength + improved RWD in one specific case.

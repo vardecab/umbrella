@@ -260,18 +260,28 @@ function drawWeather(owm_data) {
 	wind = Math.round(wind_kph, 2);
 
 	var wind_in_html = document.getElementById("wind");
-	wind_in_html.textContent += wind + " km/h"; // add to HTML
+	
+	// Klasyfikacja wiatru wg skali Beauforta @ https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw
+	if (wind < 6) {
+		wind_in_html.textContent += "⏸️ " + wind + " km/h"; // add to HTML
+	} else if ((wind >= 6) & (wind <= 28)) {
+		wind_in_html.textContent += "🍃 " + wind + " km/h"; // add to HTML
+	} else if ((wind > 28) & (wind <= 50)) {
+		wind_in_html.textContent += "🍃🍃🍃 " + wind + " km/h"; // add to HTML
+	} else {
+		wind_in_html.textContent += "🌪️ " + wind + " km/h"; // add to HTML
+	}
 
 	// ☁️ air pressure
 	var air_pressure = owm_data.list[0].main.pressure;
 	var air_pressure_in_html = document.getElementById("air_pressure");
 
 	if (air_pressure < 1000) {
-		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
 	} else if ((air_pressure >= 1000) & (air_pressure <= 1025)) {
-		air_pressure_in_html.textContent += "👍🏼" + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👍🏼 " + air_pressure + " hPa";
 	} else {
-		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
 	}
 
 	// 📔 description

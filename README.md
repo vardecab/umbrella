@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.22: Re-added information on allergens/pollen - using a different website now.
 - 0.21.3: Information on allergens/pollen has been disabled due to backend change on the site from which the data was collected.
 - 0.21.2: Fixed spacing between items in `more_details` section.
 - 0.21.1: Fixed font not working due to minification problem.
@@ -95,7 +96,7 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 ## Acknowledgements
 
 -   APIs: [OpenWeatherMap](https://openweathermap.org/api) & [Airly](https://developer.airly.eu/api) & [AQICN](https://aqicn.org/api/) & [LocationIQ](https://locationiq.com)
--   [Aktualna prognoza pylenia Claritine](https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/)
+-   [Aktualna prognoza pylenia](http://pylenia.pl/)
 -   [Main tutorial that inspired me](https://bytemaster.io/fetch-weather-openweathermap-api-javascript)
 -   [Moment.js](https://momentjs.com)
 -   [JavaScript Cookie](https://github.com/js-cookie/js-cookie)

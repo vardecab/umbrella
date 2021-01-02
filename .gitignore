@@ -21,6 +21,7 @@ py/PollenInfoAutoUpdate.exe
 fonts/jetbrainsmono
 styles/styles.css
 modal-test*
+py/scraper.py
 
 ### Visual Studio Code ###
 .vscode/*

@@ -12,37 +12,43 @@ import sys # workaround for encoding error (https://stackoverflow.com/questions/
 print("Starting...")
 start = datetime.now() # run time
 
-# === FIX, 2nd 'API' ===
+# === debug === 
 
-# new 'API' = http://pylenia.pl/search.html?r=6&a=0&from=09-01-2021&to=16-01-2021&w=0
-# base URL =  http://pylenia.pl/search.html?
-# region Slask: r=6
-# region Malopolska: r=9
-# region Mazowsze: r=7
-# aktualne pylenie: a=0 
-# pylenie bylicy: a=8
-# data: from=09-01-2021&to=16-01-2021 // DD-MM-YYYY
-# aktualny tydzien: w=1
-# nastepny tydzien: w=0 
+# page_url = 'http://pylenia.pl/search.html?r=6&a=0&w=1' # Dolny Śląsk
 
-### regions:
-# <option regId="1" value=0>Cała Polska</option>
-# <option regId="2" value=1>Wybrzeże</option>
-# <option regId="3" value=2>Pomorze</option>
-# <option regId="4" value=3>Warmia, Mazury, Podlasie</option>
-# <option regId="5" value=4>Ziemia Lubuska</option>
-# <option selected="" regId="6" value=5>Śląsk i Wielkopolska</option>
-# <option regId="7" value=6>Mazowsze i ziemia Lubelska</option>
-# <option regId="8" value=7>Sudety</option>
-# <option regId="9" value=8>Małopolska</option>
-# <option regId="10" value=9>Karpaty</option>
+# page = urlopen(page_url)
+# soup = BeautifulSoup(page, 'html.parser') # parse the page
+# with open(r"api2_bs_output.html", "w", encoding="utf-8") as file:
+#     file.write(str(soup))
+# print(soup, file=sys.stderr) # debug
 
-# === remove HTML tags from text ===
+# === functions ===
 
-def cleanhtml(raw_html):
-    cleanr = re.compile('<.*?>')
-    cleantext = re.sub(cleanr, '', raw_html)
-    return cleantext
+# isolate pure text from HTML
+def cleanHTML(raw_html):
+    cleanr = re.compile('<.*?>') # remove HTML tags
+    cleanText = re.sub(cleanr, '', raw_html)
+    return cleanText
+
+# get data from the website
+def pullData(soup):
+    description = soup.find("div", {"class":"pollen-item-cont"}) # find the div with desired info
+    description = str(description) # convert to string
+    description = re.search(r'(<div(.*?)>(.*?)</div>)', description) # find the info inside the tag
+    try: 
+        description = description.group(0)
+    except: 
+        print('Something went wrong on the website. I cannot pull the data.')
+        return
+    description = str(cleanHTML(description)) # extract just the text
+    description = description.strip()
+    # print(description) # debug
+    return description
+    # if description != 'None' or description is not None:
+    #     return description
+    # else: 
+    #     print('fail')
+    # type(description) # debug
 
 # === R6DS ===
 
@@ -50,22 +56,15 @@ page_url = 'http://pylenia.pl/search.html?r=6&a=0&w=1' # Dolny Śląsk
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
-# with open(r"api2_output.html", "w", encoding="utf-8") as file:
-#     file.write(str(soup))
-# print(soup, file=sys.stderr) # debug
 
-description = soup.find("div", {"class":"pollen-item-cont"}) # find the div with desired info
-description = str(description) # convert to string
-description = re.search(r'(<div(.*?)>(.*?)</div>)', description) # find the info inside the tag
-description = description.group(0)
-description = str(cleanhtml(description)) # extract just the text
-description = description.strip()
-# print(description) # debug
-
-print("Description DS:", description)
-with open(r"allergens-description-R6DS.txt", "w", encoding="utf-8") as file:
-    file.write(description)
-
+description = pullData(soup)
+if description is not None:
+    print("Description DS:", description)
+    with open(r"allergens-description-R6DS.txt", "w", encoding="utf-8") as file:
+        file.write(description)
+else: 
+    exit()
+    
 # === R7MZ ===
 
 page_url = 'http://pylenia.pl/search.html?r=7&a=0&w=1' # Mazowsze
@@ -73,34 +72,28 @@ page_url = 'http://pylenia.pl/search.html?r=7&a=0&w=1' # Mazowsze
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
 
-description = soup.find("div", {"class":"pollen-item-cont"}) # find the div with desired info
-description = str(description) # convert to string
-description = re.search(r'(<div(.*?)>(.*?)</div>)', description) # find the info inside the tag
-description = description.group(0)
-description = str(cleanhtml(description)) # extract just the text
-description = description.strip()
+description = pullData(soup)
+if description is not None:
+    print("Description MZ:", description)
+    with open(r"allergens-description-R7MZ.txt", "w", encoding="utf-8") as file:
+        file.write(description)
+else: 
+    exit()
 
-print("Description MZ:", description)
-with open(r"allergens-description-R7MZ.txt", "w", encoding="utf-8") as file:
-    file.write(description)
-
-# === R9MP ===
+# # === R9MP ===
 
 page_url = 'http://pylenia.pl/search.html?r=9&a=0&w=1' # Małopolska
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
 
-description = soup.find("div", {"class":"pollen-item-cont"}) # find the div with desired info
-description = str(description) # convert to string
-description = re.search(r'(<div(.*?)>(.*?)</div>)', description) # find the info inside the tag
-description = description.group(0)
-description = str(cleanhtml(description)) # extract just the text
-description = description.strip()
-
-print("Description MP:", description)
-with open(r"allergens-description-R9MP.txt", "w", encoding="utf-8") as file:
-    file.write(description)
+description = pullData(soup)
+if description is not None:
+    print("Description MP:", description)
+    with open(r"allergens-description-R9MP.txt", "w", encoding="utf-8") as file:
+        file.write(description) 
+else: 
+    exit()
 
 # === run time ===
 

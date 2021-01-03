@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.23: Added a function & `try-except` to allergens/pollen script.
 - 0.22: Re-added information on allergens/pollen - using a different website now.
 - 0.21.3: Information on allergens/pollen has been disabled due to backend change on the site from which the data was collected.
 - 0.21.2: Fixed spacing between items in `more_details` section.

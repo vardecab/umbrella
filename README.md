@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.23.1: Removed allergens/pollen date range info until a fix for APIv2 is in place.
 - 0.23: Added a function & `try-except` to allergens/pollen script.
 - 0.22: Re-added information on allergens/pollen - using a different website now.
 - 0.21.3: Information on allergens/pollen has been disabled due to backend change on the site from which the data was collected.

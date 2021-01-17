@@ -156,7 +156,7 @@ function drawWeather(owm_data) {
 		document.body.style.background =
 			"linear-gradient(150deg, rgba(188,133,231,1) 25%, rgba(255,255,255,1) 90%) no-repeat center center fixed";
 		document.head.querySelector('meta[name="theme-color"]').content =
-			"#dbb4f9";
+			"#BC85E7";
 	}
 
 	// debug start --->

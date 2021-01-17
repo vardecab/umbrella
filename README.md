@@ -1,6 +1,6 @@
 # Umbrella
 
-> A simple [weather page](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality and allergy information for supported regions. _Currently only in Polish_.
+> A simple [weather app](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality and allergy information for supported regions. _Currently only in Polish_.
 
 <img src="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png">
 
@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.23.2: Tiny change to `theme-color` for purple background.
 - 0.23.1: Removed allergens/pollen date range info until a fix for APIv2 is in place.
 - 0.23: Added a function & `try-except` to allergens/pollen script.
 - 0.22: Re-added information on allergens/pollen - using a different website now.

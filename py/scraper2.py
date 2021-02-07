@@ -5,6 +5,7 @@ from urllib.request import urlopen # open URLs
 from bs4 import BeautifulSoup # BeautifulSoup; parsing HTML
 import re # regex; extract substrings
 from datetime import datetime # calculate script's run time
+from datetime import timedelta # addition and subtraction of dates
 import sys # workaround for encoding error (https://stackoverflow.com/questions/33444740/unicodedecodeerror-charmap-codec-cant-encode-character-x-at-position-y-char)
 
 # === start + run time ===
@@ -21,6 +22,20 @@ start = datetime.now() # run time
 # with open(r"api2_bs_output.html", "w", encoding="utf-8") as file:
 #     file.write(str(soup))
 # print(soup, file=sys.stderr) # debug
+
+# === notifications ===
+
+from sys import platform # check platform (Windows/Linux/macOS); macOS == darwin, Windows == win32
+if platform == "darwin":
+    import pync # macOS notifications
+
+# === URL query date range start & end === 
+
+start_date_range = datetime.now().date() # current date, YYYY-MM-DD
+start_date_range = start_date_range.strftime('%d-%m-%Y') # re-format date from YYYY-MM-DD to DD-MM-YYYY
+
+end_date_range = start_date_range + timedelta(days=7) # add 7 days to get a full week
+end_date_range = end_date_range.strftime('%d-%m-%Y') # re-format date from YYYY-MM-DD to DD-MM-YYYY
 
 # === functions ===
 
@@ -52,7 +67,8 @@ def pullData(soup):
 
 # === R6DS ===
 
-page_url = 'http://pylenia.pl/search.html?r=6&a=0&w=1' # Dolny Śląsk
+page_url = f'http://pylenia.pl/search.html?r=6&a=0&from={start_date_range}&to={end_date_range}&w=1' # Dolny Śląsk
+# print(page_url) # debug
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
@@ -67,7 +83,7 @@ else:
     
 # === R7MZ ===
 
-page_url = 'http://pylenia.pl/search.html?r=7&a=0&w=1' # Mazowsze
+page_url = f'http://pylenia.pl/search.html?r=7&a=0&from={start_date_range}&to={end_date_range}&w=1' # Mazowsze
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
@@ -82,7 +98,7 @@ else:
 
 # # === R9MP ===
 
-page_url = 'http://pylenia.pl/search.html?r=9&a=0&w=1' # Małopolska
+page_url = f'http://pylenia.pl/search.html?r=9&a=0&from={start_date_range}&to={end_date_range}&w=1' # Małopolska
 
 page = urlopen(page_url)
 soup = BeautifulSoup(page, 'html.parser') # parse the page
@@ -94,6 +110,11 @@ if description is not None:
         file.write(description) 
 else: 
     exit()
+
+# === done === 
+
+if platform == "darwin":
+    pync.notify(f'Update complete.', title='Umbrella', subtitle='PollenInfoAutoUpdate', open="https://github.com/vardecab/umbrella/tree/master/py", contentImage="https://github.com/vardecab/umbrella/blob/master/images/umbrella-icon_blue-circle.png?raw=true", sound="Funk")
 
 # === run time ===
 

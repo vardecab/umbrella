@@ -10,7 +10,7 @@ And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bef88
 
 ## Screenshots
 
-<img src="https://s5.gifyu.com/images/umbrella.gif" height="400"/>
+<!-- <img src="https://s5.gifyu.com/images/umbrella.gif" height="400"/> -->
 <img src="https://i.ibb.co/X4CHyH4/umbrella.png"/>
 
 <!-- ![](https://i.ibb.co/Sr8H4Wv/Screenshot-20191208-143750-Brave-COLLAGE.jpg)
@@ -29,6 +29,8 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.24.1: Fixed a bug causing no allergens/pollen info updates.
+- 0.24: Added macOS notification to show when the update was ran.
 - 0.23.2: Tiny change to `theme-color` for purple background.
 - 0.23.1: Removed allergens/pollen date range info until a fix for APIv2 is in place.
 - 0.23: Added a function & `try-except` to allergens/pollen script.

@@ -22,6 +22,8 @@ fonts/jetbrainsmono
 styles/styles.css
 modal-test*
 py/scraper.py
+py/automate.sh
+py/build-app.scpt 
 
 ### Visual Studio Code ###
 .vscode/*

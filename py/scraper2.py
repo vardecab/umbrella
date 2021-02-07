@@ -1,12 +1,10 @@
 # === libs ===
 
-import requests 
 from urllib.request import urlopen # open URLs
 from bs4 import BeautifulSoup # BeautifulSoup; parsing HTML
 import re # regex; extract substrings
 from datetime import datetime # calculate script's run time
 from datetime import timedelta # addition and subtraction of dates
-import sys # workaround for encoding error (https://stackoverflow.com/questions/33444740/unicodedecodeerror-charmap-codec-cant-encode-character-x-at-position-y-char)
 
 # === start + run time ===
 
@@ -32,9 +30,9 @@ if platform == "darwin":
 # === URL query date range start & end === 
 
 start_date_range = datetime.now().date() # current date, YYYY-MM-DD
-start_date_range = start_date_range.strftime('%d-%m-%Y') # re-format date from YYYY-MM-DD to DD-MM-YYYY
-
 end_date_range = start_date_range + timedelta(days=7) # add 7 days to get a full week
+
+start_date_range = start_date_range.strftime('%d-%m-%Y') # re-format date from YYYY-MM-DD to DD-MM-YYYY
 end_date_range = end_date_range.strftime('%d-%m-%Y') # re-format date from YYYY-MM-DD to DD-MM-YYYY
 
 # === functions ===
@@ -96,7 +94,7 @@ if description is not None:
 else: 
     exit()
 
-# # === R9MP ===
+# === R9MP ===
 
 page_url = f'http://pylenia.pl/search.html?r=9&a=0&from={start_date_range}&to={end_date_range}&w=1' # Małopolska
 

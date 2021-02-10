@@ -11,12 +11,12 @@ window.onload = function geoLocator() {
 			// set 🍪 for latitude
 			Cookies.set("umbrella_coord_lat", geo_latitude, {
 				expires: 30,
-				path: "/"
+				path: "/",
 			});
 			// set 🍪 for longitude
 			Cookies.set("umbrella_coord_lng", geo_longitude, {
 				expires: 30,
-				path: "/"
+				path: "/",
 			});
 			console.log(
 				"Cookie data: " +
@@ -78,7 +78,7 @@ window.onload = function geoLocator() {
 					// set 🍪 for location name so we can reuse in future without querying API
 					Cookies.set("umbrella_location", liq_location, {
 						expires: 30,
-						path: "/"
+						path: "/",
 					});
 				});
 
@@ -96,72 +96,88 @@ window.onload = function geoLocator() {
 				"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 			);
 			console.log("User-requested city:", query_input); // debug
+			// alert(query_input); // debug
+			// user pressed OK, but the input field was empty - re-ask
+			if (query_input === "") {
+				// query_input = prompt(
+				// 	"Dla jakiego miejsca chcesz sprawdzić pogodę?"
+				// );
+				alert("Nic nie zostało wpisane. Musisz wpisać jakieś miejsce :)");
+				error(); // re-run the whole process of getting user's location
+			}
+			// user typed something and hit OK; success - let's go
+			else if (query_input) {
+				const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
 
-			const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
+				// grab data from URL
+				fetch(
+						"https://eu1.locationiq.com/v1/search.php?key=" +
+						liq_api_key +
+						"&q=" +
+						query_input +
+						"&format=json"
+					)
+					// convert data to JSON
+					.then(function (res) {
+						return res.json();
+					})
 
-			// grab data from URL
-			fetch(
-					"https://eu1.locationiq.com/v1/search.php?key=" +
-					liq_api_key +
-					"&q=" +
-					query_input +
-					"&format=json"
-				)
-				// convert data to JSON
-				.then(function (res) {
-					return res.json();
-				})
+					// use the data stored in object to do whatever
+					.then(function (liq_data) {
+						console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
-				// use the data stored in object to do whatever
-				.then(function (liq_data) {
-					console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+						// get location name based on what was returned from API and cut it to just city
+						liq_location = liq_data[0].display_name.split(",")[0];
+						// console.error(liq_location); // debug
 
-					// get location name based on what was returned from API and cut it to just city
-					liq_location = liq_data[0].display_name.split(",")[0];
-					// console.error(liq_location); // debug
+						document.getElementById("location").textContent =
+							"🌍 " + liq_location;
 
-					document.getElementById("location").textContent =
-						"🌍 " + liq_location;
+						// set 🍪 for location name
+						Cookies.set("umbrella_location", liq_location, {
+							expires: 30,
+							path: "/",
+						});
 
-					// set 🍪 for location name
-					Cookies.set("umbrella_location", liq_location, {
-						expires: 30,
-						path: "/"
+						// get coords from API based on location user inputted
+						lat = liq_data[0].lat;
+						lng = liq_data[0].lon;
+						console.log("Coords: " + lat + ", " + lng); // debug
+
+						// set 🍪 for latitude
+						Cookies.set("umbrella_coord_lat", lat, {
+							expires: 30,
+							path: "/",
+						});
+						// set 🍪 for longitude
+						Cookies.set("umbrella_coord_lng", lng, {
+							expires: 30,
+							path: "/",
+						});
+						console.log(
+							"Cookie: " +
+							"lat:" +
+							Cookies.get("umbrella_coord_lat") +
+							" lng:" +
+							Cookies.get("umbrella_coord_lng")
+						); // debug
+
+						// variables with values from 🍪s
+						cookie_lng = Cookies.get("umbrella_coord_lng");
+						cookie_lat = Cookies.get("umbrella_coord_lat");
+						// alert(liq_data.address.city); // debug
+						// alert(liq_location); // debug
+
+						weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 					});
-
-					// get coords from API based on location user inputted
-					lat = liq_data[0].lat;
-					lng = liq_data[0].lon;
-					console.log("Coords: " + lat + ", " + lng); // debug
-
-					// set 🍪 for latitude
-					Cookies.set("umbrella_coord_lat", lat, {
-						expires: 30,
-						path: "/"
-					});
-					// set 🍪 for longitude
-					Cookies.set("umbrella_coord_lng", lng, {
-						expires: 30,
-						path: "/"
-					});
-					console.log(
-						"Cookie: " +
-						"lat:" +
-						Cookies.get("umbrella_coord_lat") +
-						" lng:" +
-						Cookies.get("umbrella_coord_lng")
-					); // debug
-
-					// variables with values from 🍪s
-					cookie_lng = Cookies.get("umbrella_coord_lng");
-					cookie_lat = Cookies.get("umbrella_coord_lat");
-					// alert(liq_data.address.city); // debug
-					// alert(liq_location); // debug
-
-					weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-					airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
-					// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
-				});
+			}
+			// user hit Cancel / ESC - re-ask
+			else {
+				alert("Wpisz jakieś miejsce i kliknij Enter albo wybierz OK :)");
+				error(); // re-run the whole process of getting user's location
+			}
 		}
 	}
 	// cookies set so we'll use that
@@ -203,97 +219,120 @@ window.onload = function geoLocator() {
 };
 
 function manualFinder() {
+	// alert('manualFinder'); // debug
+
 	query_input = prompt("Dla jakiego miejsca chcesz sprawdzić pogodę?"); // if we don't know the location let's ask the user
 	console.log("City:", query_input); // debug
 
-	const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
-
-	// grab data from URL
-	fetch(
-			"https://eu1.locationiq.com/v1/search.php?key=" +
-			liq_api_key +
-			"&q=" +
-			query_input +
-			"&format=json"
-		)
-		// convert data to JSON
-		.then(function (res) {
-			return res.json();
-		})
-
-		// use the data stored in object to do whatever
-		.then(function (liq_data) {
-			console.error("LocationIQ", liq_data); // debug: output everything stored in the object
-
-			// get location name based on what was returned from API and cut it to just city
-			liq_location = liq_data[0].display_name.split(",")[0];
-			// liq_location = liq_data.address.town;
-			// console.error(liq_location); // debug
-
-			document.getElementById("location").textContent =
-				"🌍 " + liq_location;
-
-			// set 🍪 for location name
-			Cookies.set("umbrella_location", liq_location, {
-				expires: 30,
-				path: "/"
-			});
-
-			// get coords from API based on location user inputted
-			lat = liq_data[0].lat;
-			lng = liq_data[0].lon;
-			console.log("Coords: " + lat + ", " + lng); // debug
-
-			// set 🍪 for latitude
-			Cookies.set("umbrella_coord_lat", lat, {
-				expires: 30,
-				path: "/"
-			});
-			// set 🍪 for longitude
-			Cookies.set("umbrella_coord_lng", lng, {
-				expires: 30,
-				path: "/"
-			});
-			console.log(
-				"Cookie: " +
-				"lat:" +
-				Cookies.get("umbrella_coord_lat") +
-				" lng:" +
-				Cookies.get("umbrella_coord_lng")
-			); // debug
-
-			// variables with values from 🍪s
-			cookie_lng = Cookies.get("umbrella_coord_lng");
-			cookie_lat = Cookies.get("umbrella_coord_lat");
-
-			weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
-			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
-
-			location.reload();
-		});
-}
-
-smogAlert();
-
-setTimeout(function () {
-	var allergy_location = document.getElementById("location").textContent;
-	if (allergy_location == "🌍 Wroclaw, PL" || allergy_location == "🌍 Wrocław, PL") {
-		allergy_region = "R6DS";
-		checkPollen(allergy_region);
-	} else if (
-		allergy_location == "🌍 Tarnów, PL" ||
-		allergy_location == "🌍 Krakow, PL" ||
-		allergy_location == "🌍 Wola Rzędzińska, PL"
-	) {
-		allergy_region = "R9MP";
-		checkPollen(allergy_region);
-	} else if (allergy_location == "🌍 Warsaw, PL") {
-		allergy_region = "R7MZ";
-		checkPollen(allergy_region);
-	} else {
-		console.log("Allergy: this region is not supported.");
-		$("#allergy").hide();
+	// user pressed OK, but the input field was empty - re-ask
+	if (query_input === "") {
+		// query_input = prompt(
+		// 	"Dla jakiego miejsca chcesz sprawdzić pogodę?"
+		// );
+		alert("Nic nie zostało wpisane. Musisz wpisać jakieś miejsce :)");
+		error(); // re-run the whole process of getting user's location
 	}
-}, 1500);
-// TODO: add ^ to EN version
+	// user typed something and hit OK; success - let's go
+	else if (query_input) {
+		const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
+
+		// grab data from URL
+		fetch(
+				"https://eu1.locationiq.com/v1/search.php?key=" +
+				liq_api_key +
+				"&q=" +
+				query_input +
+				"&format=json"
+			)
+			// convert data to JSON
+			.then(function (res) {
+				return res.json();
+			})
+
+			// use the data stored in object to do whatever
+			.then(function (liq_data) {
+				console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+
+				// get location name based on what was returned from API and cut it to just city
+				liq_location = liq_data[0].display_name.split(",")[0];
+				// liq_location = liq_data.address.town;
+				// console.error(liq_location); // debug
+
+				document.getElementById("location").textContent =
+					"🌍 " + liq_location;
+
+				// set 🍪 for location name
+				Cookies.set("umbrella_location", liq_location, {
+					expires: 30,
+					path: "/",
+				});
+
+				// get coords from API based on location user inputted
+				lat = liq_data[0].lat;
+				lng = liq_data[0].lon;
+				console.log("Coords: " + lat + ", " + lng); // debug
+
+				// set 🍪 for latitude
+				Cookies.set("umbrella_coord_lat", lat, {
+					expires: 30,
+					path: "/",
+				});
+				// set 🍪 for longitude
+				Cookies.set("umbrella_coord_lng", lng, {
+					expires: 30,
+					path: "/",
+				});
+				console.log(
+					"Cookie: " +
+					"lat:" +
+					Cookies.get("umbrella_coord_lat") +
+					" lng:" +
+					Cookies.get("umbrella_coord_lng")
+				); // debug
+
+				// variables with values from 🍪s
+				cookie_lng = Cookies.get("umbrella_coord_lng");
+				cookie_lat = Cookies.get("umbrella_coord_lat");
+
+				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+
+				location.reload();
+			});
+	}
+
+	// user hit Cancel / ESC - re-ask
+	else {
+		alert("Wpisz jakieś miejsce i kliknij Enter albo wybierz OK :)");
+		error(); // re-run the whole process of getting user's location
+
+		// });
+	}}
+
+	smogAlert();
+
+	setTimeout(function () {
+		var allergy_location = document.getElementById("location").textContent;
+		if (
+			allergy_location == "🌍 Wroclaw, PL" ||
+			allergy_location == "🌍 Wrocław, PL"
+		) {
+			allergy_region = "R6DS";
+			checkPollen(allergy_region);
+		} else if (
+			allergy_location == "🌍 Tarnów, PL" ||
+			allergy_location == "🌍 Krakow, PL" ||
+			allergy_location == "🌍 Wola Rzędzińska, PL"
+		) {
+			allergy_region = "R9MP";
+			checkPollen(allergy_region);
+		} else if (allergy_location == "🌍 Warsaw, PL") {
+			allergy_region = "R7MZ";
+			checkPollen(allergy_region);
+		} else {
+			console.log("Allergy: this region is not supported.");
+			$("#allergy").hide();
+		}
+	}, 1500);
+	// TODO: add ^ to EN version

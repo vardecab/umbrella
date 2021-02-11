@@ -24,6 +24,8 @@ modal-test*
 py/scraper.py
 py/automate.sh
 py/build-app.scpt 
+scripts/min
+styles/styles.min.css
 
 ### Visual Studio Code ###
 .vscode/*

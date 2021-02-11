@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.25: Added dawn & dusk times; renamed files so it's easier to understand what's happening where. moved some functions around.
 - 0.24.3: Fixed "Die Null" bug. 
 - 0.24.2: Fixed `TypeError` from _0.24.1_.
 - 0.24.1: Fixed a bug causing no allergens/pollen info updates.
@@ -101,9 +102,14 @@ Using [SemVer](http://semver.org/).
 GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/umbrella/blob/master/LICENSE).
 
 ## Acknowledgements
-
--   APIs: [OpenWeatherMap](https://openweathermap.org/api) & [Airly](https://developer.airly.eu/api) & [AQICN](https://aqicn.org/api/) & [LocationIQ](https://locationiq.com)
+### APIs
+-   [OpenWeatherMap API](https://openweathermap.org/api)
+- [Airly API](https://developer.airly.eu/api)
+- [AQICN API](https://aqicn.org/api/)
+- [LocationIQ API](https://locationiq.com)
+- [Sunrise Sunset API](https://sunrise-sunset.org/api)
 -   [Aktualna prognoza pylenia](http://pylenia.pl/)
+### Other
 -   [Main tutorial that inspired me](https://bytemaster.io/fetch-weather-openweathermap-api-javascript)
 -   [Moment.js](https://momentjs.com)
 -   [JavaScript Cookie](https://github.com/js-cookie/js-cookie)

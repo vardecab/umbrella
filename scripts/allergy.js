@@ -1,4 +1,5 @@
 // scraper.py is getting data from https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/
+// scraper2.py is getting data from http://pylenia.pl/
 
 function checkPollen(lID) {
 	//  get description
@@ -34,3 +35,28 @@ function checkPollen(lID) {
 			// 	});
 		});
 };
+
+setTimeout(function () {
+	// show info from PollenInfoAutoUpdate
+	var allergy_location = document.getElementById("location").textContent;
+	if (
+		allergy_location == "🌍 Wroclaw, PL" ||
+		allergy_location == "🌍 Wrocław, PL"
+	) {
+		allergy_region = "R6DS";
+		checkPollen(allergy_region);
+	} else if (
+		allergy_location == "🌍 Tarnów, PL" ||
+		allergy_location == "🌍 Krakow, PL" ||
+		allergy_location == "🌍 Wola Rzędzińska, PL"
+	) {
+		allergy_region = "R9MP";
+		checkPollen(allergy_region);
+	} else if (allergy_location == "🌍 Warsaw, PL") {
+		allergy_region = "R7MZ";
+		checkPollen(allergy_region);
+	} else {
+		console.log("Allergy: this region is not supported.");
+		$("#allergy").hide();
+	}
+}, 1500);

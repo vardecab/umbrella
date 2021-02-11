@@ -24,16 +24,18 @@ function weatherBallon(lat, lng) {
 	console.log("Full API URL:", owm_url); // debug
 	fetch(owm_url)
 		// convert data to JSON
-		.then(function(resp) {
+		.then(function (resp) {
 			return resp.json();
 		})
 		// get data to drawWeather function below
-		.then(function(owm_data) {
+		.then(function (owm_data) {
 			console.error("OpenWeatherMap", owm_data);
 			drawWeather(owm_data);
 		})
 		// catch any errors
-		.catch(function() {});
+		.catch(function () {});
+
+	sunTimes(lat, lng); // pass coords to get sunrise, sunrise etc. info
 }
 
 // === Part 2 ===
@@ -55,17 +57,17 @@ function drawWeather(owm_data) {
 	while (just_a_counter <= 1) { // * NOTE: 0 = now/next 3 hrs, 1 = next 6 hrs, 2 = next 9 hrs and so on
 		console.log(
 			"(feels like temp) Update #" +
-				just_a_counter +
-				": " +
-				Math.round(owm_data.list[just_a_counter].main.feels_like, 0) +
-				"C"
+			just_a_counter +
+			": " +
+			Math.round(owm_data.list[just_a_counter].main.feels_like, 0) +
+			"C"
 		); // debug; feels like temperature
 		console.log(
 			"(temp) Update #" +
-				just_a_counter +
-				": " +
-				Math.round(owm_data.list[just_a_counter].main.temp, 0) +
-				"C"
+			just_a_counter +
+			": " +
+			Math.round(owm_data.list[just_a_counter].main.temp, 0) +
+			"C"
 		); // debug; temperature
 
 		single_temperature = Math.round(
@@ -82,7 +84,7 @@ function drawWeather(owm_data) {
 
 	// let's get sum and average of temperatures in the list
 	if (temperatures.length) {
-		temperatures_sum = temperatures.reduce(function(a, b) {
+		temperatures_sum = temperatures.reduce(function (a, b) {
 			return a + b;
 		});
 		temperatures_avg = temperatures_sum / temperatures.length;
@@ -235,7 +237,7 @@ function drawWeather(owm_data) {
 	// 🔥 temperature
 	document.getElementById("temperature").innerHTML = Math.round(owm_data.list[0].main.feels_like, 0) + "&deg;";
 	// Math.round(owm_data.list[0].main.temp, 0) + "&deg;"; // temperature in Celsius without comma
-	
+
 	// var element = document.getElementById("temperature");
 	// element.classList.add("temperature_next_3hrs");
 	// document.getElementById("temperature_next_6hrs").textContent += Math.round(temperatures_avg, 0) + "°"; // ! FIX: "&deg;" doesn't work
@@ -260,16 +262,16 @@ function drawWeather(owm_data) {
 	wind = Math.round(wind_kph, 2);
 
 	var wind_in_html = document.getElementById("wind");
-	
+
 	// Klasyfikacja wiatru wg skali Beauforta @ https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw
 	if (wind < 6) {
-		wind_in_html.textContent += "⏸️ " + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "⏸️" + wind + " km/h"; // add to HTML
 	} else if ((wind >= 6) & (wind <= 28)) {
-		wind_in_html.textContent += "🍃 " + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "🍃" + wind + " km/h"; // add to HTML
 	} else if ((wind > 28) & (wind <= 50)) {
-		wind_in_html.textContent += "🍃🍃🍃 " + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "🍃🍃🍃" + wind + " km/h"; // add to HTML
 	} else {
-		wind_in_html.textContent += "🌪️ " + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "🌪️" + wind + " km/h"; // add to HTML
 	}
 
 	// ☁️ air pressure
@@ -277,27 +279,15 @@ function drawWeather(owm_data) {
 	var air_pressure_in_html = document.getElementById("air_pressure");
 
 	if (air_pressure < 1000) {
-		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
 	} else if ((air_pressure >= 1000) & (air_pressure <= 1025)) {
-		air_pressure_in_html.textContent += "👍🏼 " + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👍🏼" + air_pressure + " hPa";
 	} else {
-		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
 	}
 
 	// 📔 description
 	// document.getElementById("weather_description").innerHTML = owm_data.list[0].weather[0].main; // NOTE: if disabling in HTML you need to disable here as well - otherwise everything below won't be displayed
-
-	// ☀️ sunrise
-	var sunrise_local = moment.unix(owm_data.city.sunrise).format("H:mm");
-
-	var sunrise_in_html = document.getElementById("sunrise");
-	sunrise_in_html.textContent += sunrise_local;
-
-	// 🌒 sunset
-	var sunset_local = moment.unix(owm_data.city.sunset).format("H:mm");
-
-	var sunset_in_html = document.getElementById("sunset");
-	sunset_in_html.textContent += sunset_local;
 
 	// === Part 5 ===
 	// save data to localStorage for offline use

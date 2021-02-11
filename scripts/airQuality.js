@@ -221,3 +221,5 @@ function smogAlert() {
 		} else console.log("No alert/notification, air is not so bad. Current: >", air_quality_status, "<");
 	}, 1500); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 }
+
+smogAlert();

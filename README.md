@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.26: Added browser notification feature when air quality is bad. `alert()` being used when notificatioons are not supported / blocked.
 - 0.25: Added dawn & dusk times; renamed files so it's easier to understand what's happening where. moved some functions around.
 - 0.24.3: Fixed "Die Null" bug. 
 - 0.24.2: Fixed `TypeError` from _0.24.1_.

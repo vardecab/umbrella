@@ -57,16 +57,15 @@ function airMask(lat, lng) {
 			} else {}
 
 			// get info about PM2.5 & PM10
-			
+
 			try {
-			console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
-			console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
-			pm25 = data_airly.current.values[1].value;
-			document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
-			pm10 = data_airly.current.values[2].value;
-			document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
-			}
-			catch(err) {
+				console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
+				console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
+				pm25 = data_airly.current.values[1].value;
+				document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
+				pm10 = data_airly.current.values[2].value;
+				document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+			} catch (err) {
 				console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
 			}
 
@@ -141,7 +140,7 @@ function airMask(lat, lng) {
 						} else {}
 
 						// get info about PM2.5 & PM10
-						
+
 						if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
 							pm25 = data_aqicn.data.iaqi.pm25.v;
 							console.log("PM2.5:", pm25 + "μm" + "/25"); // debug
@@ -175,49 +174,47 @@ function smogAlert() {
 			air_quality_status == "Powietrze: ⚰️⚰️" ||
 			air_quality_status == "Powietrze: ⚰️⚰️⚰️"
 		) {
-			alert(
-				"Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️"
-			); // replaced with notification
-			// // Let's check if the browser supports notifications
-			// if (!("Notification" in window)) {
-			// 	console.error(
-			// 		"This browser does not support desktop notifications."
-			// 	);
-			// }
+			// Let's check if the browser supports notifications
+			if (!("Notification" in window)) {
+				console.error(
+					"This browser does not support desktop notifications."
+				);
+				alert(
+					"Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️"
+				);
+			}
 
-			// // Let's check whether notification permissions have already been granted
-			// else if (Notification.permission === "granted") {
-			// 	// If it's okay let's create a notification
-			// 	var notification = new Notification(
-			// 		"Smog zabija ☠️",
-			// 		{
-			// 			icon:
-			// 				"./images/umbrella-icon_blue-circle.png",
-			// 			body:
-			// 				"Nie wychodź z budynku i nie otwieraj okien!"
-			// 		}
-			// 	);
-			// }
+			// Let's check whether notification permissions have already been granted
+			else if (Notification.permission === "granted") {
+				// If it's okay let's create a notification
+				var notification = new Notification(
+					"Smog zabija ☠️", {
+						icon: "./images/umbrella-icon_blue-circle.png",
+						body: "Lepiej nie wychodź z budynku i nie otwieraj okien!"
+					}
+				);
+			} else if (Notification.permission == 'denied') {
+				// user blocked notifications
+				alert("Lepiej nie wychodź z budynku i nie otwieraj okien! Smog zabija ☠️");
+			}
 
-			// // Otherwise, we need to ask the user for permission
-			// else if (Notification.permission !== "denied") {
-			// 	Notification.requestPermission().then(function(
-			// 		permission
-			// 	) {
-			// 		// If the user accepts, let's create a notification
-			// 		if (permission === "granted") {
-			// 			var notification = new Notification(
-			// 				"Smog zabija ☠️",
-			// 				{
-			// 					icon:
-			// 						"./images/umbrella-icon_blue-circle.png",
-			// 					body:
-			// 						"Nie wychodź z budynku i nie otwieraj okien!"
-			// 				}
-			// 			);
-			// 		}
-			// 	});
-			// }
+			// Otherwise, we need to ask the user for permission
+			else if (Notification.permission !== "denied") {
+				alert("Dostęp do powiadomień będzie użyty wyłącznie żeby wyświetlić informację o złym stanie powietrza.")
+				Notification.requestPermission().then(function (
+					permission
+				) {
+					// If the user accepts, let's create a notification
+					if (permission === "granted") {
+						var notification = new Notification(
+							"Smog zabija ☠️", {
+								icon: "./images/umbrella-icon_blue-circle.png",
+								body: "Lepiej nie wychodź z budynku i nie otwieraj okien!"
+							}
+						);
+					}
+				});
+			}
 		} else console.log("No alert/notification, air is not so bad. Current: >", air_quality_status, "<");
 	}, 1500); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 }

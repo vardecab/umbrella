@@ -5,6 +5,7 @@ const airly_api_key = "p1ukBMrlBEPfRD1SynGXU9iEcr0zzJrE";
 const aqicn_api_key = "b2a31fc801f6e4e27353e44d13acf144189c4a0a";
 
 function airMask(lat, lng) {
+	setTimeout(function () {
 	// grab data from URL
 	fetch(
 			"https://airapi.airly.eu/v2/measurements/point?indexType=AIRLY_CAQI&lat=" +
@@ -160,11 +161,17 @@ function airMask(lat, lng) {
 					});
 			}
 		})
+	
 
 		// catch any errors
 		.catch(function () {});
+	}, 500); // *NOTE: delay showing info so it doesn't show along the loading screen
 }
 
+// notify user when air quality is bad 
+// using browser notification: https://developer.mozilla.org/en-US/docs/Web/API/notification
+// using alert () when browser notification ^ is not supported / blocked 
+// !FIX: doesn't work on mobile - would need to implemment https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications
 function smogAlert() {
 	setTimeout(function () {
 		var air_quality_status = document.getElementById("air_quality")
@@ -190,7 +197,8 @@ function smogAlert() {
 				var notification = new Notification(
 					"Smog zabija ☠️", {
 						icon: "./images/umbrella-icon_blue-circle.png",
-						body: "Lepiej nie wychodź z budynku i nie otwieraj okien!"
+						body: "Lepiej nie wychodź z budynku i nie otwieraj okien!",
+						requireInteraction: true // don't close notification
 					}
 				);
 			} else if (Notification.permission == 'denied') {
@@ -201,6 +209,7 @@ function smogAlert() {
 			// Otherwise, we need to ask the user for permission
 			else if (Notification.permission !== "denied") {
 				alert("Dostęp do powiadomień będzie użyty wyłącznie żeby wyświetlić informację o złym stanie powietrza.")
+
 				Notification.requestPermission().then(function (
 					permission
 				) {
@@ -209,14 +218,15 @@ function smogAlert() {
 						var notification = new Notification(
 							"Smog zabija ☠️", {
 								icon: "./images/umbrella-icon_blue-circle.png",
-								body: "Lepiej nie wychodź z budynku i nie otwieraj okien!"
+								body: "Lepiej nie wychodź z budynku i nie otwieraj okien!",
+								requireInteraction: true // don't close notification
 							}
 						);
 					}
 				});
 			}
 		} else console.log("No alert/notification, air is not so bad. Current: >", air_quality_status, "<");
-	}, 1500); // how many ms to wait until function is executed; 1500 ms = 1.5 s
+	}, 2000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 }
 
 smogAlert();

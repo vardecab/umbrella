@@ -27,6 +27,9 @@ py/build-app.scpt
 scripts/min
 styles/styles.min.css
 
+# push notifications on mobile
+scripts/sw.js 
+
 ### Visual Studio Code ###
 .vscode/*
 !.vscode/settings.json

@@ -59,4 +59,4 @@ setTimeout(function () {
 		console.log("Allergy: this region is not supported.");
 		$("#allergy").hide();
 	}
-}, 1500);
+}, 2000);

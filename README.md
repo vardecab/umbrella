@@ -29,6 +29,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.26.1: Added a 500 ms delay so air quality info is not being shown with the loading screen but after; increased the delay from 1500 ms → 2000 ms for allergens/pollen info; tweaked notifications so they won't be closed without user's interaction. 
 - 0.26: Added browser notification feature when air quality is bad. `alert()` being used when notificatioons are not supported / blocked.
 - 0.25: Added dawn & dusk times; renamed files so it's easier to understand what's happening where. moved some functions around.
 - 0.24.3: Fixed "Die Null" bug. 

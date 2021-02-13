@@ -6,165 +6,163 @@ const aqicn_api_key = "b2a31fc801f6e4e27353e44d13acf144189c4a0a";
 
 function airMask(lat, lng) {
 	setTimeout(function () {
-	// grab data from URL
-	fetch(
-			"https://airapi.airly.eu/v2/measurements/point?indexType=AIRLY_CAQI&lat=" +
-			lat +
-			"&lng=" +
-			lng +
-			"&apikey=" +
-			airly_api_key
-		)
-		// convert data to JSON
-		.then(function (res) {
-			return res.json();
-		})
+		// grab data from URL
+		fetch(
+				"https://airapi.airly.eu/v2/measurements/point?indexType=AIRLY_CAQI&lat=" +
+				lat +
+				"&lng=" +
+				lng +
+				"&apikey=" +
+				airly_api_key
+			)
+			// convert data to JSON
+			.then(function (res) {
+				return res.json();
+			})
 
-		// use the data stored in object to do whatever
-		.then(function (data_airly) {
-			console.error("Airly", data_airly); // debug: output everything stored in the object
+			// use the data stored in object to do whatever
+			.then(function (data_airly) {
+				console.error("Airly", data_airly); // debug: output everything stored in the object
 
-			// 💨 air quality
-			current_air_quality = data_airly.current.indexes["0"].level; // get info about air quality
-			console.log(
-				"Current air quality is",
-				current_air_quality,
-				"with value of: " +
-				data_airly.current.indexes["0"].value +
-				". Medium starts at 50, bad starts at 75. Death starts at 100."
-			); // debug
-
-			// data from primary API - Airly
-			air_quality_index = data_airly.current.indexes["0"].value;
-
-			if ((air_quality_index >= 0) & (air_quality_index < 30)) {
-				document.getElementById("air_quality").innerHTML =
-					"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
-			} else if ((air_quality_index >= 30) & (air_quality_index < 50)) {
-				document.getElementById("air_quality").innerHTML =
-					"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
-			} else if ((air_quality_index >= 50) & (air_quality_index < 75)) {
-				document.getElementById("air_quality").innerHTML =
-					"Powietrze: 🤬"; // 🔴
-			} else if ((air_quality_index >= 75) & (air_quality_index < 100)) {
-				document.getElementById("air_quality").innerHTML =
-					"Powietrze: ⚰️"; // ⚫
-			} else if ((air_quality_index >= 100) & (air_quality_index < 125)) {
-				document.getElementById("air_quality").innerHTML =
-					"Powietrze: ⚰️⚰️"; // ⚫⚫
-			} else if (air_quality_index >= 125) {
-				document.getElementById("air_quality").innerHTML =
-					"Powietrze: ⚰️⚰️⚰️"; // ⚫⚫⚫
-			} else {}
-
-			// get info about PM2.5 & PM10
-
-			try {
-				console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
-				console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
-				pm25 = data_airly.current.values[1].value;
-				document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
-				pm10 = data_airly.current.values[2].value;
-				document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
-			} catch (err) {
-				console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
-			}
-
-			// fallback call to different API (AQICN) when Airly is down (either lack of sensors around (3 km radius) or no requests available due to their limits)
-			if (
-				data_airly.current.indexes["0"].value == null ||
-				data_airly.current.indexes["0"].level == "UNKNOWN" ||
-				data_airly.current.indexes["0"].level == null
-			) {
+				// 💨 air quality
+				current_air_quality = data_airly.current.indexes["0"].level; // get info about air quality
 				console.log(
-					"There is something wrong and I can't download air quality data from Airly. Probably I couldn't find any stations in 3 km radius or I can't send any more requests."
-				);
+					"Current air quality is",
+					current_air_quality,
+					"with value of: " +
+					data_airly.current.indexes["0"].value +
+					". Medium starts at 50, bad starts at 75. Death starts at 100."
+				); // debug
 
-				console.log(
-					"Looks like Airly failed us... Let's pull data from China 🤓"
-				);
+				// data from primary API - Airly
+				air_quality_index = data_airly.current.indexes["0"].value;
 
-				fetch(
-						"https://api.waqi.info/feed/geo:" +
-						lat +
-						";" +
-						lng +
-						"/?token=" +
-						aqicn_api_key
-					)
-					// convert data to JSON
-					.then(function (res) {
-						return res.json();
-					})
+				if ((air_quality_index >= 0) & (air_quality_index < 30)) {
+					document.getElementById("air_quality").innerHTML =
+						"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
+				} else if ((air_quality_index >= 30) & (air_quality_index < 50)) {
+					document.getElementById("air_quality").innerHTML =
+						"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
+				} else if ((air_quality_index >= 50) & (air_quality_index < 75)) {
+					document.getElementById("air_quality").innerHTML =
+						"Powietrze: 🤬"; // 🔴
+				} else if ((air_quality_index >= 75) & (air_quality_index < 100)) {
+					document.getElementById("air_quality").innerHTML =
+						"Powietrze: ⚰️"; // ⚫
+				} else if ((air_quality_index >= 100) & (air_quality_index < 125)) {
+					document.getElementById("air_quality").innerHTML =
+						"Powietrze: ⚰️⚰️"; // ⚫⚫
+				} else if (air_quality_index >= 125) {
+					document.getElementById("air_quality").innerHTML =
+						"Powietrze: ⚰️⚰️⚰️"; // ⚫⚫⚫
+				} else {}
 
-					// use the data stored in object to do whatever
-					.then(function (data_aqicn) {
-						console.error("AQICN", data_aqicn); // debug: output everything stored in the object
-						console.log("AQICN:", data_aqicn.data.aqi); // debug
+				// get info about PM2.5 & PM10
 
-						air_quality_index = data_aqicn.data.aqi;
+				try {
+					console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
+					console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
+					pm25 = data_airly.current.values[1].value;
+					document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
+					pm10 = data_airly.current.values[2].value;
+					document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+				} catch (err) {
+					console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
+				}
 
-						// NOTE: there must be a cleaner way to do it rather than copy-pasting from above... but this works for now
-						if (
-							(air_quality_index >= 0) &
-							(air_quality_index < 50)
-						) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
-						} else if (
-							(air_quality_index >= 50) &
-							(air_quality_index < 100)
-						) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
-						} else if (
-							(air_quality_index >= 100) &
-							(air_quality_index < 150)
-						) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: 🤬"; // 🔴
-						} else if (
-							(air_quality_index >= 150) &
-							(air_quality_index < 200)
-						) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: ⚰️"; // ⚫
-						} else if (
-							(air_quality_index >= 200) &
-							(air_quality_index < 300)
-						) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: ⚰️⚰️"; // ⚫⚫
-						} else if (air_quality_index >= 300) {
-							document.getElementById("air_quality").innerHTML =
-								"Powietrze: ⚰️⚰️⚰️"; // ⚫⚫⚫
-						} else {}
+				// fallback call to different API (AQICN) when Airly is down (either lack of sensors around (3 km radius) or no requests available due to their limits)
+				if (
+					data_airly.current.indexes["0"].value == null ||
+					data_airly.current.indexes["0"].level == "UNKNOWN" ||
+					data_airly.current.indexes["0"].level == null
+				) {
+					console.log(
+						"There is something wrong and I can't download air quality data from Airly. Probably I couldn't find any stations in 3 km radius or I can't send any more requests."
+					);
 
-						// get info about PM2.5 & PM10
+					console.log(
+						"Looks like Airly failed us... Let's pull data from China 🤓"
+					);
 
-						if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
-							pm25 = data_aqicn.data.iaqi.pm25.v;
-							console.log("PM2.5:", pm25 + "μm" + "/25"); // debug
-							document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
-						} else {
-							pm25 = data_airly.current.values[1].value;
-							console.log("PM2.5:", pm25 + "μm" + "/25"); // debug 
-						}
-						if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
-							pm10 = data_aqicn.data.iaqi.pm10.v;
-							console.log("PM10:", pm10 + "μm" + "/50"); // debug
-							document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
-						} else {
-							pm25 = data_airly.current.values[2].value;
-							console.log("PM10:", pm10 + "μm" + "/50"); // debug
-						}
-					});
-			}
-		})
-	
+					fetch(
+							"https://api.waqi.info/feed/geo:" +
+							lat +
+							";" +
+							lng +
+							"/?token=" +
+							aqicn_api_key
+						)
+						// convert data to JSON
+						.then(function (res) {
+							return res.json();
+						})
 
-		// catch any errors
-		.catch(function () {});
+						// use the data stored in object to do whatever
+						.then(function (data_aqicn) {
+							console.error("AQICN", data_aqicn); // debug: output everything stored in the object
+							console.log("AQICN:", data_aqicn.data.aqi); // debug
+
+							air_quality_index = data_aqicn.data.aqi;
+
+							// NOTE: there must be a cleaner way to do it rather than copy-pasting from above... but this works for now
+							if (
+								(air_quality_index >= 0) &
+								(air_quality_index < 50)
+							) {
+								document.getElementById("air_quality").innerHTML =
+									"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
+							} else if (
+								(air_quality_index >= 50) &
+								(air_quality_index < 100)
+							) {
+								document.getElementById("air_quality").innerHTML =
+									"Powietrze: 🤢"; // 🟡 emoji not fully supported across different operating systems (ie < Android 10)
+							} else if (
+								(air_quality_index >= 100) &
+								(air_quality_index < 150)
+							) {
+								document.getElementById("air_quality").innerHTML =
+									"Powietrze: 🤬"; // 🔴
+							} else if (
+								(air_quality_index >= 150) &
+								(air_quality_index < 200)
+							) {
+								document.getElementById("air_quality").innerHTML =
+									"Powietrze: ⚰️"; // ⚫
+							} else if (
+								(air_quality_index >= 200) &
+								(air_quality_index < 300)
+							) {
+								document.getElementById("air_quality").innerHTML =
+									"Powietrze: ⚰️⚰️"; // ⚫⚫
+							} else if (air_quality_index >= 300) {
+								document.getElementById("air_quality").innerHTML =
+									"Powietrze: ⚰️⚰️⚰️"; // ⚫⚫⚫
+							} else {}
+
+							// get info about PM2.5 & PM10
+
+							if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
+								pm25 = data_aqicn.data.iaqi.pm25.v;
+								console.log("PM2.5:", pm25 + "μm" + "/25"); // debug
+								document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
+							} else {
+								pm25 = data_airly.current.values[1].value;
+								console.log("PM2.5:", pm25 + "μm" + "/25"); // debug 
+							}
+							if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
+								pm10 = data_aqicn.data.iaqi.pm10.v;
+								console.log("PM10:", pm10 + "μm" + "/50"); // debug
+								document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+							} else {
+								pm25 = data_airly.current.values[2].value;
+								console.log("PM10:", pm10 + "μm" + "/50"); // debug
+							}
+						});
+				}
+			})
+			// catch any errors
+			.catch(function () {});
 	}, 500); // *NOTE: delay showing info so it doesn't show along the loading screen
 }
 

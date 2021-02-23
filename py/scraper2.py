@@ -112,7 +112,7 @@ else:
 # === done === 
 
 if platform == "darwin":
-    pync.notify(f'Update complete.', title='Umbrella', subtitle='PollenInfoAutoUpdate', open="https://github.com/vardecab/umbrella/tree/master/py", contentImage="https://github.com/vardecab/umbrella/blob/master/images/umbrella-icon_blue-circle.png?raw=true", sound="Funk")
+    pync.notify(f'Update complete.', title='Umbrella', subtitle='PollenInfoAutoUpdate', open="https://github.com/vardecab/umbrella/tree/master/py", contentImage="https://github.com/vardecab/umbrella/blob/master/images/umbrella-icon_blue-circle.png?raw=true")
 
 # === run time ===
 

@@ -26,6 +26,7 @@ py/automate.sh
 py/build-app.scpt 
 scripts/min
 styles/styles.min.css
+py/automate/*
 
 # push notifications on mobile
 scripts/sw.js 

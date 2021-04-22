@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup # BeautifulSoup; parsing HTML
 import re # regex; extract substrings
 from datetime import datetime # calculate script's run time
 from datetime import timedelta # addition and subtraction of dates
+import webbrowser # open URL from notification 
 
 # === start + run time ===
 
@@ -26,6 +27,9 @@ start = datetime.now() # run time
 from sys import platform # check platform (Windows/Linux/macOS); macOS == darwin, Windows == win32
 if platform == "darwin":
     import pync # macOS notifications
+elif platform == 'win32':
+    from win10toast_click import ToastNotifier # Windows 10 notifications
+    toaster = ToastNotifier() # initialize win10toast
 
 # === URL query date range start & end === 
 
@@ -111,8 +115,17 @@ else:
 
 # === done === 
 
-# if platform == "darwin":
-#     pync.notify(f'Update complete.', title='Umbrella', subtitle='PollenInfoAutoUpdate', open="https://github.com/vardecab/umbrella/tree/master/py", contentImage="https://github.com/vardecab/umbrella/blob/master/images/umbrella-icon_blue-circle.png?raw=true")
+def open_url(): # callback from Windows 10 notification 
+    # try: 
+    webbrowser.open_new("https://github.com/vardecab/umbrella/tree/master/py")
+        # print('')  
+    # except: 
+        # print('')
+
+if platform == "darwin":
+    pync.notify(f'Update complete.', title='Umbrella', subtitle='PollenInfoAutoUpdate', open="https://github.com/vardecab/umbrella/tree/master/py", contentImage="https://github.com/vardecab/umbrella/blob/master/images/umbrella-icon_blue-circle.png?raw=true")
+elif platform == "win32":
+    toaster.show_toast(title="Umbrella", msg='PollenInfoAutoUpdate complete.', icon_path="../images/umbrella-icon_blue-circle.ico", duration=None, threaded=True, callback_on_click=open_url) # duration=None - leave notification in Notification Center; threaded=True - rest of the script will be allowed to be executed while the notification is still active
 
 # === run time ===
 

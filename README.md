@@ -1,5 +1,9 @@
 # Umbrella
 
+![](https://img.shields.io/uptimerobot/status/m788095876-34537beb719d60f13baeea7b)
+<br>
+![](https://img.shields.io/badge/browser-Chromium%20%7C%20Firefox%20%7C%20Safari-blue)
+
 > A simple [weather app](https://vardecab.github.io/umbrella/umbrella.html) that tells you if you need to take an umbrella when going outside ☔ + it shows air quality and allergy information for supported regions. _Currently only in Polish_.
 
 <img src="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png">
@@ -104,7 +108,8 @@ Using [SemVer](http://semver.org/).
 
 ## License
 
-GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/umbrella/blob/master/LICENSE).
+![](https://img.shields.io/github/license/vardecab/umbrella)
+<!-- GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/umbrella/blob/master/LICENSE). -->
 
 ## Acknowledgements
 ### APIs
@@ -126,3 +131,9 @@ GNU General Public License v3.0, see [LICENSE.md](https://github.com/vardecab/um
 -   Icons from [Flaticon](https://www.flaticon.com)
 -   Font used: [Mali](https://fonts.google.com/specimen/Mali)
 - [Wind strength scale](https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw)
+
+## Contributing
+
+![](https://img.shields.io/github/issues/vardecab/umbrella)
+
+If you found a bug or want to propose a feature, feel free to visit [the Issues page](https://github.com/vardecab/umbrella/issues).

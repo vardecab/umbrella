@@ -1,26 +1,44 @@
+<!-- =============================== -->
+<!--            Umbrella             -->
+<!--      A simple weather app       -->
+<!-- =============================== -->
+
 <!DOCTYPE html>
 <html lang="pl">
 
 <head>
+	<!-- ------------ title ------------ -->
 	<title>Umbrella</title>
-	<meta property="og:title" content="Umbrella" />
+
+	<!-- --------- description --------- -->
 	<meta name="description" content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz." />
+
+	<!-- --------- Open Graph ---------- -->
+	<meta property="og:title" content="Umbrella" />
 	<meta property="og:description" content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz." />
 	<meta property="og:image" content="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="og:url" content="https://vardecab.github.io/umbrella/umbrella.html" />
+
 	<meta name="twitter:card" content="summary_large_image" />
 
+	<!-- --------- theme color --------- -->
+	<!-- The theme-color meta tag provides a way to suggest a color that browsers should use to customize the display of the page or of the surrounding user interface. For example, browsers might use the color for the page’s title bar or use it as a color highlight in a tab bar or task switcher. -->
 	<meta name="theme-color" content="#000000" /> <!-- default -->
 
+	<!-- ------------ other ------------ -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+	<!-- - website/tab icon / favicon -- -->
 	<link rel="icon" type="image/png" href="./images/umbrella-icon_blue-circle.png" />
 
+	<!-- ------------- CSS ------------- -->
 	<link rel="stylesheet" href="./styles/styles.css" /> <!-- website styling -->
 
+	<!-- --------- JavaScript ---------- -->
+	<!-- ---------- my files ----------- -->
 	<script src="./scripts/weather.js"></script> <!-- weather logic -->
 	<script src="./scripts/airQuality.js"></script> <!-- air quality logic -->
 	<script src="./scripts/allergy.js"></script> <!-- allergy logic -->
@@ -28,9 +46,13 @@
 	<script src="./scripts/location.js"></script> <!-- get location -->
 	<script src="./scripts/sunTimes.js"></script> <!-- sunrise, sunset -->
 
+	<!-- ----- external libraries ------ -->
 	<script src="./scripts/libraries/moment.min.js"></script> <!-- time formats manipulation -->
 	<script src="./scripts/libraries/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
 	<script src="./scripts/libraries/jquery.slim.min.js"></script> <!-- jQuery for hide() and show() in allergy.js -->
+
+	<!-- -------- auto-refresh --------- -->
+	<meta http-equiv="refresh" content="3600" /> <!-- auto-refresh every 1 hour to load a new forecast -->
 </head>
 
 <body>

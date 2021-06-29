@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.28: Auto-refresh every 1 hour to load a new forecast.
 - 0.27: Re-enabled macOS notification and added Windows 10 notification when `PollenInfoAutoUpdate` is complete.
 - 0.26.3: Disabled macOS notification added in 0.24.
 - 0.26.2: Removed sound from macOS notification when allergens/pollen info is updated.

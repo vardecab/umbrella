@@ -156,9 +156,9 @@ window.onload = function geoLocator() {
 						});
 						console.log(
 							"Cookie: " +
-							"lat:" +
+							"lat:",
 							Cookies.get("umbrella_coord_lat") +
-							" lng:" +
+							" lng:",
 							Cookies.get("umbrella_coord_lng")
 						); // debug
 

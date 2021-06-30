@@ -21,7 +21,7 @@ function weatherBallon(lat, lng) {
 		owm_api_key +
 		"&units=metric" +
 		"&lang=pl";
-	console.log("Full API URL:", owm_url); // debug
+	console.log('%c%s', 'color: #0047ca', "Full API URL:", owm_url); // debug; colored output 
 	fetch(owm_url)
 		// convert data to JSON
 		.then(function (resp) {
@@ -309,7 +309,7 @@ function drawWeather(owm_data) {
 		localStorage_description
 	);
 
-	// store time of last update
+	// store time of requested data (ie. it's 15:00 but data is taken from 17:00)
 	time_of_data = owm_data.list[0].dt_txt;
 	var utcTime = time_of_data;
 	var local_time = moment
@@ -333,3 +333,10 @@ function drawWeather(owm_data) {
 if (navigator.onLine === false) {
 	window.location = "./offline.html";
 }
+
+/* ------------- Part 7 ------------- */
+// output last update time
+
+var autoRefreshLastUpdate = new Date(); // new date object (date + time)
+autoRefreshLastUpdate = autoRefreshLastUpdate.toTimeString().split(' ')[0] // toTimeString returns the complete time. We split it by space to get the time component only
+console.log('%c%s', 'color: #007531', "autoRefreshLastUpdate:", autoRefreshLastUpdate); // colored output 

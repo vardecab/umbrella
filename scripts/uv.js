@@ -43,7 +43,7 @@ function getUVI(lat, lng) {
 function showUVI(owm_data) {
     uvi = owm_data.current.uvi
     uvi = Math.round(uvi)
-    console.log('UVI:', uvi) // debug
+    // console.log('UVI:', uvi) // debug
 
     // *NOTE: https://en.wikipedia.org/wiki/Ultraviolet_index
 
@@ -57,7 +57,7 @@ function showUVI(owm_data) {
     } else if (uvi >= 8 && uvi < 11) { // very high risk of harm
         uvi_in_html.textContent += uvi + " 🏠";
     } else { // uvi >= 11; extreme risk of harm 
-        
+        uvi_in_html.textContent += uvi + " 🏠";
     }
 }
 

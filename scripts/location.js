@@ -85,6 +85,8 @@ window.onload = function geoLocator() {
 			weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+
+			getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 		}
 
 		function error() {
@@ -171,6 +173,7 @@ window.onload = function geoLocator() {
 						weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+						getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 					});
 			}
 			// user hit Cancel / ESC - re-ask
@@ -207,6 +210,8 @@ window.onload = function geoLocator() {
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
+
+		getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 	}
 
 	if (!navigator.geolocation) {
@@ -297,6 +302,7 @@ function manualFinder() {
 				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+				getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 
 				location.reload();
 			});

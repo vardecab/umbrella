@@ -12,6 +12,7 @@ function weatherBallon(lat, lng) {
 	// }
 
 	// grab data from URL
+	// 5 day / 3 hour forecast data (https://openweathermap.org/forecast5)
 	var owm_url =
 		"https://api.openweathermap.org/data/2.5/forecast?lat=" +
 		lat +
@@ -21,7 +22,7 @@ function weatherBallon(lat, lng) {
 		owm_api_key +
 		"&units=metric" +
 		"&lang=pl";
-	console.log('%c%s', 'color: #0047ca', "Full API URL:", owm_url); // debug; colored output 
+	console.log('%c%s', 'color: #0047ca', "Full API URL (5D/3H (all)):", owm_url); // debug; colored output 
 	fetch(owm_url)
 		// convert data to JSON
 		.then(function (resp) {
@@ -29,7 +30,7 @@ function weatherBallon(lat, lng) {
 		})
 		// get data to drawWeather function below
 		.then(function (owm_data) {
-			console.error("OpenWeatherMap", owm_data);
+			console.error("OpenWeatherMap - 5D/3H (all)", owm_data);
 			drawWeather(owm_data);
 		})
 		// catch any errors

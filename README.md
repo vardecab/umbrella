@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.29: Added UV index info with notifications when UVI means high risk of harm from unprotected sun exposure.
 - 0.28.1: Log `autoRefreshLastUpdate`.
 - 0.28: Auto-refresh every 1 hour to load a new forecast.
 - 0.27: Re-enabled macOS notification and added Windows 10 notification when `PollenInfoAutoUpdate` is complete.

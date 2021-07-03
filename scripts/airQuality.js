@@ -168,7 +168,7 @@ function airMask(lat, lng) {
 
 // notify user when air quality is bad 
 // using browser notification: https://developer.mozilla.org/en-US/docs/Web/API/notification
-// using alert () when browser notification ^ is not supported / blocked 
+// using alert() when browser notification ^ is not supported / blocked 
 // !FIX: doesn't work on mobile - would need to implemment https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications
 function smogAlert() {
 	setTimeout(function () {
@@ -206,7 +206,7 @@ function smogAlert() {
 
 			// Otherwise, we need to ask the user for permission
 			else if (Notification.permission !== "denied") {
-				alert("Dostęp do powiadomień będzie użyty wyłącznie żeby wyświetlić informację o złym stanie powietrza.")
+				alert("Dostęp do powiadomień będzie użyty wyłącznie żeby wyświetlić informacje związane z zagrożeniami pogodowymi.")
 
 				Notification.requestPermission().then(function (
 					permission

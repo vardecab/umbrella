@@ -1,4 +1,6 @@
-// 🇵🇱
+/* ================================== */
+/*              5D/3H API             */
+/* ================================== */
 
 // === Part 1 ===
 // get data from weather API and do stuff
@@ -39,7 +41,7 @@ function weatherBallon(lat, lng) {
 	sunTimes(lat, lng); // pass coords to get sunrise, sunrise etc. info
 }
 
-// === Part 2 ===
+// === Part 2 ==
 // icon/text/background logic based on temperature
 
 // get data from weatherBallon and do magic
@@ -49,7 +51,7 @@ function drawWeather(owm_data) {
 		document.getElementById("loading").remove();
 	} else console.error("City in OWM is null!");
 
-	// === temperature calculations ===
+	/* ---- temperature calculations ---- */
 	var just_a_counter = 0; // counter
 	var temperatures = []; // list of temperatures
 
@@ -235,7 +237,7 @@ function drawWeather(owm_data) {
 	// === Part 4 ===
 	// get weather details from API and push to HTML
 
-	// 🔥 temperature
+	// 🌡️ temperature
 	document.getElementById("temperature").innerHTML = Math.round(owm_data.list[0].main.feels_like, 0) + "&deg;";
 	// Math.round(owm_data.list[0].main.temp, 0) + "&deg;"; // temperature in Celsius without comma
 
@@ -287,6 +289,18 @@ function drawWeather(owm_data) {
 		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
 	}
 
+	// 🌫️ humidity 
+	// humidity = owm_data.list[0].main.humidity;
+	// var humidity_in_html = document.getElementById("humidity");
+	
+	// if (humidity >= 40 && humidity <= 60) {
+	// 	humidity_in_html.textContent += humidity + "%" + "🟩";
+	// } else if (humidity < 40) {
+	// 	humidity_in_html.textContent += humidity + "%" + "🔻";
+	// } else if (humidity > 60) {
+	// 	humidity_in_html.textContent += humidity + "%" + "🔺";
+	// }
+	
 	// 📔 description
 	// document.getElementById("weather_description").innerHTML = owm_data.list[0].weather[0].main; // NOTE: if disabling in HTML you need to disable here as well - otherwise everything below won't be displayed
 

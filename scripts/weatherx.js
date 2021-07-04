@@ -1,10 +1,10 @@
 /* ================================== */
-/*              UV index              */
+/*            One Call API            */
 /* ================================== */
 
-/* -------- get UVI from API -------- */
+/* -------- get data from API -------- */
 
-function getUVI(lat, lng) {
+function weatherBallon2(lat, lng) {
 	const owm_api_key = "4541406d253305e837d9ff9e415c7551"; // well... no way to hide it ¯\_(ツ)_/¯
 	// if (owm_api_key == "") {
 	//     window.alert("API key missing!");
@@ -13,6 +13,7 @@ function getUVI(lat, lng) {
 
 	/* ------- grab data from URL ------- */
 	// One Call API (https://openweathermap.org/api/one-call-api)
+	// excluding unnecessary information 
 	var owm_url =
 		"https://api.openweathermap.org/data/2.5/onecall?lat=" +
 		lat +
@@ -22,30 +23,32 @@ function getUVI(lat, lng) {
         "minutely,hourly,daily,alerts" +
 		"&appid=" +
 		owm_api_key
-	console.log('%c%s', 'color: #0047ca', "Full API URL (One Call (UV)):", owm_url); // debug; colored output 
+	console.log('%c%s', 'color: #0047ca', "Full API URL (One Call (UV & DP)):", owm_url); // debug; colored output 
 	fetch(owm_url)
 		// convert data to JSON
 		.then(function (resp) {
 			return resp.json();
 		})
-		// get data to showUVI() function below
+		// get data to showData() function below
 		.then(function (owm_data) {
-			console.error("OpenWeatherMap - One Call (UVI)", owm_data);
-			showUVI(owm_data);
+			console.error("OpenWeatherMap - One Call (UV & DP)", owm_data);
+			showData(owm_data);
 		})
 		// catch any errors
 		.catch(function () {});
 }
 
-/* --------- show UVI in app -------- */
+/* --------- show data in HTML -------- */
 
-// get data from getUVI() and do magic
-function showUVI(owm_data) {
-    uvi = owm_data.current.uvi
+// get data from weatherBallon2() and do magic
+function showData(owm_data) {
+    
+	/* ------------- ☀️ UVI ------------- */
+	// *NOTE: https://en.wikipedia.org/wiki/Ultraviolet_index	
+
+	uvi = owm_data.current.uvi
     uvi = Math.round(uvi)
     // console.log('UVI:', uvi) // debug
-
-    // *NOTE: https://en.wikipedia.org/wiki/Ultraviolet_index
 
     var uvi_in_html = document.getElementById("uvi");
     if (uvi < 3) { // low danger
@@ -59,6 +62,30 @@ function showUVI(owm_data) {
     } else { // uvi >= 11; extreme risk of harm 
         uvi_in_html.textContent += uvi + " 🏠";
     }
+
+	/* ---------- 🌫️ dew point --------- */
+	// *NOTE: https://www.weather.gov/arx/why_dewpoint_vs_humidity
+
+	// get DP temperature from API
+	dew_point = owm_data.current.dew_point; // default is Kelvin 
+	// convert Kelvin to Celsius 
+	dew_point = dew_point - 273.15
+	// round the number without decimals
+	dew_point = dew_point.toFixed(0) // 0 after .
+
+	// get HTML element
+	var dew_point_in_html = document.getElementById("dew_point");
+	
+	if (dew_point <= 12.78) {
+		// dew_point_in_html.textContent += dew_point + "°" + "🟩";
+		dew_point_in_html.textContent += "fajnie" + "🟩";
+	} else if (dew_point > 12.78 && dew_point < 18.33) {
+		// dew_point_in_html.textContent += dew_point + "°" + "🔺";
+		dew_point_in_html.textContent += "parno" + "🔺";
+	} else if (dew_point >= 18.33) {
+		// dew_point_in_html.textContent += dew_point + "°" + "🔺";
+		dew_point_in_html.textContent += "parno" + "🔺";
+	}
 }
 
 /* --------- high UVI alert --------- */

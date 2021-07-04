@@ -1,3 +1,5 @@
+// "manual API" to get allergy/pollen info 
+
 // scraper.py is getting data from https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/
 // scraper2.py is getting data from http://pylenia.pl/
 
@@ -21,18 +23,6 @@ function checkPollen(lID) {
 					$("#allergy_placeholder").show();
 				}
 			});
-
-			// get date range for which this update is available
-			// TODO: get data range from new "API"
-			// fetch("./py/allergens-date_range.txt")
-			// 	.then(response => response.text())
-			// 	.then(data_dateRange => {
-					// alert(data_dateRange); // debug
-			// 		console.log(
-			// 			"Allergy description date range:",
-			// 			data_dateRange
-			// 		);
-			// 	});
 		});
 };
 

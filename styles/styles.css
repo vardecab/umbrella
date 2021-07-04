@@ -63,7 +63,7 @@ body {
 .more_details {
 	margin-top: -2%;
 	margin-bottom: 2.5%;
-	display: none;
+	display: none; /* *NOTE: disable to see all the details */ 
 }
 
 #umbrella,

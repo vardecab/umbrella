@@ -1,3 +1,8 @@
+// what this file does: 
+// $ take user's input 
+// $ take user's coords or convert input (city name) to coords and then send to functions which will return the weather data 
+// $ save coords to cookies 
+
 window.onload = function geoLocator() {
 	if (
 		Cookies.get("umbrella_coord_lat") == undefined ||
@@ -83,10 +88,9 @@ window.onload = function geoLocator() {
 				});
 
 			weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
-
-			getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 		}
 
 		function error() {
@@ -171,9 +175,9 @@ window.onload = function geoLocator() {
 						// alert(liq_location); // debug
 
 						weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
-						getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 					});
 			}
 			// user hit Cancel / ESC - re-ask
@@ -208,10 +212,9 @@ window.onload = function geoLocator() {
 		}
 
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+		weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
-
-		getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 	}
 
 	if (!navigator.geolocation) {
@@ -300,9 +303,9 @@ function manualFinder() {
 				cookie_lat = Cookies.get("umbrella_coord_lat");
 
 				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
+				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
-				getUVI(cookie_lat, cookie_lng); // pass coords to get UV index
 
 				location.reload();
 			});

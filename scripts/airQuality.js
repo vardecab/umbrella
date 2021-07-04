@@ -1,4 +1,4 @@
-// 🇵🇱
+// file which handles air quality data - sends request to API, returns the result, displays data in HTML and sends alert when air quality is unhealthy 
 
 // API keys, well... no way to hide it ¯\_(ツ)_/¯
 const airly_api_key = "p1ukBMrlBEPfRD1SynGXU9iEcr0zzJrE";

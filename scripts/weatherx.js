@@ -47,11 +47,13 @@ function showData(owm_data) {
 	// *NOTE: https://en.wikipedia.org/wiki/Ultraviolet_index	
 
 	uvi = owm_data.current.uvi
-    uvi = Math.round(uvi)
+    uvi = uvi.toFixed(0) // 0 after .
     // console.log('UVI:', uvi) // debug
 
     var uvi_in_html = document.getElementById("uvi");
-    if (uvi < 3) { // low danger
+    if (uvi == 0) { // no danger?
+		uvi_in_html.textContent += uvi;
+	} else if (uvi < 3) { // low danger
         uvi_in_html.textContent += uvi + " 🕶️";
     } else if (uvi >= 3 && uvi < 6) { // moderate risk of harm
         uvi_in_html.textContent += uvi + " 🕶️👒";

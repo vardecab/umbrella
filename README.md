@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.30.2: Tiny text tweak.
 - 0.30.1: Fixed a tiny bug where `UVI == 0` wasn't handled. 
 - 0.30: Added dew point temperature to see if it's muddy or not (based on [NWS: Dew Point vs Humidity](https://www.weather.gov/arx/why_dewpoint_vs_humidity)); cleaned up some code; added some comments.
 - 0.29: Added UV index info with notifications when UVI means high risk of harm from unprotected sun exposure.

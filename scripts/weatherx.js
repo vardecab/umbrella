@@ -124,7 +124,7 @@ function uviAlert() {
 			else if (Notification.permission === "granted") {
 				// If it's okay let's create a notification
 				var notification = new Notification(
-					"Słońce szkodzi ☀️", {
+					"Słońce może szkodzić ☀️", {
 						icon: "./images/umbrella-icon_blue-circle.png",
 						body: "Lepiej nie wychodź z budynku. Wysokie zagrożenie podczas przebywania na słońcu!",
 						requireInteraction: true // don't close notification
@@ -145,7 +145,7 @@ function uviAlert() {
 					// If the user accepts, let's create a notification
 					if (permission === "granted") {
 						var notification = new Notification(
-                            "Słońce szkodzi ☀️", {
+                            "Słońce może szkodzić ☀️", {
                                 icon: "./images/umbrella-icon_blue-circle.png",
                                 body: "Lepiej nie wychodź z budynku. Wysokie zagrożenie podczas przebywania na słońcu!",
                                 requireInteraction: true // don't close notification

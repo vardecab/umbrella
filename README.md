@@ -33,10 +33,19 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.30.4: Tiny UX tweak to dew point; changed "auto-refresh" from 30 to 15 mins.
 - 0.30.3: Changed "auto-refresh" from 60 to 30 mins.
 - 0.30.2: Tiny text tweak.
 - 0.30.1: Fixed a tiny bug where `UVI == 0` wasn't handled. 
 - 0.30: Added dew point temperature to see if it's muddy or not (based on [NWS: Dew Point vs Humidity](https://www.weather.gov/arx/why_dewpoint_vs_humidity)); cleaned up some code; added some comments.
+
+<details>
+
+<summary>
+Click to see all updates < 0.30
+</summary>
+
+
 - 0.29: Added UV index info with notifications when UVI means high risk of harm from unprotected sun exposure.
 - 0.28.1: Log `autoRefreshLastUpdate`.
 - 0.28: Auto-refresh every 1 hour to load a new forecast.
@@ -109,6 +118,10 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 -   0.2: Added early code for winter.
 -   0.1: Initial release.
 
+</details>
+
+<br>
+
 ## Versioning
 
 Using [SemVer](http://semver.org/).
@@ -126,7 +139,13 @@ Using [SemVer](http://semver.org/).
 - [LocationIQ API](https://locationiq.com)
 - [Sunrise Sunset API](https://sunrise-sunset.org/api)
 -   [Aktualna prognoza pylenia](http://pylenia.pl/)
-### Other
+
+<details>
+
+<summary>
+Other
+</summary>
+
 -   [Main tutorial that inspired me](https://bytemaster.io/fetch-weather-openweathermap-api-javascript)
 -   [Moment.js](https://momentjs.com)
 -   [JavaScript Cookie](https://github.com/js-cookie/js-cookie)
@@ -138,6 +157,10 @@ Using [SemVer](http://semver.org/).
 -   Icons from [Flaticon](https://www.flaticon.com)
 -   Font used: [Mali](https://fonts.google.com/specimen/Mali)
 - [Wind strength scale](https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw)
+
+</details>
+
+<br>
 
 ## Contributing
 

@@ -71,22 +71,22 @@ function showData(owm_data) {
 	// get DP temperature from API
 	dew_point = owm_data.current.dew_point; // default is Kelvin 
 	// convert Kelvin to Celsius 
-	dew_point = dew_point - 273.15
+	dew_point = dew_point - 273.15;
 	// round the number without decimals
 	dew_point = dew_point.toFixed(0) // 0 after .
 
 	// get HTML element
 	var dew_point_in_html = document.getElementById("dew_point");
-	
+
 	if (dew_point <= 12.78) {
-		// dew_point_in_html.textContent += dew_point + "°" + "🟩";
-		dew_point_in_html.textContent += "fajnie" + "🟩";
+		// dew_point_in_html.textContent += dew_point + "°" + " 🟩";
+		dew_point_in_html.textContent += "nieparno" + " 🟩";
 	} else if (dew_point > 12.78 && dew_point < 18.33) {
-		// dew_point_in_html.textContent += dew_point + "°" + "🔺";
-		dew_point_in_html.textContent += "parno" + "🔺";
+		// dew_point_in_html.textContent += dew_point + "°" + " 🔺";
+		dew_point_in_html.textContent += "parno" + " 🔺";
 	} else if (dew_point >= 18.33) {
-		// dew_point_in_html.textContent += dew_point + "°" + "🔺";
-		dew_point_in_html.textContent += "parno" + "🔺";
+		// dew_point_in_html.textContent += dew_point + "°" + " 🔺";
+		dew_point_in_html.textContent += "parno" + " 🔺";
 	}
 }
 

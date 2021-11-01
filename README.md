@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.30.6: Improved RWD in one specific case.
 - 0.30.5: Improved RWD in one specific case.
 - 0.30.4: Tiny UX tweak to dew point; changed "auto-refresh" from 30 to 15 mins.
 - 0.30.3: Changed "auto-refresh" from 60 to 30 mins.

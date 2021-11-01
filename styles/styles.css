@@ -216,7 +216,7 @@ a {
 }
 
 /* Computer w/ Full HD screen - 2/3 screen on Windows 11 */
-@media (min-width: 1250px) {
+@media (min-width: 1250px) and (max-width: 1400px) {
 	#icon {
 		margin-top: 20% !important;
 	}

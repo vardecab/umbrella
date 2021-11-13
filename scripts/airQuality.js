@@ -37,7 +37,10 @@ function airMask(lat, lng) {
 				// data from primary API - Airly
 				air_quality_index = data_airly.current.indexes["0"].value;
 
-				if ((air_quality_index >= 0) & (air_quality_index < 30)) {
+				if (air_quality_index == null) {
+					document.getElementById("air_quality").innerHTML =
+						"Sprawdzam..."; // Airly can't find the data for this location. Need to try with AQICN. 
+				} else if ((air_quality_index >= 0) & (air_quality_index < 30)) {
 					document.getElementById("air_quality").innerHTML =
 						"Powietrze: 🤓"; // 🟢 emoji not fully supported across different operating systems (ie < Android 10)
 				} else if ((air_quality_index >= 30) & (air_quality_index < 50)) {
@@ -71,11 +74,8 @@ function airMask(lat, lng) {
 				}
 
 				// fallback call to different API (AQICN) when Airly is down (either lack of sensors around (3 km radius) or no requests available due to their limits)
-				if (
-					data_airly.current.indexes["0"].value == null ||
-					data_airly.current.indexes["0"].level == "UNKNOWN" ||
-					data_airly.current.indexes["0"].level == null
-				) {
+
+				if (air_quality_index == null) {
 					console.log(
 						"There is something wrong and I can't download air quality data from Airly. Probably I couldn't find any stations in 3 km radius or I can't send any more requests."
 					);

@@ -27,6 +27,7 @@ py/build-app.scpt
 scripts/min
 styles/styles.min.css
 py/automate/*
+.vscode
 
 # push notifications on mobile
 scripts/sw.js 

@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.31: Fixed a bug where an incorrect air quality value was shown before the target air quality value was shown.
 - 0.30.6: Improved RWD in one specific case.
 - 0.30.5: Improved RWD in one specific case.
 - 0.30.4: Tiny UX tweak to dew point; changed "auto-refresh" from 30 to 15 mins.

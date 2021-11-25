@@ -211,7 +211,7 @@ a {
 /* Computer w/ Full HD screen - half size */
 @media (min-width: 950px) and (min-height: 1000px) {
 	#icon {
-		margin-top: 30% !important;
+		margin-top: 20% !important;
 	}
 }
 

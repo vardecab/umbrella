@@ -91,6 +91,7 @@ window.onload = function geoLocator() {
 			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
+			// TODO: showPollen(liq_location_full); // pass full location to get allergy information
 			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 		}
 
@@ -100,7 +101,7 @@ window.onload = function geoLocator() {
 			);
 			// if we don't know the location let's ask the user
 			query_input = prompt(
-				"Dla jakiego miejsca chcesz sprawdzić pogodę?"
+				"Dla jakiej ulicy w jakim mieście chcesz sprawdzić pogodę?"
 			);
 			console.log("User-requested city:", query_input); // debug
 			// alert(query_input); // debug
@@ -109,7 +110,7 @@ window.onload = function geoLocator() {
 				// query_input = prompt(
 				// 	"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 				// );
-				alert("Nic nie zostało wpisane. Musisz wpisać jakieś miejsce :)");
+				alert("Nic nie zostało wpisane. Musisz wpisać jakąś ulicę i miasto :)");
 				error(); // re-run the whole process of getting user's location
 			}
 			// user typed something and hit OK; success - let's go
@@ -137,11 +138,20 @@ window.onload = function geoLocator() {
 						liq_location = liq_data[0].display_name.split(",")[1]; // take second part of the name, usually city
 						// console.error(liq_location); // debug
 
+						liq_location_full = liq_data[0].display_name;
+						console.log('Full location:', liq_location_full); // debug
+
 						document.getElementById("location").textContent =
 							"🌍 " + liq_location;
 
 						// set 🍪 for location name
 						Cookies.set("umbrella_location", liq_location, {
+							expires: 30,
+							path: "/",
+						});
+
+						// set 🍪 for full location 
+						Cookies.set("umbrella_location_full", liq_location_full, {
 							expires: 30,
 							path: "/",
 						});
@@ -179,6 +189,7 @@ window.onload = function geoLocator() {
 						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
+						showPollen(liq_location_full); // pass full location to get allergy information
 						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 					});
 			}
@@ -205,6 +216,7 @@ window.onload = function geoLocator() {
 		cookie_lng = Cookies.get("umbrella_coord_lng");
 		cookie_lat = Cookies.get("umbrella_coord_lat");
 		cookie_location = Cookies.get("umbrella_location");
+		cookie_location_full = Cookies.get("umbrella_location_full");
 
 		if (cookie_location == "undefined") {
 			document.getElementById("location").textContent = "🌍 ";
@@ -217,6 +229,7 @@ window.onload = function geoLocator() {
 		weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
+		showPollen(cookie_location_full); // pass full location to get allergy information
 		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
 	}
 
@@ -232,15 +245,15 @@ window.onload = function geoLocator() {
 function manualFinder() {
 	// alert('manualFinder'); // debug
 
-	query_input = prompt("Dla jakiego miejsca chcesz sprawdzić pogodę?"); // if we don't know the location let's ask the user
-	console.log("City:", query_input); // debug
+	query_input = prompt("Dla jakiej ulicy w jakim mieście chcesz sprawdzić pogodę?"); // if we don't know the location let's ask the user
+	console.log("Street / city:", query_input); // debug
 
 	// user pressed OK, but the input field was empty - re-ask
 	if (query_input === "") {
 		// query_input = prompt(
 		// 	"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 		// );
-		alert("Nic nie zostało wpisane. Musisz wpisać jakieś miejsce :)");
+		alert("Nic nie zostało wpisane. Musisz wpisać jakąś ulicę i miasto :)");
 		error(); // re-run the whole process of getting user's location
 	}
 	// user typed something and hit OK; success - let's go
@@ -265,15 +278,24 @@ function manualFinder() {
 				console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 				// get location name based on what was returned from API and cut it to just city
-				liq_location = liq_data[0].display_name.split(",")[0];
+				liq_location = liq_data[0].display_name.split(",")[1]; // take second part of the name, usually city
 				// liq_location = liq_data.address.town;
 				// console.error(liq_location); // debug
+
+				liq_location_full = liq_data[0].display_name;
+				console.log('Full location:', liq_location_full); // debug
 
 				document.getElementById("location").textContent =
 					"🌍 " + liq_location;
 
 				// set 🍪 for location name
 				Cookies.set("umbrella_location", liq_location, {
+					expires: 30,
+					path: "/",
+				});
+
+				// set 🍪 for full location 
+				Cookies.set("umbrella_location_full", liq_location_full, {
 					expires: 30,
 					path: "/",
 				});
@@ -304,11 +326,13 @@ function manualFinder() {
 				// variables with values from 🍪s
 				cookie_lng = Cookies.get("umbrella_coord_lng");
 				cookie_lat = Cookies.get("umbrella_coord_lat");
+				cookie_location_full = Cookies.get("umbrella_location_full");
 
 				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
+				showPollen(cookie_location_full); // pass full location to get allergy information
 				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 
 				location.reload();

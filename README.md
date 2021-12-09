@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.33: Changed displayed allergy information to be based on voivodeship rather than city (supports MZ, DS, MP for now); added `Day.js` library to manipulate time and date. 
 - 0.32: Showing city name instead of street name; changed unit for air quality data; improved logs and comments; started working on air quality forecasts.
 - 0.31.1: Improved RWD in one specific case.
 - 0.31: Fixed a bug where an incorrect air quality value was shown before the target air quality value was shown.
@@ -138,12 +139,13 @@ Using [SemVer](http://semver.org/).
 
 ## Acknowledgements
 ### APIs
--   [OpenWeatherMap API](https://openweathermap.org/api)
+
+- [OpenWeatherMap API](https://openweathermap.org/api)
 - [Airly API](https://developer.airly.eu/api)
 - [AQICN API](https://aqicn.org/api/)
 - [LocationIQ API](https://locationiq.com)
 - [Sunrise Sunset API](https://sunrise-sunset.org/api)
--   [Aktualna prognoza pylenia](http://pylenia.pl/)
+- [Aktualna prognoza pylenia](http://pylenia.pl/)
 
 <details>
 
@@ -162,6 +164,7 @@ Other
 -   Icons from [Flaticon](https://www.flaticon.com)
 -   Font used: [Mali](https://fonts.google.com/specimen/Mali)
 - [Wind strength scale](https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw)
+- [Day.js](https://day.js.org/en/)
 
 </details>
 

@@ -1,44 +1,52 @@
+# other 
 TODO
 .ds_store
-_old
+.vscode
+
+# folders
 cities
 data
+
+# old files 
+_old
 umbrella-legacy.html
-images/social-sharing/umbrella-background.png
-images/social-sharing/umbrella-facebook-ogimage.png
 scripts/aqicn.js
 scripts/allergy-apsik.js
 scripts/locate.js
 service_worker.js
 umbrella.min.html
+# styles/styles.css
+modal-test*
+scripts/min
+# styles/styles.min.css
+scripts/dispatcher.min.js
+
+# English version
 umbrella-en.min.html
-py/umbrellaallergensscraper-windowstaskscheduler.xml
 scripts/en
 umbrella-en.html
+
+# images
+images/social-sharing/umbrella-background.png
+images/social-sharing/umbrella-facebook-ogimage.png
+
+# automation
+py/umbrellaallergensscraper-windowstaskscheduler.xml
 py/update.bat
 py/PollenInfoAutoUpdate.bat
 py/PollenInfoAutoUpdate.exe
-fonts/jetbrainsmono
-styles/styles.css
-modal-test*
 py/scraper.py
 py/automate.sh
-py/build-app.scpt 
-scripts/min
-styles/styles.min.css
 py/automate/*
-.vscode
+py/build-app.scpt 
+
+# fonts
+fonts/jetbrainsmono
 
 # push notifications on mobile
 scripts/sw.js 
 
-### Visual Studio Code ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-### Visual Studio Code Patch ###
-# Ignore all local history of files
-.history
+# temp ignored
+scripts/airQualityForecasts.min.js
+scripts/airQualityForecasts.js
+scripts/airQuality.min.js

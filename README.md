@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.32: Showing city name instead of street name; changed unit for air quality data; improved logs and comments; started working on air quality forecasts.
 - 0.31.1: Improved RWD in one specific case.
 - 0.31: Fixed a bug where an incorrect air quality value was shown before the target air quality value was shown.
 - 0.30.6: Improved RWD in one specific case.

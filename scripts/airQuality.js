@@ -15,6 +15,7 @@ function airMask(lat, lng) {
 				"&apikey=" +
 				airly_api_key
 			)
+			// NOTE: Measurement values are interpolated by averaging measurements from nearby sensors (up to 1,5km away from the given point). The returned value is a weighted average, with the weight inversely proportional to the distance from the sensor to the given point.
 			// convert data to JSON
 			.then(function (res) {
 				return res.json();
@@ -63,12 +64,12 @@ function airMask(lat, lng) {
 				// get info about PM2.5 & PM10
 
 				try {
-					console.log("PM2.5:", data_airly.current.values[1].value + "μm" + "/25"); // debug
-					console.log("PM10:", data_airly.current.values[2].value + "μm" + "/50"); // debug
+					console.log("PM2.5:", data_airly.current.values[1].value + "/25" + " μg"); // debug
+					console.log("PM10:", data_airly.current.values[2].value + "/50" + " μg"); // debug
 					pm25 = data_airly.current.values[1].value;
-					document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
+					document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25" + " μg";
 					pm10 = data_airly.current.values[2].value;
-					document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+					document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "/50" + " μg" ;
 				} catch (err) {
 					console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
 				}
@@ -77,12 +78,12 @@ function airMask(lat, lng) {
 
 				if (air_quality_index == null) {
 					console.log(
-						"There is something wrong and I can't download air quality data from Airly. Probably I couldn't find any stations in 3 km radius or I can't send any more requests."
+						"There is something wrong and I can't download air quality data from Airly. Probably I couldn't find any stations in 3 km radius or I can't send any more requests. Let's pull data from China instead 🤓"
 					);
 
-					console.log(
-						"Looks like Airly failed us... Let's pull data from China 🤓"
-					);
+					// console.log(
+					// 	"Looks like Airly failed us... Let's pull data from China 🤓"
+					// );
 
 					fetch(
 							"https://api.waqi.info/feed/geo:" +
@@ -144,19 +145,19 @@ function airMask(lat, lng) {
 
 							if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
 								pm25 = data_aqicn.data.iaqi.pm25.v;
-								console.log("PM2.5:", pm25 + "μm" + "/25"); // debug
-								document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "μm" + "/25";
+								console.log("PM2.5:", pm25 + "/25" + " μg"); // debug
+								document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25" + " μg";
 							} else {
 								pm25 = data_airly.current.values[1].value;
-								console.log("PM2.5:", pm25 + "μm" + "/25"); // debug 
+								console.log("PM2.5:", pm25 + "/25" + " μg"); // debug 
 							}
 							if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
-								pm10 = data_aqicn.data.iaqi.pm10.v;
-								console.log("PM10:", pm10 + "μm" + "/50"); // debug
-								document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "μm" + "/50";
+								pm10 = data_aqicn.data.iaqi.pm10.v; //! FIX: might be giving errors because not every location has PM10 sensors
+								console.log("PM10:", pm10+ "/50" + " μg"); // debug
+								document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "/50" + " μg";
 							} else {
 								pm25 = data_airly.current.values[2].value;
-								console.log("PM10:", pm10 + "μm" + "/50"); // debug
+								console.log("PM10:", pm10 + "/50" + " μg"); // debug
 							}
 						});
 				}

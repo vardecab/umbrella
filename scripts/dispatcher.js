@@ -90,6 +90,7 @@ window.onload = function geoLocator() {
 			weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 		}
 
@@ -133,7 +134,7 @@ window.onload = function geoLocator() {
 						console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 						// get location name based on what was returned from API and cut it to just city
-						liq_location = liq_data[0].display_name.split(",")[0];
+						liq_location = liq_data[0].display_name.split(",")[1]; // take second part of the name, usually city
 						// console.error(liq_location); // debug
 
 						document.getElementById("location").textContent =
@@ -162,9 +163,9 @@ window.onload = function geoLocator() {
 						});
 						console.log(
 							"Cookie: " +
-							"lat:",
+							"lat: ",
 							Cookies.get("umbrella_coord_lat") +
-							" lng:",
+							" lng: ",
 							Cookies.get("umbrella_coord_lng")
 						); // debug
 
@@ -177,6 +178,7 @@ window.onload = function geoLocator() {
 						weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 					});
 			}
@@ -193,9 +195,9 @@ window.onload = function geoLocator() {
 
 		console.log(
 			"Cookie: " +
-			"lat:" +
+			"lat: " +
 			Cookies.get("umbrella_coord_lat") +
-			" lng:" +
+			" lng: " +
 			Cookies.get("umbrella_coord_lng")
 		); // debug
 
@@ -214,6 +216,7 @@ window.onload = function geoLocator() {
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 		weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
 	}
 
@@ -292,9 +295,9 @@ function manualFinder() {
 				});
 				console.log(
 					"Cookie: " +
-					"lat:" +
+					"lat: " +
 					Cookies.get("umbrella_coord_lat") +
-					" lng:" +
+					" lng: " +
 					Cookies.get("umbrella_coord_lng")
 				); // debug
 
@@ -305,6 +308,7 @@ function manualFinder() {
 				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
+				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 
 				location.reload();

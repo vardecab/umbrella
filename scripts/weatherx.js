@@ -154,8 +154,8 @@ function uviAlert() {
 					}
 				});
 			}
-		} else console.log("No alert/notification, UVI is not so bad. Current: >", uvi, "<");
-	}, 2000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
+		} else console.log("No alert/notification, UVI is not so bad. Current: > " + uvi + " <");
+	}, 3000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 }
 
 uviAlert();

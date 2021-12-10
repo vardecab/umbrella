@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.34: Fixed logs; fixed how some text is displayed; added air quality forecasts - 6 & 12 hours.
 - 0.33: Changed displayed allergy information to be based on voivodeship rather than city (supports MZ, DS, MP for now); added `Day.js` library to manipulate time and date. 
 - 0.32: Showing city name instead of street name; changed unit for air quality data; improved logs and comments; started working on air quality forecasts.
 - 0.31.1: Improved RWD in one specific case.

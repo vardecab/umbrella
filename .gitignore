@@ -48,6 +48,7 @@ scripts/sw.js
 
 # temp ignored
 scripts/airQualityForecasts.min.js
-scripts/airQualityForecasts.js
 scripts/airQuality.min.js
 scripts/allergy.min.js
+scripts/weatherx.min.js
+.gitignore

@@ -64,12 +64,12 @@ function airMask(lat, lng) {
 				// get info about PM2.5 & PM10
 
 				try {
-					console.log("PM2.5:", data_airly.current.values[1].value + "/25" + " μg"); // debug
-					console.log("PM10:", data_airly.current.values[2].value + "/50" + " μg"); // debug
+					console.log("PM2.5:", data_airly.current.values[1].value + "/25 μg"); // debug
+					console.log("PM10:", data_airly.current.values[2].value + "/50 μg"); // debug
 					pm25 = data_airly.current.values[1].value;
-					document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25" + " μg";
+					document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25 μg";
 					pm10 = data_airly.current.values[2].value;
-					document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "/50" + " μg" ;
+					document.getElementById("pm10").innerHTML = "PM10: " + pm10 + "/50 μg" ;
 				} catch (err) {
 					console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
 				}
@@ -145,19 +145,19 @@ function airMask(lat, lng) {
 
 							if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
 								pm25 = data_aqicn.data.iaqi.pm25.v;
-								console.log("PM2.5:", pm25 + "/25" + " μg"); // debug
-								document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25" + " μg";
+								console.log("PM2.5:", pm25 + "/25 μg"); // debug
+								document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25 μg";
 							} else {
 								pm25 = data_airly.current.values[1].value;
-								console.log("PM2.5:", pm25 + "/25" + " μg"); // debug 
+								console.log("PM2.5:", pm25 + "/25 μg"); // debug 
 							}
 							if (data_airly.current.standards.length == "0") { // if data from Airly API wasn't used
 								pm10 = data_aqicn.data.iaqi.pm10.v; //! FIX: might be giving errors because not every location has PM10 sensors
-								console.log("PM10:", pm10+ "/50" + " μg"); // debug
-								document.getElementById("pm10").innerHTML = "& PM10: " + pm10 + "/50" + " μg";
+								console.log("PM10:", pm10+ "/50 μg"); // debug
+								document.getElementById("pm10").innerHTML = "PM10: " + pm10 + "/50 μg";
 							} else {
 								pm25 = data_airly.current.values[2].value;
-								console.log("PM10:", pm10 + "/50" + " μg"); // debug
+								console.log("PM10:", pm10 + "/50 μg"); // debug
 							}
 						});
 				}
@@ -224,8 +224,8 @@ function smogAlert() {
 					}
 				});
 			}
-		} else console.log("No alert/notification, air is not so bad. Current: >", air_quality_status, "<");
-	}, 2000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
+		} else console.log("No alert/notification, air is not so bad. Current: > " + air_quality_status + " <");
+	}, 3000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 }
 
 smogAlert();

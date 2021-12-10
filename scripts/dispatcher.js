@@ -4,6 +4,7 @@
 // $ save coords to cookies 
 
 window.onload = function geoLocator() {
+	// TODO: refactoring might be needed 
 	if (
 		Cookies.get("umbrella_coord_lat") == undefined ||
 		Cookies.get("umbrella_coord_lng") == undefined
@@ -135,17 +136,26 @@ window.onload = function geoLocator() {
 						console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 						// get location name based on what was returned from API and cut it to just city
-						liq_location = liq_data[0].display_name.split(",")[1]; // take second part of the name, usually city
+						liq_location = liq_data[0].display_name.split(",")[0]; // [1] => take second part of the name, usually city but often state 
 						// console.error(liq_location); // debug
+
+						liq_location_0 = liq_location;
+						liq_location_1 = liq_data[0].display_name.split(",")[1];
 
 						liq_location_full = liq_data[0].display_name;
 						console.log('Full location:', liq_location_full); // debug
 
 						document.getElementById("location").textContent =
-							"🌍 " + liq_location;
+							"🌍 " + liq_location + ", " + liq_location_1;
 
 						// set 🍪 for location name
 						Cookies.set("umbrella_location", liq_location, {
+							expires: 30,
+							path: "/",
+						});
+
+						// set 🍪 for location name [1]
+						Cookies.set("umbrella_location_1", liq_location_1, {
 							expires: 30,
 							path: "/",
 						});
@@ -216,13 +226,14 @@ window.onload = function geoLocator() {
 		cookie_lng = Cookies.get("umbrella_coord_lng");
 		cookie_lat = Cookies.get("umbrella_coord_lat");
 		cookie_location = Cookies.get("umbrella_location");
+		cookie_location_1 = Cookies.get("umbrella_location_1");
 		cookie_location_full = Cookies.get("umbrella_location_full");
 
 		if (cookie_location == "undefined") {
 			document.getElementById("location").textContent = "🌍 ";
 		} else {
 			document.getElementById("location").textContent =
-				"🌍 " + cookie_location;
+				"🌍 " + cookie_location + "," + cookie_location_1;
 		}
 
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
@@ -278,18 +289,27 @@ function manualFinder() {
 				console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 				// get location name based on what was returned from API and cut it to just city
-				liq_location = liq_data[0].display_name.split(",")[1]; // take second part of the name, usually city
+				liq_location = liq_data[0].display_name.split(",")[0]; // [1] => take second part of the name, usually city but often state 
 				// liq_location = liq_data.address.town;
 				// console.error(liq_location); // debug
+
+				liq_location_0 = liq_location;
+				liq_location_1 = liq_data[0].display_name.split(",")[1];
 
 				liq_location_full = liq_data[0].display_name;
 				console.log('Full location:', liq_location_full); // debug
 
 				document.getElementById("location").textContent =
-					"🌍 " + liq_location;
+					"🌍 " + liq_location + ", " + liq_location_1;
 
-				// set 🍪 for location name
+				// set 🍪 for location name [0]
 				Cookies.set("umbrella_location", liq_location, {
+					expires: 30,
+					path: "/",
+				});
+
+				// set 🍪 for location name [1]
+				Cookies.set("umbrella_location_1", liq_location_1, {
 					expires: 30,
 					path: "/",
 				});

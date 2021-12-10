@@ -28,7 +28,7 @@ function airCrystalBall(lat, lng) {
 
             // use the data stored in object to do whatever
             .then(function (data_airly) {
-                console.error("Airly2", data_airly); // debug: output everything stored in the object
+                console.error("Airly2_forecast", data_airly); // debug: output everything stored in the object
 
                 /* - convert ISO time to local time - */
 
@@ -75,14 +75,51 @@ function airCrystalBall(lat, lng) {
 
                     /* ------ display data on page ------ */
 
-                    // document.getElementById("pm_forecast_6").append("O ", localized_time_6, " będzie: ", "PM2,5: ", pm25_6, "/50 μg", ", a PM10: ", pm10_6, "/50 μg");
+                    document.getElementById("pm_forecast_6").appendChild(document.createElement("br")); // add a new line
+                    document.getElementById("pm_forecast_6").appendChild(document.createElement("br")); // add a new line
+
                     document.getElementById("pm_forecast_6").append("🕕", localized_time_6, ": ", "PM2,5: ", pm25_6, " & PM10: ", pm10_6);
-                    // document.getElementById("pm_forecast_12").append("O ", localized_time_12, " będzie: ", "PM2,5: ", pm25_12, "/50 μg", ", a PM10: ", pm10_12, "/50 μg");
+                    document.getElementById("pm_forecast_6").appendChild(document.createElement("br")); // add a new line
                     document.getElementById("pm_forecast_12").append("🕛", localized_time_12, ": ", "PM2,5: ", pm25_12, " & PM10: ", pm10_12);
+
                 } catch {
                     console.log("Airly is not supported in this location so can't show a forecast.")
-                    // TODO: code AQICN fallback for forecasts
                 }
+
+                // TODO: code AQICN fallback for forecasts
+                /* --------- AQICN fallback --------- */
+                //* NOTE: AQICN is showing forecasts for a day, not specific hours... 
+
+                // if (data_airly.forecast[6].values.length === 0) { // checking if Airly failed
+                //     // Airly failed 
+                //     alert('woops');
+
+                //     /* ----- get data from AQICN API ---- */
+
+                //     fetch(
+                //             "https://api.waqi.info/feed/geo:" +
+                //             lat +
+                //             ";" +
+                //             lng +
+                //             "/?token=" +
+                //             aqicn_api_key
+                //         )
+                //         // convert data to JSON
+                //         .then(function (res) {
+                //             return res.json();
+                //         })
+
+                //         // use the data stored in object to do whatever
+                //         .then(function (data_aqicn) {
+                //             console.error("AQICN2_forecast", data_aqicn); // debug: output everything stored in the object
+                //             console.log("AQICN:", data_aqicn.data.aqi); // debug
+
+                //             air_quality_index = data_aqicn.data.aqi;
+
+                //         })
+                // } else {
+                //     // Airly is ok
+                // }
 
             })
     })

@@ -225,7 +225,7 @@ function smogAlert() {
 				});
 			}
 		} else console.log("No alert/notification, air is not so bad. Current: > " + air_quality_status + " <");
-	}, 3000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
+	}, 5000); // how many ms to wait until function is executed; 1500 ms = 1.5 s
 }
 
 smogAlert();

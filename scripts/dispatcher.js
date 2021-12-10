@@ -47,7 +47,8 @@ window.onload = function geoLocator() {
 					cookie_lat +
 					"&lon=" +
 					cookie_lng +
-					"&format=json"
+					"&format=json" + 
+					"&addressdetails=1"
 				)
 				// convert data to JSON
 				.then(function (res) {
@@ -57,6 +58,8 @@ window.onload = function geoLocator() {
 				// use the data stored in object to do whatever
 				.then(function (liq_data) {
 					console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+
+					// TODO: is this necessary? GPS auto-locator 🤔
 
 					// get city name
 					// liq_location = data.address.city;
@@ -92,7 +95,7 @@ window.onload = function geoLocator() {
 			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-			// TODO: showPollen(liq_location_full); // pass full location to get allergy information
+			// TODO: showPollen(liq_location_full); // pass voivodeship to get allergy information
 			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 		}
 
@@ -124,7 +127,8 @@ window.onload = function geoLocator() {
 						liq_api_key +
 						"&q=" +
 						query_input +
-						"&format=json"
+						"&format=json" +
+						"&addressdetails=1"
 					)
 					// convert data to JSON
 					.then(function (res) {
@@ -135,18 +139,23 @@ window.onload = function geoLocator() {
 					.then(function (liq_data) {
 						console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
-						// get location name based on what was returned from API and cut it to just city
-						liq_location = liq_data[0].display_name.split(",")[0]; // [1] => take second part of the name, usually city but often state 
-						// console.error(liq_location); // debug
+						// get location name based on what was returned from API and cut it to just district / city or village
 
-						liq_location_0 = liq_location;
-						liq_location_1 = liq_data[0].display_name.split(",")[1];
+						liq_location = liq_data[0].address.city_district;
+						if (liq_location == undefined) {
+							// console.log('testA'); // debug
+							liq_location = liq_data[0].address.town;
+							if (liq_location == undefined) {
+								// console.log('testB'); // debug
+								liq_location = liq_data[0].address.village;
+							}
+						}
 
-						liq_location_full = liq_data[0].display_name;
-						console.log('Full location:', liq_location_full); // debug
-
+						liq_location_voivodeship = liq_data[0].address.state;
+						// console.log('Voivodeship:', liq_location_voivodeship); // debug
+						
 						document.getElementById("location").textContent =
-							"🌍 " + liq_location + ", " + liq_location_1;
+							"🌍 " + liq_location;
 
 						// set 🍪 for location name
 						Cookies.set("umbrella_location", liq_location, {
@@ -154,17 +163,17 @@ window.onload = function geoLocator() {
 							path: "/",
 						});
 
-						// set 🍪 for location name [1]
-						Cookies.set("umbrella_location_1", liq_location_1, {
+						// set 🍪 for location voivodeship
+						Cookies.set("umbrella_location_voivodeship", liq_location_voivodeship, {
 							expires: 30,
 							path: "/",
 						});
 
-						// set 🍪 for full location 
-						Cookies.set("umbrella_location_full", liq_location_full, {
-							expires: 30,
-							path: "/",
-						});
+						// // set 🍪 for full location 
+						// Cookies.set("umbrella_location_full", liq_location_full, {
+						// 	expires: 30,
+						// 	path: "/",
+						// });
 
 						// get coords from API based on location user inputted
 						lat = liq_data[0].lat;
@@ -199,7 +208,7 @@ window.onload = function geoLocator() {
 						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-						showPollen(liq_location_full); // pass full location to get allergy information
+						showPollen(liq_location_voivodeship); // pass voivodeship to get allergy information
 						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 					});
 			}
@@ -226,21 +235,21 @@ window.onload = function geoLocator() {
 		cookie_lng = Cookies.get("umbrella_coord_lng");
 		cookie_lat = Cookies.get("umbrella_coord_lat");
 		cookie_location = Cookies.get("umbrella_location");
-		cookie_location_1 = Cookies.get("umbrella_location_1");
-		cookie_location_full = Cookies.get("umbrella_location_full");
+		cookie_location_voivodeship = Cookies.get("umbrella_location_voivodeship");
+		// cookie_location_full = Cookies.get("umbrella_location_full");
 
 		if (cookie_location == "undefined") {
 			document.getElementById("location").textContent = "🌍 ";
 		} else {
 			document.getElementById("location").textContent =
-				"🌍 " + cookie_location + "," + cookie_location_1;
+				"🌍 " + cookie_location;
 		}
 
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 		weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-		showPollen(cookie_location_full); // pass full location to get allergy information
+		showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
 		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
 	}
 
@@ -277,7 +286,8 @@ function manualFinder() {
 				liq_api_key +
 				"&q=" +
 				query_input +
-				"&format=json"
+				"&format=json" +
+				"&addressdetails=1"
 			)
 			// convert data to JSON
 			.then(function (res) {
@@ -288,37 +298,41 @@ function manualFinder() {
 			.then(function (liq_data) {
 				console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
-				// get location name based on what was returned from API and cut it to just city
-				liq_location = liq_data[0].display_name.split(",")[0]; // [1] => take second part of the name, usually city but often state 
-				// liq_location = liq_data.address.town;
-				// console.error(liq_location); // debug
-
-				liq_location_0 = liq_location;
-				liq_location_1 = liq_data[0].display_name.split(",")[1];
-
-				liq_location_full = liq_data[0].display_name;
-				console.log('Full location:', liq_location_full); // debug
+				// get location name based on what was returned from API and cut it to just district / city or village
+				
+				liq_location = liq_data[0].address.city_district;
+						if (liq_location == undefined) {
+							// console.log('testC'); // debug
+							liq_location = liq_data[0].address.town;
+							if (liq_location == undefined) {
+								// console.log('testD'); // debug
+								liq_location = liq_data[0].address.village;
+							}
+						}
+				
+				liq_location_voivodeship = liq_data[0].address.state;
+				// console.log('Voivodeship:', liq_location_voivodeship); // debug
 
 				document.getElementById("location").textContent =
-					"🌍 " + liq_location + ", " + liq_location_1;
+					"🌍 " + liq_location;
 
-				// set 🍪 for location name [0]
+				// set 🍪 for location name
 				Cookies.set("umbrella_location", liq_location, {
 					expires: 30,
 					path: "/",
 				});
 
-				// set 🍪 for location name [1]
-				Cookies.set("umbrella_location_1", liq_location_1, {
+				// set 🍪 for location name voivodeship
+				Cookies.set("umbrella_location_voivodeship", liq_location_voivodeship, {
 					expires: 30,
 					path: "/",
 				});
 
-				// set 🍪 for full location 
-				Cookies.set("umbrella_location_full", liq_location_full, {
-					expires: 30,
-					path: "/",
-				});
+				// // set 🍪 for full location 
+				// Cookies.set("umbrella_location_full", liq_location_full, {
+				// 	expires: 30,
+				// 	path: "/",
+				// });
 
 				// get coords from API based on location user inputted
 				lat = liq_data[0].lat;
@@ -352,7 +366,7 @@ function manualFinder() {
 				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-				showPollen(cookie_location_full); // pass full location to get allergy information
+				showPollen(liq_location_voivodeship); // pass voivodeship to get allergy information
 				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 
 				location.reload();

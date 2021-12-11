@@ -1,3 +1,9 @@
+/* ================================== */
+/*              sunTimes              */
+/* ================================== */
+
+// get sunrise and sunset times from sunrise-sunset API
+
 function sunTimes(lat, lng) {
 	ss_url =
 		"https://api.sunrise-sunset.org/json?lat=" +

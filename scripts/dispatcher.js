@@ -1,7 +1,11 @@
+/* ================================== */
+/*             dispatcher             */
+/* ================================== */
+
 // what this file does: 
-// $ take user's input 
-// $ take user's coords or convert input (city name) to coords and then send to functions which will return the weather data 
-// $ save coords to cookies 
+// - take user's input 
+// - take user's coords or convert input (city name) to coords and then send to functions which will return the weather data 
+// - save coords to cookies 
 
 window.onload = function geoLocator() {
 	// TODO: refactoring might be needed 
@@ -95,7 +99,7 @@ window.onload = function geoLocator() {
 			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-			// TODO: showPollen(liq_location_full); // pass voivodeship to get allergy information
+			// TODO: showPollen(liq_location_full); // pass voivodeship to get allergy information?
 			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 		}
 
@@ -253,7 +257,7 @@ window.onload = function geoLocator() {
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 		showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
-		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage}
+		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
 	}
 
 	if (!navigator.geolocation) {

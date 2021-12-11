@@ -1,5 +1,5 @@
 /* ================================== */
-/*            One Call API            */
+/*          OWM One Call API          */
 /* ================================== */
 
 /* -------- get data from API -------- */
@@ -95,7 +95,7 @@ function showData(owm_data) {
 // notify user when there is high risk of harm from unprotected sun exposure
 // using browser notification: https://developer.mozilla.org/en-US/docs/Web/API/notification
 // using alert() when browser notification ^ is not supported / blocked 
-// !FIX: doesn't work on mobile - would need to implemment https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications
+// !FIX: doesn't work on mobile - would need to implement https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications
 function uviAlert() {
 	setTimeout(function () {
 		var uvi = document.getElementById("uvi")

@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.36.1: Cleaned some comments.
 - 0.36: Extended air quality forecasts to 18 hours with Airly API; added fallback air quality forecast API; tweaked how location is displayed; fixed a bug when PM2.5 or PM10 was unavailable in AQICN API.
 - 0.35: Changed how location is displayed - more bulletproof.
 - 0.34.1: Tiny fix to how air quality details are displayed.

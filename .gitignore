@@ -52,3 +52,6 @@ scripts/airQuality.min.js
 scripts/allergy.min.js
 scripts/weatherx.min.js
 scripts/libraries/require.js
+scripts/findMe.min.js
+scripts/weather.min.js
+scripts/sunTimes.min.js

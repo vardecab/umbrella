@@ -1,4 +1,8 @@
-// file which handles air quality data - sends request to API, returns the result, displays data in HTML and sends alert when air quality is unhealthy 
+/* ================================== */
+/*             airQuality             */
+/* ================================== */
+
+// File which handles air quality data - sends request to API, returns the result, displays data in HTML and sends alert when air quality is unhealthy.
 
 // API keys, well... no way to hide it ¯\_(ツ)_/¯
 const airly_api_key = "p1ukBMrlBEPfRD1SynGXU9iEcr0zzJrE";
@@ -16,6 +20,7 @@ function airMask(lat, lng) {
 				airly_api_key
 			)
 			// NOTE: Measurement values are interpolated by averaging measurements from nearby sensors (up to 1,5km away from the given point). The returned value is a weighted average, with the weight inversely proportional to the distance from the sensor to the given point.
+
 			// convert data to JSON
 			.then(function (res) {
 				return res.json();
@@ -175,10 +180,12 @@ function airMask(lat, lng) {
 	}, 500); // *NOTE: delay showing info so it doesn't show along the loading screen
 }
 
+/* ---------- notification ---------- */
+
 // notify user when air quality is bad 
 // using browser notification: https://developer.mozilla.org/en-US/docs/Web/API/notification
 // using alert() when browser notification ^ is not supported / blocked 
-// !FIX: doesn't work on mobile - would need to implement https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications
+// TODO: doesn't work on mobile - would need to implement https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications
 function smogAlert() {
 	setTimeout(function () {
 		var air_quality_status = document.getElementById("air_quality")

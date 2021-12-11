@@ -1,3 +1,7 @@
+/* ================================== */
+/*               allergy              */
+/* ================================== */
+
 // "manual API" to get allergy/pollen info 
 
 // scraper.py is getting data from https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/

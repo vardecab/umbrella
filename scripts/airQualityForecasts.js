@@ -2,11 +2,10 @@
 /*         airQualityForecasts        */
 /* ================================== */
 
-// TODO: write something about what this script does 
+// Display air quality forecasts using 2 APIs: Airly & AQICN. Airly allows to show hourly (1-23) forecast while AQICN only allows for daily. AQICN acts as a fallback to Airly in locations where Airly sensors are not available. 
 
-// API keys, well... no way to hide it ¯\_(ツ)_/¯
-// const airly_api_key = "#"; //* NOTE: already declared elsewhere and can be used
-// const aqicn_api_key = "#"; //* NOTE: already declared elsewhere and can be used
+// const airly_api_key = "#"; //* NOTE: already declared elsewhere and can be used here
+// const aqicn_api_key = "#"; //* NOTE: already declared elsewhere and can be used here
 
 function airCrystalBall(lat, lng) {
     setTimeout(function () {
@@ -26,16 +25,6 @@ function airCrystalBall(lat, lng) {
                 return res.json();
             })
 
-            // // convert data to JSON
-            // .then(function (res) { // res = response
-			// 	if (response.ok) {
-			// 		return res.json();
-			// 	}
-			// 	else {
-			// 		console.log("API limit exceeded.");
-			// 	}
-            // }
-
             // use the data stored in object to do whatever
             .then(function (data_airly) {
                 console.error("Airly2_forecast", data_airly); // debug: output everything stored in the object
@@ -47,7 +36,6 @@ function airCrystalBall(lat, lng) {
                     forecast_time_12 = data_airly.forecast[12].fromDateTime; // take time & day from API; 12 hrs forward
                     forecast_time_18 = data_airly.forecast[18].fromDateTime; // take time & day from API; 18 hrs forward
                     //* NOTE: ISO8601 timestamp; date and time in UTC; the two fields represent time interval during which the data in this payload was measured and averaged
-                    // console.log(forecast_time_6); // debug 
 
                     // 6 hrs
                     localized_day_time_6 = dayjs(forecast_time_6).format('DD/MM/YYYY HH:mm'); // ISO converted to local day & time 
@@ -144,7 +132,7 @@ function airCrystalBall(lat, lng) {
                             console.error("AQICN2_forecast", data_aqicn); // debug: output everything stored in the object
                             // console.log("AQICN:", data_aqicn.data.aqi); // debug
 
-                            //* NOTE: assumption: looks like API returns forecast for -2 days from the request day, day 0 = request day, and +4 days
+                            //* NOTE: assumption: looks like API returns forecast for -2 days from the request day, day 0 = request day, and +4 days // update: depends on location, need to diff dates to course correct this 
 
                             /* ------------- get today ------------ */
 

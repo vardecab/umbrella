@@ -1,4 +1,9 @@
+/* ================================== */
+/*               findMe               */
+/* ================================== */
+
 // find user using GPS/IP when clicked on 📍
+
 function findMe() {
 	function success(position) {
 		const geo_latitude = position.coords.latitude;

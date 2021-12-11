@@ -1,5 +1,5 @@
 /* ================================== */
-/*              5D/3H API             */
+/*            OWM 5D/3H API           */
 /* ================================== */
 
 // === Part 1 ===
@@ -225,7 +225,7 @@ function drawWeather(owm_data) {
 	// console.log("what's in 'raining' list:", raining); // debug ✅
 	// console.log("weather conditions:", weather_conditions); // debug ✅; write next 4 weather conditions
 
-	// check if actual raining weather is in definied 'raining' or 'snowing' lists
+	// check if actual raining weather is in defined 'raining' or 'snowing' lists
 	if (weather_conditions.some(r => raining.includes(r)) == true) {
 		document.getElementById("umbrella").innerHTML = "Weź parasol!";
 		document.getElementById("icon").src = "./images/weather/rain.svg";
@@ -243,7 +243,7 @@ function drawWeather(owm_data) {
 
 	// var element = document.getElementById("temperature");
 	// element.classList.add("temperature_next_3hrs");
-	// document.getElementById("temperature_next_6hrs").textContent += Math.round(temperatures_avg, 0) + "°"; // ! FIX: "&deg;" doesn't work
+	// document.getElementById("temperature_next_6hrs").textContent += Math.round(temperatures_avg, 0) + "°"; // FIX: "&deg;" doesn't work
 
 	// 🏙 city name (& country name)
 	// TODO: `city == undefined`

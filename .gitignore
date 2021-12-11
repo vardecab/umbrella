@@ -51,4 +51,4 @@ scripts/airQualityForecasts.min.js
 scripts/airQuality.min.js
 scripts/allergy.min.js
 scripts/weatherx.min.js
-.gitignore
+scripts/libraries/require.js

@@ -47,7 +47,7 @@ window.onload = function geoLocator() {
 					cookie_lat +
 					"&lon=" +
 					cookie_lng +
-					"&format=json" + 
+					"&format=json" +
 					"&addressdetails=1"
 				)
 				// convert data to JSON
@@ -144,16 +144,19 @@ window.onload = function geoLocator() {
 						liq_location = liq_data[0].address.city_district;
 						if (liq_location == undefined) {
 							// console.log('testA'); // debug
-							liq_location = liq_data[0].address.town;
+							liq_location = liq_data[0].address.city;
 							if (liq_location == undefined) {
-								// console.log('testB'); // debug
-								liq_location = liq_data[0].address.village;
+								liq_location = liq_data[0].address.town;
+								if (liq_location == undefined) {
+									// console.log('testB'); // debug
+									liq_location = liq_data[0].address.village;
+								}
 							}
 						}
 
 						liq_location_voivodeship = liq_data[0].address.state;
 						// console.log('Voivodeship:', liq_location_voivodeship); // debug
-						
+
 						document.getElementById("location").textContent =
 							"🌍 " + liq_location;
 
@@ -299,17 +302,20 @@ function manualFinder() {
 				console.error("LocationIQ", liq_data); // debug: output everything stored in the object
 
 				// get location name based on what was returned from API and cut it to just district / city or village
-				
+
 				liq_location = liq_data[0].address.city_district;
 						if (liq_location == undefined) {
-							// console.log('testC'); // debug
-							liq_location = liq_data[0].address.town;
+							// console.log('testA'); // debug
+							liq_location = liq_data[0].address.city;
 							if (liq_location == undefined) {
-								// console.log('testD'); // debug
-								liq_location = liq_data[0].address.village;
+								liq_location = liq_data[0].address.town;
+								if (liq_location == undefined) {
+									// console.log('testB'); // debug
+									liq_location = liq_data[0].address.village;
+								}
 							}
 						}
-				
+
 				liq_location_voivodeship = liq_data[0].address.state;
 				// console.log('Voivodeship:', liq_location_voivodeship); // debug
 

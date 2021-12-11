@@ -29,10 +29,11 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 -   Autocomplete location name (+ maybe a search bar).
 -   More elegant way to ask for location.
 -   <del>_Geolocation._</del>
--   <del>_Be able to use any city - not only those predefinied._</del>
+-   <del>_Be able to use any city - not only those predefined._</del>
 
 ## Release History
 
+- 0.36: Extended air quality forecasts to 18 hours with Airly API; added fallback air quality forecast API; tweaked how location is displayed; fixed a bug when PM2.5 or PM10 was unavailable in AQICN API.
 - 0.35: Changed how location is displayed - more bulletproof.
 - 0.34.1: Tiny fix to how air quality details are displayed.
 - 0.34: Fixed logs; fixed how some text is displayed; added air quality forecasts - 6 & 12 hours.
@@ -62,7 +63,7 @@ Click to see all updates < 0.30
 - 0.26.3: Disabled macOS notification added in 0.24.
 - 0.26.2: Removed sound from macOS notification when allergens/pollen info is updated.
 - 0.26.1: Added a 500 ms delay so air quality info is not being shown with the loading screen but after; increased the delay from 1500 ms → 2000 ms for allergens/pollen info; tweaked notifications so they won't be closed without user's interaction. 
-- 0.26: Added browser notification feature when air quality is bad. `alert()` being used when notificatioons are not supported / blocked.
+- 0.26: Added browser notification feature when air quality is bad. `alert()` being used when notifications are not supported / blocked.
 - 0.25: Added dawn & dusk times; renamed files so it's easier to understand what's happening where. moved some functions around.
 - 0.24.3: Fixed "Die Null" bug. 
 - 0.24.2: Fixed `TypeError` from _0.24.1_.

@@ -24,6 +24,8 @@ function sunTimes(lat, lng) {
 		.then(function (ss_data) {
 			console.error("Sunrise Sunset", ss_data); // debug: output everything stored in the object
 
+			// NOTE: all times are client-local
+
 			// 🌥️ first light
 
 			var first_light_utc = ss_data.results.civil_twilight_begin;

@@ -79,6 +79,8 @@ function airMask(lat, lng) {
 					console.log("Can't take PM2.5 & PM10 data from Airly API. Will re-try with AQICN.");
 				}
 
+				/* ---------- fallback API ---------- */
+
 				// fallback call to different API (AQICN) when Airly is down (either lack of sensors around (3 km radius) or no requests available due to their limits)
 
 				if (air_quality_index == null) {
@@ -153,6 +155,7 @@ function airMask(lat, lng) {
 									console.log('PM2.5 is not available in this location. Not able to show its value.');
 								} else {
 									pm25 = data_aqicn.data.iaqi.pm25.v;
+									pm25 = ConcPM25(pm25); // convert AQI value from API to μg
 									console.log("PM2.5:", pm25 + "/25 μg"); // debug
 									document.getElementById("pm25").innerHTML = "PM2.5: " + pm25 + "/25 μg";
 								}
@@ -165,6 +168,7 @@ function airMask(lat, lng) {
 									console.log('PM10 is not available in this location. Not able to show its value.')
 								} else {
 									pm10 = data_aqicn.data.iaqi.pm10.v;
+									pm10 = ConcPM10(pm10); // convert AQI value from API to μg
 									console.log("PM10:", pm10 + "/50 μg"); // debug
 									document.getElementById("pm10").innerHTML = "PM10: " + pm10 + "/50 μg";
 								}

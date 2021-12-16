@@ -177,20 +177,24 @@ function airCrystalBall(lat, lng) {
                             /* ---- get forecast PM2.5 today ---- */
 
                             forecast_pm25_avg = data_aqicn.data.forecast.daily.pm25[forecast_index_today].avg;
+                            forecast_pm25_avg = ConcPM25(forecast_pm25_avg); // convert AQI value from API to μg
                             console.log('Forecast PM25 avg:', forecast_pm25_avg);
                             
                             /* --- get forecast PM2.5 tomorrow -- */
                             
                             forecast_pm25_avg_tomorrow = data_aqicn.data.forecast.daily.pm25[forecast_index_tomorrow].avg;
+                            forecast_pm25_avg_tomorrow = ConcPM25(forecast_pm25_avg_tomorrow); // convert AQI value from API to μg
                             console.log('Forecast PM25 avg_tomorrow:', forecast_pm25_avg_tomorrow);
 
                             /* ----- get forecast PM10 today ---- */
                             forecast_pm10_avg = data_aqicn.data.forecast.daily.pm10[forecast_index_today].avg;
+                            forecast_pm10_avg = ConcPM10(forecast_pm10_avg); // convert AQI value from API to μg
                             console.log('Forecast PM10 avg:', forecast_pm10_avg);
                             
                             /* --- get forecast PM10 tomorrow --- */
                             
                             forecast_pm10_avg_tomorrow = data_aqicn.data.forecast.daily.pm10[forecast_index_tomorrow].avg;
+                            forecast_pm10_avg_tomorrow = ConcPM10(forecast_pm10_avg_tomorrow); // convert AQI value from API to μg
                             console.log('Forecast PM10 avg_tomorrow:', forecast_pm10_avg_tomorrow);
                             
                             /* ------ display data on page ------ */

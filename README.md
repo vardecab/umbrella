@@ -33,6 +33,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.37: Previously air quality data from AQICN API was displayed in `AQI` unit rather than in `μg` — big bug that's now fixed.
 - 0.36.1: Cleaned some comments.
 - 0.36: Extended air quality forecasts to 18 hours with Airly API; added fallback air quality forecast API; tweaked how location is displayed; fixed a bug when PM2.5 or PM10 was unavailable in AQICN API.
 - 0.35: Changed how location is displayed - more bulletproof.
@@ -55,7 +56,6 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 <summary>
 Click to see all updates < 0.30
 </summary>
-
 
 - 0.29: Added UV index info with notifications when UVI means high risk of harm from unprotected sun exposure.
 - 0.28.1: Log `autoRefreshLastUpdate`.
@@ -170,6 +170,7 @@ Other
 -   Font used: [Mali](https://fonts.google.com/specimen/Mali)
 - [Wind strength scale](https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw)
 - [Day.js](https://day.js.org/en/)
+- [AQI Calculator](https://www.airnow.gov/aqi/aqi-calculator/)
 
 </details>
 

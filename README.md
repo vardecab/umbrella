@@ -1,6 +1,7 @@
 # Umbrella
 
 ![](https://img.shields.io/uptimerobot/status/m788095876-34537beb719d60f13baeea7b)
+![](https://img.shields.io/uptimerobot/ratio/m788095876-34537beb719d60f13baeea7b)
 <br>
 ![](https://img.shields.io/badge/browser-Chromium%20%7C%20Firefox%20%7C%20Safari-blue)
 

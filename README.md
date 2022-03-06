@@ -34,6 +34,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.38: Re-wrote `PollenInfoAutoUpdate` Python scraper a bit: more functions to avoid repeated code, icons are now locally stored, more notifications added to show potential errors preventing script to complete.
 - 0.37: Previously air quality data from AQICN API was displayed in `AQI` unit rather than in `μg` — big bug that's now fixed.
 - 0.36.1: Cleaned some comments.
 - 0.36: Extended air quality forecasts to 18 hours with Airly API; added fallback air quality forecast API; tweaked how location is displayed; fixed a bug when PM2.5 or PM10 was unavailable in AQICN API.

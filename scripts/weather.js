@@ -57,7 +57,7 @@ function drawWeather(owm_data) {
 
 	// add temperature from 2 consecutive data updates to the list above ^
 	// let's look at "feels like" temperature, not "normal" one
-	while (just_a_counter <= 1) { // * NOTE: 0 = now/next 3 hrs, 1 = next 6 hrs, 2 = next 9 hrs and so on
+	while (just_a_counter <= 1) { // NOTE: 0 = now/next 3 hrs, 1 = next 6 hrs, 2 = next 9 hrs and so on
 		console.log(
 			"(feels like temp) Update #" +
 			just_a_counter +
@@ -216,7 +216,7 @@ function drawWeather(owm_data) {
 
 	var numero = 0; // just a counter for the loop below
 
-	while (numero <= 1) { /// * NOTE: 1 = next 6 hrs 
+	while (numero <= 0) { // NOTE: 0 = next update which means next 3 hrs, 1 = next 6 hrs, 2 = next 9 hrs and so on
 		// console.log(numero, owm_data.list[numero].weather[0].main); // debug ✅
 		// console.log(just_a_counter); // debug ✅
 		weather_conditions.push(owm_data.list[numero].weather[0].main); // add to list

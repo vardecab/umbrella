@@ -56,9 +56,9 @@ function showData(owm_data) {
 	} else if (uvi < 3) { // low danger
         uvi_in_html.textContent += uvi + " 🕶️";
     } else if (uvi >= 3 && uvi < 6) { // moderate risk of harm
-        uvi_in_html.textContent += uvi + " 🕶️👒";
-    } else if (uvi >= 6 && uvi < 8) { // high risk of harm 
         uvi_in_html.textContent += uvi + " 🕶️👒🌳";
+    } else if (uvi >= 6 && uvi < 8) { // high risk of harm 
+        uvi_in_html.textContent += uvi + " 🏠";
     } else if (uvi >= 8 && uvi < 11) { // very high risk of harm
         uvi_in_html.textContent += uvi + " 🏠";
     } else { // uvi >= 11; extreme risk of harm 

@@ -101,6 +101,8 @@ function uviAlert() {
 		var uvi = document.getElementById("uvi")
 			.textContent;
 		if (
+			uvi == "UVI: 6 🏠" || 
+			uvi == "UVI: 7 🏠" || 
 			uvi == "UVI: 8 🏠" || 
 			uvi == "UVI: 9 🏠" || 
 			uvi == "UVI: 10 🏠" || 

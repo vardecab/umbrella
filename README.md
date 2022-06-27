@@ -34,6 +34,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.38.3: Extended UVI range when notification is displayed.
 - 0.38.2: Updated "rain window" from 6 to 3 hours.
 - 0.38.1: Updated `moment.js` to fix lib's vulnerability.
 - 0.38: Re-wrote `PollenInfoAutoUpdate` Python scraper a bit: more functions to avoid repeated code, icons are now locally stored, more notifications added to show potential errors preventing script to complete.

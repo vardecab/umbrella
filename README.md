@@ -34,6 +34,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.40: Changed how sunrise and sunset times are displayed — now in location time regardless of user's local time.
 - 0.39: Added rain description; changed how emojis in conditions' description are displayed.
 - 0.38.3: Extended UVI range when notification is displayed.
 - 0.38.2: Updated "rain window" from 6 to 3 hours.

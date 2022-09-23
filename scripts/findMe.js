@@ -4,6 +4,8 @@
 
 // find user using GPS/IP when clicked on 📍
 
+// TODO: disable as it doesn't work properly as of 2209xx
+
 function findMe() {
 	function success(position) {
 		const geo_latitude = position.coords.latitude;

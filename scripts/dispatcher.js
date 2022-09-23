@@ -100,7 +100,7 @@ window.onload = function geoLocator() {
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 			// TODO: showPollen(liq_location_full); // pass voivodeship to get allergy information?
-			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
 		}
 
 		function error() {
@@ -216,7 +216,7 @@ window.onload = function geoLocator() {
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 						showPollen(liq_location_voivodeship); // pass voivodeship to get allergy information
-						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
 					});
 			}
 			// user hit Cancel / ESC - re-ask
@@ -257,7 +257,7 @@ window.onload = function geoLocator() {
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 		showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
-		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
 	}
 
 	if (!navigator.geolocation) {
@@ -377,7 +377,7 @@ function manualFinder() {
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 				showPollen(liq_location_voivodeship); // pass voivodeship to get allergy information
-				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage
+				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
 
 				location.reload();
 			});

@@ -4,15 +4,15 @@
 
 // get sunrise and sunset times from sunrise-sunset API
 
-function sunTimes(lat, lng) {
+function sunTimes(lat, lng, offset) {
 	ss_url =
 		"https://api.sunrise-sunset.org/json?lat=" +
 		lat +
 		"&lng=" +
 		lng +
 		"&formatted=0";
-	// *NOTE "&formatted=0" so the date is in UNIX
-	console.log("Sunrise Sunset URL:", ss_url); // debug
+	// NOTE: "&formatted=0" so the date is in UNIX
+	console.log('%c%s', 'color: #0047ca', "Sunrise Sunset URL:", ss_url); // debug, colored output
 
 	// grab data from URL
 	fetch(ss_url)
@@ -24,45 +24,76 @@ function sunTimes(lat, lng) {
 		.then(function (ss_data) {
 			console.error("Sunrise Sunset", ss_data); // debug: output everything stored in the object
 
-			// NOTE: all times are client-local
-			// TODO: change to location-local
-
 			// 🌥️ first light
 
-			var first_light_utc = ss_data.results.civil_twilight_begin;
-			var first_light_local = moment.utc(first_light_utc).local().format("H:mm");
-			console.log("First light:", first_light_local); // debug 
+			var first_light_utc = ss_data.results.civil_twilight_begin; // get data from API, it's UTC
+			var first_light_location = moment(first_light_utc).utcOffset(offset).format("H:mm"); // take UTC, add offset from TimeZoneDB, format nicely
+			console.log("First light UTC:", first_light_utc); // debug 
+			console.log("First light location:", first_light_location); // debug 
 
 			var first_light_in_html = document.getElementById("first_light");
-			first_light_in_html.textContent += first_light_local;
+			first_light_in_html.textContent += first_light_location; // add to the page
 
 			// ☀️ sunrise
 
-			var sunrise_utc = ss_data.results.sunrise;
-			var sunrise_local = moment.utc(sunrise_utc).local().format("H:mm");
-			console.log("Sunrise:", sunrise_local); // debug
+			var sunrise_utc = ss_data.results.sunrise; // get data from API, it's UTC
+			var sunrise_location = moment(sunrise_utc).utcOffset(offset).format("H:mm"); // take UTC, add offset from TimeZoneDB, format nicely
+			console.log("Sunrise:", sunrise_location); // debug
 
 			var sunrise_in_html = document.getElementById("sunrise");
-			sunrise_in_html.textContent += sunrise_local;
+			sunrise_in_html.textContent += sunrise_location; // add to the page
 
 			// 🌒 sunset
 
-			var sunset_utc = ss_data.results.sunset;
-			var sunset_local = moment.utc(sunset_utc).local().format("H:mm");
-			console.log("Sunset:", sunset_local); // debug
+			var sunset_utc = ss_data.results.sunset; // get data from API, it's UTC
+			var sunset_location = moment(sunset_utc).utcOffset(offset).format("H:mm"); // take UTC, add offset from TimeZoneDB, format nicely
+			console.log("Sunset:", sunset_location); // debug
 
 			var sunset_in_html = document.getElementById("sunset");
-			sunset_in_html.textContent += sunset_local;
+			sunset_in_html.textContent += sunset_location; // add to the page
 
 			// 🌑 last light 
 
-			var last_light_utc = ss_data.results.civil_twilight_end;
-			var last_light_local = moment.utc(last_light_utc).local().format("H:mm");
-			console.log("Last light:", last_light_local); // debug
+			var last_light_utc = ss_data.results.civil_twilight_end; // get data from API, it's UTC
+			var last_light_location = moment(last_light_utc).utcOffset(offset).format("H:mm"); // take UTC, add offset from TimeZoneDB, format nicely
+			console.log("Last light:", last_light_location); // debug
 
 			var last_light_in_html = document.getElementById("last_light");
-			last_light_in_html.textContent += last_light_local;
+			last_light_in_html.textContent += last_light_location; // add to the page
 
+		})
+		// catch any errors
+		.catch(function () {});
+}
+
+function getTimeZoneOffset(lat, lng) {
+	const tzdbAPIkey = "CJR1UAW12M6R";
+	tzdbURL =
+		"http://api.timezonedb.com/v2.1/get-time-zone?" +
+		"key=" + tzdbAPIkey +
+		"&format=json" +
+		"&by=position" +
+		"&lat=" + lat +
+		"&lng=" + lng;
+	console.log('%c%s', 'color: #0047ca', "TimeZoneDB URL:", tzdbURL); // debug, colored output
+
+	// grab data from URL
+	fetch(tzdbURL)
+		// convert data to JSON
+		.then(function (resp) {
+			return resp.json();
+		})
+		// use the data stored in object to do whatever
+		.then(function (tzdbData) {
+			console.error("TimeZoneDB", tzdbData); // debug: output everything stored in the object
+
+			// get GMT offset from the data
+			var offset = tzdbData.gmtOffset; // get GMT offset from the API; eg. 7200 means 120 minutes means 2 hours
+			offset = offset / 60 / 60; // convert offset from seconds to hours
+			console.log("GMT offset:", offset, "hours"); // status
+			
+			// send data to function to get sunrise & sunset
+			sunTimes(lat, lng, offset);
 		})
 		// catch any errors
 		.catch(function () {});

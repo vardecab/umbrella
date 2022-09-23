@@ -238,6 +238,7 @@ function drawWeather(owm_data) {
 	// get weather details from API and push to HTML
 
 	// 🌡️ temperature
+
 	document.getElementById("temperature").innerHTML = Math.round(owm_data.list[0].main.feels_like, 0) + "&deg;";
 	// Math.round(owm_data.list[0].main.temp, 0) + "&deg;"; // temperature in Celsius without comma
 
@@ -246,7 +247,9 @@ function drawWeather(owm_data) {
 	// document.getElementById("temperature_next_6hrs").textContent += Math.round(temperatures_avg, 0) + "°"; // FIX: "&deg;" doesn't work
 
 	// 🏙 city name (& country name)
+
 	// TODO: `city == undefined`
+
 	if (owm_data.city.country == undefined) {
 		// nothing
 	} else {
@@ -260,6 +263,7 @@ function drawWeather(owm_data) {
 	}
 
 	// 🍃 wind
+
 	var wind_raw = owm_data.list[0].wind.speed; // get wind
 	wind_kph = parseFloat(wind_raw) * 3.6; // convert m/s to km/h
 	wind = Math.round(wind_kph, 2);
@@ -268,28 +272,30 @@ function drawWeather(owm_data) {
 
 	// Klasyfikacja wiatru wg skali Beauforta @ https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw
 	if (wind < 6) {
-		wind_in_html.textContent += "⏸️" + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "⏸️ " + wind + " km/h"; // add to HTML
 	} else if ((wind >= 6) & (wind <= 28)) {
-		wind_in_html.textContent += "🍃" + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "🍃 " + wind + " km/h"; // add to HTML
 	} else if ((wind > 28) & (wind <= 50)) {
-		wind_in_html.textContent += "🍃🍃🍃" + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "🍃🍃🍃 " + wind + " km/h"; // add to HTML
 	} else {
-		wind_in_html.textContent += "🌪️" + wind + " km/h"; // add to HTML
+		wind_in_html.textContent += "🌪️ " + wind + " km/h"; // add to HTML
 	}
 
 	// ☁️ air pressure
+
 	var air_pressure = owm_data.list[0].main.pressure;
 	var air_pressure_in_html = document.getElementById("air_pressure");
 
 	if (air_pressure < 1000) {
-		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
 	} else if ((air_pressure >= 1000) & (air_pressure <= 1025)) {
-		air_pressure_in_html.textContent += "👍🏼" + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👍🏼 " + air_pressure + " hPa";
 	} else {
-		air_pressure_in_html.textContent += "👎🏼" + air_pressure + " hPa";
+		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
 	}
 
 	// 🌫️ humidity 
+
 	// humidity = owm_data.list[0].main.humidity;
 	// var humidity_in_html = document.getElementById("humidity");
 	
@@ -302,7 +308,41 @@ function drawWeather(owm_data) {
 	// }
 	
 	// 📔 description
+
 	// document.getElementById("weather_description").innerHTML = owm_data.list[0].weather[0].main; // NOTE: if disabling in HTML you need to disable here as well - otherwise everything below won't be displayed
+
+	// 💦 rain levels 
+	// based on: https://en.wikipedia.org/wiki/Rain#Intensity:~:text=Light%20rain%20%E2%80%94%20when%20the%20precipitation%20rate%20is%20%3C%202.5%C2%A0mm,is%20%3E%2050%C2%A0mm%20(2.0%C2%A0in)%20per%20hour%5B107%5D & https://water.usgs.gov/edu/activity-howmuchrain-metric.html#:~:text=Moderate%20rain:%20Greater%20than%200.5,than%202%20mm%20per%20hour. & https://www.baranidesign.com/faq-articles/2020/1/19/rain-rate-intensity-classification
+
+	var rain_volume = owm_data.list[0].rain["3h"]; // shown in 'mm'; volume for 3 hours
+	var rain_volume_in_html = document.getElementById("rain"); // put HTML element to a variable
+
+	rain_volume = rain_volume / 3; // rain volume from API is a sum from 3 hours so we need to divide to get hourly volume
+	rain_volume = rain_volume.toFixed(2);
+
+	// FIX: seems that data from API is low and not realistic?
+	// NOTE: checked with other sources and seems correct… need some real-life examples
+
+	if (rain_volume < 2.5) { // light rain
+		// rain_volume_in_html.textContent += "💧 " + rain_volume + " " + "mm/hr";
+		rain_volume_in_html.textContent += "💧 lekki deszcz";
+	} else if ((rain_volume >= 2.5) & (rain_volume < 8)) { // moderate / heavy rain
+		// rain_volume_in_html.textContent += "💦 " + rain_volume + " " + "mm/hr";
+		rain_volume_in_html.textContent += "💦 spory deszcz";
+	} else if ((rain_volume >= 8) & (rain_volume < 50)) { // heavy rain / shower
+		// rain_volume_in_html.textContent += "🌧️ "  + rain_volume + " " + "mm/hr";
+		rain_volume_in_html.textContent += "🌧️ ulewa";
+	} else if (rain_volume >= 50) { // violent rain / shower
+		// rain_volume_in_html.textContent += "⛈️⛈️⛈️ " + rain_volume + " " + "mm/hr";
+		rain_volume_in_html.textContent += "⛈️⛈️⛈️ potop";
+	} 
+	
+	// ❄️ snow levels // TODO
+	// based on: https://en.wikipedia.org/wiki/Classifications_of_snow#:~:text=In%20the%20US,%20the%20intensity,than%200.5%20kilometres%20(550%20yd)
+
+	// var snow_levels = owm_data.list[0].snow["3h"]; // shown in which metric?
+
+	// NOTE: look at visibility
 
 	// === Part 5 ===
 	// save data to localStorage for offline use

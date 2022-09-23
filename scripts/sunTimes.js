@@ -25,6 +25,7 @@ function sunTimes(lat, lng) {
 			console.error("Sunrise Sunset", ss_data); // debug: output everything stored in the object
 
 			// NOTE: all times are client-local
+			// TODO: change to location-local
 
 			// 🌥️ first light
 

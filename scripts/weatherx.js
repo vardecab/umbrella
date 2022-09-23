@@ -66,7 +66,7 @@ function showData(owm_data) {
     }
 
 	/* ---------- 🌫️ dew point --------- */
-	// *NOTE: https://www.weather.gov/arx/why_dewpoint_vs_humidity
+	// based on: https://www.weather.gov/arx/why_dewpoint_vs_humidity
 
 	// get DP temperature from API
 	dew_point = owm_data.current.dew_point; // default is Kelvin 
@@ -80,13 +80,16 @@ function showData(owm_data) {
 
 	if (dew_point <= 12.78) {
 		// dew_point_in_html.textContent += dew_point + "°" + " 🟩";
-		dew_point_in_html.textContent += "nieparno" + " 🟩";
+		// dew_point_in_html.textContent += "nieparno" + " 🟩";
+		dew_point_in_html.textContent += "😊 nieparno";
 	} else if (dew_point > 12.78 && dew_point < 18.33) {
 		// dew_point_in_html.textContent += dew_point + "°" + " 🔺";
-		dew_point_in_html.textContent += "parno" + " 🔺";
-	} else if (dew_point >= 18.33) {
+		// dew_point_in_html.textContent += "parno" + " 🔺";
+		dew_point_in_html.textContent += "😮‍💨 parno";
+	} else if (dew_point >= 18.33) { // TODO: can't be merged with the above?
 		// dew_point_in_html.textContent += dew_point + "°" + " 🔺";
-		dew_point_in_html.textContent += "parno" + " 🔺";
+		// dew_point_in_html.textContent += "parno" + " 🔺";
+		dew_point_in_html.textContent += "😮‍💨 parno";
 	}
 }
 

@@ -92,7 +92,7 @@ function getTimeZoneOffset(lat, lng) {
 			console.error("TimeZoneDB", tzdbData); // debug: output everything stored in the object
 
 			// get GMT offset from the data
-			var offset = tzdbData.gmtOffset; // get GMT offset from the API; eg. 7200 means 120 minutes means 2 hours
+			var offset = tzdbData.gmtOffset; // get GMT offset from the API; eg. 7200 means 120 minutes means 2 hours; GMT = UTC
 			offset = offset / 60 / 60; // convert offset from seconds to hours
 			console.log("GMT offset:", offset, "hours"); // status
 			

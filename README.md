@@ -157,6 +157,7 @@ Using [SemVer](http://semver.org/).
 - [AQICN API](https://aqicn.org/api/)
 - [LocationIQ API](https://locationiq.com)
 - [Sunrise Sunset API](https://sunrise-sunset.org/api)
+- [TimeZoneDB](https://timezonedb.com/api)
 - [Aktualna prognoza pylenia](http://pylenia.pl/)
 
 <details>

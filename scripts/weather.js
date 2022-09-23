@@ -38,7 +38,8 @@ function weatherBallon(lat, lng) {
 		// catch any errors
 		.catch(function () {});
 
-	sunTimes(lat, lng); // pass coords to get sunrise, sunrise etc. info
+	// sunTimes(lat, lng); // pass coords to get sunrise, sunrise etc. info // TODO: remove
+	getTimeZoneOffset(lat, lng); // pass coords to a function which will get offset and send data to another function to get sunrise, sunrise etc. info
 }
 
 // === Part 2 ==

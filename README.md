@@ -34,6 +34,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.40.1: Fixed a HTTP/HTTPS mismatch in `TimeZoneDB` URL; fixed a comment that appeared publicly but shouldn't.
 - 0.40: Changed how sunrise and sunset times are displayed — now in location time regardless of user's local time.
 - 0.39: Added rain description; changed how emojis in conditions' description are displayed.
 - 0.38.3: Extended UVI range when notification is displayed.

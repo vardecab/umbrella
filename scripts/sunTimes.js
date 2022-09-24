@@ -69,7 +69,7 @@ function sunTimes(lat, lng, offset) {
 function getTimeZoneOffset(lat, lng) {
 	const tzdbAPIkey = "CJR1UAW12M6R";
 	tzdbURL =
-		"http://api.timezonedb.com/v2.1/get-time-zone?" +
+		"https://api.timezonedb.com/v2.1/get-time-zone?" +
 		"key=" + tzdbAPIkey +
 		"&format=json" +
 		"&by=position" +

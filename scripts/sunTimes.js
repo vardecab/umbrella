@@ -2,7 +2,9 @@
 /*              sunTimes              */
 /* ================================== */
 
-// get sunrise and sunset times from sunrise-sunset API
+// get sunrise and sunset times 
+
+// 2nd function
 
 function sunTimes(lat, lng, offset) {
 	ss_url =
@@ -65,6 +67,8 @@ function sunTimes(lat, lng, offset) {
 		// catch any errors
 		.catch(function () {});
 }
+
+// 1st function
 
 function getTimeZoneOffset(lat, lng) {
 	const tzdbAPIkey = "CJR1UAW12M6R";

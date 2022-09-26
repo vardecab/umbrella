@@ -1,5 +1,7 @@
 # Umbrella
 
+![Actively Maintained](https://img.shields.io/badge/Maintenance%20Level-Actively%20Maintained-green.svg)
+<br>
 ![](https://img.shields.io/uptimerobot/status/m788095876-34537beb719d60f13baeea7b)
 ![](https://img.shields.io/uptimerobot/ratio/m788095876-34537beb719d60f13baeea7b)
 <br>

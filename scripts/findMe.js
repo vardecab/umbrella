@@ -4,7 +4,7 @@
 
 // find user using GPS/IP when clicked on 📍
 
-// TODO: disable as it doesn't work properly as of 2209xx
+// NOTE: doesn't work in Vivaldi, GPS is disabled -> https://forum.vivaldi.net/topic/71634/gps-still-not-working/7
 
 function findMe() {
 	function success(position) {
@@ -23,14 +23,18 @@ function findMe() {
 		});
 	}
 
+	function error() {
+		console.log('Unable to get location from GPS/IP...');
+	}
+
 	if (!navigator.geolocation) {
 		alert(
-			"Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :("
+			"Geolokalizacja (GPS) nie jest wspierana przez Twoją przeglądarkę... :("
 		);
 	} else {
 		var locating = document.querySelector("#findme");
 		locating.textContent = "Szukam...";
-		location.reload();
+		location.reload(); // reload page
 		navigator.geolocation.getCurrentPosition(success, error);
 	}
 }

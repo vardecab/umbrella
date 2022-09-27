@@ -7,16 +7,17 @@
 // - take user's coords or convert input (city name) to coords and then send to functions which will return the weather data 
 // - save coords to cookies 
 
+// when page loads: try cookies, if not go and try to get lat & lng from GPS/IP
 window.onload = function geoLocator() {
-	// TODO: refactoring might be needed 
+	// if cookies don't exist then go and try GPS/IP and set cookies
 	if (
 		Cookies.get("umbrella_coord_lat") == undefined ||
 		Cookies.get("umbrella_coord_lng") == undefined
 	) {
 		// get coords from geolocation (GPS/IP)
 		function success(position) {
-			const geo_latitude = position.coords.latitude;
-			const geo_longitude = position.coords.longitude;
+			const geo_latitude = position.coords.latitude; // get lat
+			const geo_longitude = position.coords.longitude; // get lng
 
 			// set 🍪 for latitude
 			Cookies.set("umbrella_coord_lat", geo_latitude, {
@@ -29,12 +30,12 @@ window.onload = function geoLocator() {
 				path: "/",
 			});
 			console.log(
-				"Cookie data: " +
+				"🍪 Cookie data: " +
 				"lat:" +
 				Cookies.get("umbrella_coord_lat") +
 				" lng:" +
 				Cookies.get("umbrella_coord_lng")
-			); // debug
+			); // send data to console
 
 			// variables with values from 🍪s
 			cookie_lng = Cookies.get("umbrella_coord_lng");
@@ -44,16 +45,16 @@ window.onload = function geoLocator() {
 			const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
 
 			// we need to get city name from LocationIQ API
-			fetch(
-					"https://eu1.locationiq.com/v1/reverse.php?key=" +
-					liq_api_key +
-					"&lat=" +
-					cookie_lat +
-					"&lon=" +
-					cookie_lng +
-					"&format=json" +
-					"&addressdetails=1"
-				)
+			liqURL = "https://eu1.locationiq.com/v1/reverse.php?key=" +
+				liq_api_key +
+				"&lat=" +
+				cookie_lat +
+				"&lon=" +
+				cookie_lng +
+				"&format=json" +
+				"&addressdetails=1";
+			// console.log(liqURL); // debug
+			fetch(liqURL)
 				// convert data to JSON
 				.then(function (res) {
 					return res.json();
@@ -61,35 +62,68 @@ window.onload = function geoLocator() {
 
 				// use the data stored in object to do whatever
 				.then(function (liq_data) {
-					console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+					// console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+					console.log('%c%s', 'color: #ea01ff', "🌐 LocationIQ", liq_data); // debug: output everything stored in the object
 
-					// TODO: is this necessary? GPS auto-locator 🤔
+					// necessary if user is looking for location manually — API returns multiple objects so we need [0]
+					try {
+						liq_location = liq_data[0].address.motorway_junction;
+						if (liq_location == undefined) {
+							liq_location = liq_data[0].address.city_district;
+							if (liq_location == undefined) {
+								liq_location = liq_data[0].address.city;
+								if (liq_location == undefined) {
+									liq_location = liq_data[0].address.town;
+									if (liq_location == undefined) {
+										liq_location = liq_data[0].address.village;
+									}
+									if (liq_location == undefined) {
+										liq_location = liq_data[0].address.administrative;
+									}
+								}
+							}
+						}
+					}
 
-					// get city name
-					// liq_location = data.address.city;
-					// liq_location = data[0].display_name.split(",")[0];
-					if (
-						(liq_data.address.town = "null") ||
-						(liq_data.address.town = "undefined") ||
-						(liq_data.address.town = "")
-					) {
-						if (
-							(liq_data.address.city = "null") ||
-							(liq_data.address.city = "undefined") ||
-							(liq_data.address.city = "")
-						) {
-							liq_location = liq_data.address.county;
-						} else {
-							liq_location = liq_data.address.city;
+					// if location is taken from GPS then it doesn't have multiple objects, therefore [0] creates issues
+					catch {
+						liq_location = liq_data.address.motorway_junction;
+						if (liq_location == undefined) {
+							liq_location = liq_data.address.city_district;
+							if (liq_location == undefined) {
+								liq_location = liq_data.address.city;
+								if (liq_location == undefined) {
+									liq_location = liq_data.address.town;
+									if (liq_location == undefined) {
+										liq_location = liq_data.address.village;
+									}
+									if (liq_location == undefined) {
+										liq_location = liq_data.address.administrative;
+									}
+								}
+							}
 						}
 					}
 
 					// show city name on the website
 					document.getElementById("location").textContent =
 						"🌍 " + liq_location;
+					console.log('%c%s', 'color: #00a3cc', 'Location (from geolocation):', liq_location); // debug
 
 					// set 🍪 for location name so we can reuse in future without querying API
 					Cookies.set("umbrella_location", liq_location, {
+						expires: 30,
+						path: "/",
+					});
+
+					try { // manual
+						liq_location_voivodeship = liq_data[0].address.state;
+					} catch { // GPS
+						liq_location_voivodeship = liq_data.address.state;
+					}
+					// console.log('Voivodeship:', liq_location_voivodeship); // debug
+					// set 🍪 for location voivodeship
+					Cookies.set("umbrella_location_voivodeship", liq_location_voivodeship, {
 						expires: 30,
 						path: "/",
 					});
@@ -99,17 +133,18 @@ window.onload = function geoLocator() {
 			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-			// TODO: showPollen(liq_location_full); // pass voivodeship to get allergy information?
-			// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
+			showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information?
 		}
 
+		// if we can't geolocate then ask user for the location
 		function error() {
 			alert(
 				"Wygląda na to, że nie mogę znaleźć Twojej lokalizacji... Prawdopodobnie masz wyłączony GPS :("
 			);
 			// if we don't know the location let's ask the user
 			query_input = prompt(
-				"Dla jakiej ulicy w jakim mieście chcesz sprawdzić pogodę?"
+				// "Dla jakiej ulicy w jakim mieście chcesz sprawdzić pogodę?"
+				"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 			);
 			console.log("User-requested city:", query_input); // debug
 			// alert(query_input); // debug
@@ -118,7 +153,8 @@ window.onload = function geoLocator() {
 				// query_input = prompt(
 				// 	"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 				// );
-				alert("Nic nie zostało wpisane. Musisz wpisać jakąś ulicę i miasto :)");
+				// alert("Nic nie zostało wpisane. Musisz wpisać jakąś ulicę i miasto :)");
+				alert("Nic nie zostało wpisane. Musisz wpisać jakieś miejsce, np. miasto :)");
 				error(); // re-run the whole process of getting user's location
 			}
 			// user typed something and hit OK; success - let's go
@@ -141,19 +177,26 @@ window.onload = function geoLocator() {
 
 					// use the data stored in object to do whatever
 					.then(function (liq_data) {
-						console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+						// console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+						console.log('%c%s', 'color: #ea01ff', "🌐 LocationIQ", liq_data); // debug: output everything stored in the object
 
 						// get location name based on what was returned from API and cut it to just district / city or village
 
-						liq_location = liq_data[0].address.city_district;
+						liq_location = liq_data[0].address.motorway_junction;
 						if (liq_location == undefined) {
-							// console.log('testA'); // debug
-							liq_location = liq_data[0].address.city;
+							liq_location = liq_data[0].address.city_district;
 							if (liq_location == undefined) {
-								liq_location = liq_data[0].address.town;
+								// console.log('testA'); // debug
+								liq_location = liq_data[0].address.city;
 								if (liq_location == undefined) {
-									// console.log('testB'); // debug
-									liq_location = liq_data[0].address.village;
+									liq_location = liq_data[0].address.town;
+									if (liq_location == undefined) {
+										// console.log('testB'); // debug
+										liq_location = liq_data[0].address.village;
+									}
+									if (liq_location == undefined) {
+										liq_location = liq_data[0].address.administrative;
+									}
 								}
 							}
 						}
@@ -163,6 +206,7 @@ window.onload = function geoLocator() {
 
 						document.getElementById("location").textContent =
 							"🌍 " + liq_location;
+						console.log('%c%s', 'color: #ff0000', 'Location (fallback from geolocation):', liq_location); // debug
 
 						// set 🍪 for location name
 						Cookies.set("umbrella_location", liq_location, {
@@ -198,7 +242,7 @@ window.onload = function geoLocator() {
 							path: "/",
 						});
 						console.log(
-							"Cookie: " +
+							"🍪 Cookie: " +
 							"lat: ",
 							Cookies.get("umbrella_coord_lat") +
 							" lng: ",
@@ -215,23 +259,25 @@ window.onload = function geoLocator() {
 						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-						showPollen(liq_location_voivodeship); // pass voivodeship to get allergy information
-						// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
+						showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
 					});
 			}
 			// user hit Cancel / ESC - re-ask
 			else {
-				alert("Wpisz jakieś miejsce i kliknij Enter albo wybierz OK :)");
-				error(); // re-run the whole process of getting user's location
+				// alert("Wpisz jakieś miejsce i kliknij Enter albo wybierz OK :)");
+				// error(); // re-run the whole process of getting user's location
+				document.getElementById("loading").innerHTML = "Nic nie widzę... Wybierz miejsce 🌍";
+				document.getElementById("icon").src = "./images/status/nothing.svg";
 			}
 		}
 	}
-	// cookies set so we'll use that
+	// cookies previously set so we'll use that
 	else {
-		console.error("LocationIQ data not necessary - took data from 🍪s.");
+		// console.error("LocationIQ data not necessary - took data from 🍪s.");
+		console.log('%c%s', 'color: #058700', "LocationIQ data not necessary - took data from 🍪s.");
 
 		console.log(
-			"Cookie: " +
+			"🍪 Cookie: " +
 			"lat: " +
 			Cookies.get("umbrella_coord_lat") +
 			" lng: " +
@@ -246,7 +292,8 @@ window.onload = function geoLocator() {
 		// cookie_location_full = Cookies.get("umbrella_location_full");
 
 		if (cookie_location == "undefined") {
-			document.getElementById("location").textContent = "🌍 ";
+			geoLocator(); // we don't have location name so let's get it
+			// document.getElementById("location").textContent = "🌍 ";
 		} else {
 			document.getElementById("location").textContent =
 				"🌍 " + cookie_location;
@@ -257,9 +304,9 @@ window.onload = function geoLocator() {
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 		showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
-		// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
 	}
 
+	// geolocation not supported in the browser
 	if (!navigator.geolocation) {
 		alert(
 			"Geolokalizacja nie jest wspierana przez Twoją przeglądarkę... :("
@@ -269,10 +316,12 @@ window.onload = function geoLocator() {
 	}
 };
 
-function manualFinder() {
+// user manually looking for location
+function manualFinder() { // globe icon
 	// alert('manualFinder'); // debug
 
-	query_input = prompt("Dla jakiej ulicy w jakim mieście chcesz sprawdzić pogodę?"); // if we don't know the location let's ask the user
+	// query_input = prompt("Dla jakiej ulicy w jakim mieście chcesz sprawdzić pogodę?"); // if we don't know the location let's ask the user
+	query_input = prompt("Dla jakiego miejsca chcesz sprawdzić pogodę?"); // if we don't know the location let's ask the user
 	console.log("Street / city:", query_input); // debug
 
 	// user pressed OK, but the input field was empty - re-ask
@@ -280,7 +329,8 @@ function manualFinder() {
 		// query_input = prompt(
 		// 	"Dla jakiego miejsca chcesz sprawdzić pogodę?"
 		// );
-		alert("Nic nie zostało wpisane. Musisz wpisać jakąś ulicę i miasto :)");
+		// alert("Nic nie zostało wpisane. Musisz wpisać jakąś ulicę i miasto :)");
+		alert("Nic nie zostało wpisane. Musisz wpisać jakieś miejsce, np. miasto :)");
 		error(); // re-run the whole process of getting user's location
 	}
 	// user typed something and hit OK; success - let's go
@@ -303,28 +353,36 @@ function manualFinder() {
 
 			// use the data stored in object to do whatever
 			.then(function (liq_data) {
-				console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+				// console.error("LocationIQ", liq_data); // debug: output everything stored in the object
+				console.log('%c%s', 'color: #ea01ff', "🌐 LocationIQ", liq_data); // // debug: output everything stored in the object
 
 				// get location name based on what was returned from API and cut it to just district / city or village
 
-				liq_location = liq_data[0].address.city_district;
+				liq_location = liq_data[0].address.motorway_junction;
+				if (liq_location == undefined) {
+					liq_location = liq_data[0].address.city_district;
+					if (liq_location == undefined) {
+						// console.log('testA'); // debug
+						liq_location = liq_data[0].address.city;
 						if (liq_location == undefined) {
-							// console.log('testA'); // debug
-							liq_location = liq_data[0].address.city;
+							liq_location = liq_data[0].address.town;
 							if (liq_location == undefined) {
-								liq_location = liq_data[0].address.town;
-								if (liq_location == undefined) {
-									// console.log('testB'); // debug
-									liq_location = liq_data[0].address.village;
-								}
+								// console.log('testB'); // debug
+								liq_location = liq_data[0].address.village;
+							}
+							if (liq_location == undefined) {
+								liq_location = liq_data[0].address.administrative;
 							}
 						}
+					}
+				}
 
 				liq_location_voivodeship = liq_data[0].address.state;
 				// console.log('Voivodeship:', liq_location_voivodeship); // debug
 
 				document.getElementById("location").textContent =
 					"🌍 " + liq_location;
+				console.log('%c%s', 'color: #00e600', 'Location (user input):', liq_location);
 
 				// set 🍪 for location name
 				Cookies.set("umbrella_location", liq_location, {
@@ -360,7 +418,7 @@ function manualFinder() {
 					path: "/",
 				});
 				console.log(
-					"Cookie: " +
+					"🍪 Cookie: " +
 					"lat: " +
 					Cookies.get("umbrella_coord_lat") +
 					" lng: " +
@@ -370,16 +428,16 @@ function manualFinder() {
 				// variables with values from 🍪s
 				cookie_lng = Cookies.get("umbrella_coord_lng");
 				cookie_lat = Cookies.get("umbrella_coord_lat");
-				cookie_location_full = Cookies.get("umbrella_location_full");
+				// cookie_location_full = Cookies.get("umbrella_location_full");
+				cookie_location_voivodeship = Cookies.get("umbrella_location_voivodeship");
 
 				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
 				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-				showPollen(liq_location_voivodeship); // pass voivodeship to get allergy information
-				// apsik(cookie_lat, cookie_lng); // pass coords to get allergy info; NOTE: API doesn't have good coverage // TODO: remove
+				showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
 
-				location.reload();
+				location.reload(); // reload page
 			});
 	}
 

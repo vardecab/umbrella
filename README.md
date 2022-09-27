@@ -36,6 +36,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.41: Fixed geolocation issues.
 - 0.40.1: Fixed a HTTP/HTTPS mismatch in `TimeZoneDB` URL; fixed a comment that appeared publicly but shouldn't.
 - 0.40: Changed how sunrise and sunset times are displayed — now in location time regardless of user's local time.
 - 0.39: Added rain description; changed how emojis in conditions' description are displayed.
@@ -181,6 +182,7 @@ Other
 - [Wind strength scale](https://www.bip.krakow.pl/plik.php?zid=80905&wer=0&new=t&mode=shw)
 - [Day.js](https://day.js.org/en/)
 - [AQI Calculator](https://www.airnow.gov/aqi/aqi-calculator/)
+- SVG to PNG converter: [Aconvert](https://www.aconvert.com/image/png-to-svg/)
 
 </details>
 

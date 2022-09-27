@@ -296,7 +296,7 @@ window.onload = function geoLocator() {
 			// document.getElementById("location").textContent = "🌍 ";
 		} else {
 			document.getElementById("location").textContent =
-				"🌍 " + cookie_location;
+				"🌍 " + cookie_location; 
 		}
 
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info

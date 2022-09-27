@@ -19,11 +19,11 @@ function weatherBallon2(lat, lng) {
 		lat +
 		"&lon=" +
 		lng +
-        "&exclude=" +
-        "minutely,hourly,daily,alerts" +
+		"&exclude=" +
+		"minutely,hourly,daily,alerts" +
 		"&appid=" +
 		owm_api_key
-	console.log('%c%s', 'color: #0047ca', "Full API URL (One Call (UV & DP)):", owm_url); // debug; colored output 
+	console.log('%c%s', 'color: #0047ca', "🔗 Full API URL (One Call (UV & DP)):", owm_url); // debug; colored output 
 	fetch(owm_url)
 		// convert data to JSON
 		.then(function (resp) {
@@ -31,7 +31,8 @@ function weatherBallon2(lat, lng) {
 		})
 		// get data to showData() function below
 		.then(function (owm_data) {
-			console.error("OpenWeatherMap - One Call (UV & DP)", owm_data);
+			// console.error("OpenWeatherMap - One Call (UV & DP)", owm_data);
+			console.log('%c%s', 'color: #ea01ff', "🌐 OpenWeatherMap - One Call (UV & DP)", owm_data); // debug: output everything stored in the object
 			showData(owm_data);
 		})
 		// catch any errors
@@ -42,28 +43,28 @@ function weatherBallon2(lat, lng) {
 
 // get data from weatherBallon2() and do magic
 function showData(owm_data) {
-    
+
 	/* ------------- ☀️ UVI ------------- */
 	// *NOTE: https://en.wikipedia.org/wiki/Ultraviolet_index	
 
 	uvi = owm_data.current.uvi
-    uvi = uvi.toFixed(0) // 0 after .
-    // console.log('UVI:', uvi) // debug
+	uvi = uvi.toFixed(0) // 0 after .
+	// console.log('UVI:', uvi) // debug
 
-    var uvi_in_html = document.getElementById("uvi");
-    if (uvi == 0) { // no danger?
+	var uvi_in_html = document.getElementById("uvi");
+	if (uvi == 0) { // no danger?
 		uvi_in_html.textContent += uvi;
 	} else if (uvi < 3) { // low danger
-        uvi_in_html.textContent += uvi + " 🕶️";
-    } else if (uvi >= 3 && uvi < 6) { // moderate risk of harm
-        uvi_in_html.textContent += uvi + " 🕶️👒🌳";
-    } else if (uvi >= 6 && uvi < 8) { // high risk of harm 
-        uvi_in_html.textContent += uvi + " 🏠";
-    } else if (uvi >= 8 && uvi < 11) { // very high risk of harm
-        uvi_in_html.textContent += uvi + " 🏠";
-    } else { // uvi >= 11; extreme risk of harm 
-        uvi_in_html.textContent += uvi + " 🏠";
-    }
+		uvi_in_html.textContent += uvi + " 🕶️";
+	} else if (uvi >= 3 && uvi < 6) { // moderate risk of harm
+		uvi_in_html.textContent += uvi + " 🕶️👒🌳";
+	} else if (uvi >= 6 && uvi < 8) { // high risk of harm 
+		uvi_in_html.textContent += uvi + " 🏠";
+	} else if (uvi >= 8 && uvi < 11) { // very high risk of harm
+		uvi_in_html.textContent += uvi + " 🏠";
+	} else { // uvi >= 11; extreme risk of harm 
+		uvi_in_html.textContent += uvi + " 🏠";
+	}
 
 	/* ---------- 🌫️ dew point --------- */
 	// based on: https://www.weather.gov/arx/why_dewpoint_vs_humidity
@@ -104,15 +105,15 @@ function uviAlert() {
 		var uvi = document.getElementById("uvi")
 			.textContent;
 		if (
-			uvi == "UVI: 6 🏠" || 
-			uvi == "UVI: 7 🏠" || 
-			uvi == "UVI: 8 🏠" || 
-			uvi == "UVI: 9 🏠" || 
-			uvi == "UVI: 10 🏠" || 
-			uvi == "UVI: 11 🏠" || 
-			uvi == "UVI: 12 🏠" || 
-			uvi == "UVI: 13 🏠" || 
-			uvi == "UVI: 14 🏠" || 
+			uvi == "UVI: 6 🏠" ||
+			uvi == "UVI: 7 🏠" ||
+			uvi == "UVI: 8 🏠" ||
+			uvi == "UVI: 9 🏠" ||
+			uvi == "UVI: 10 🏠" ||
+			uvi == "UVI: 11 🏠" ||
+			uvi == "UVI: 12 🏠" ||
+			uvi == "UVI: 13 🏠" ||
+			uvi == "UVI: 14 🏠" ||
 			uvi == "UVI: 15 🏠"
 		) {
 			// Let's check if the browser supports notifications
@@ -150,12 +151,12 @@ function uviAlert() {
 					// If the user accepts, let's create a notification
 					if (permission === "granted") {
 						var notification = new Notification(
-                            "Słońce może szkodzić ☀️", {
-                                icon: "./images/umbrella-icon_blue-circle.png",
-                                body: "Lepiej nie wychodź z budynku. Wysokie zagrożenie podczas przebywania na słońcu!",
-                                requireInteraction: true // don't close notification
-                            }
-                        );
+							"Słońce może szkodzić ☀️", {
+								icon: "./images/umbrella-icon_blue-circle.png",
+								body: "Lepiej nie wychodź z budynku. Wysokie zagrożenie podczas przebywania na słońcu!",
+								requireInteraction: true // don't close notification
+							}
+						);
 					}
 				});
 			}

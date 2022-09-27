@@ -28,7 +28,8 @@ function airMask(lat, lng) {
 
 			// use the data stored in object to do whatever
 			.then(function (data_airly) {
-				console.error("Airly", data_airly); // debug: output everything stored in the object
+				// console.error("Airly", data_airly); // debug: output everything stored in the object
+				console.log('%c%s', 'color: #ea01ff', "🌐 Airly", data_airly); // debug: output everything stored in the object
 
 				// 💨 air quality
 				current_air_quality = data_airly.current.indexes["0"].level; // get info about air quality
@@ -107,9 +108,10 @@ function airMask(lat, lng) {
 
 						// use the data stored in object to do whatever
 						.then(function (data_aqicn) {
-							console.error("AQICN", data_aqicn); // debug: output everything stored in the object
+							// console.error("AQICN", data_aqicn); // debug: output everything stored in the object
+							console.log('%c%s', 'color: #ea01ff', "🌐 AQICN", data_aqicn);// debug: output everything stored in the object
+							
 							console.log("AQICN:", data_aqicn.data.aqi); // debug
-
 							air_quality_index = data_aqicn.data.aqi;
 
 							// NOTE: there must be a cleaner way to do it rather than copy-pasting from above... but this works for now

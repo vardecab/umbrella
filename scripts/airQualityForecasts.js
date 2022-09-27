@@ -27,7 +27,8 @@ function airCrystalBall(lat, lng) {
 
             // use the data stored in object to do whatever
             .then(function (data_airly) {
-                console.error("Airly2_forecast", data_airly); // debug: output everything stored in the object
+                // console.error("Airly2_forecast", data_airly); // debug: output everything stored in the object
+                console.log('%c%s', 'color: #ea01ff', "🌐 Airly2_forecast", data_airly); // debug: output everything stored in the object
 
                 /* - convert ISO time to local time - */
 
@@ -129,7 +130,9 @@ function airCrystalBall(lat, lng) {
 
                         // use the data stored in object to do whatever
                         .then(function (data_aqicn) {
-                            console.error("AQICN2_forecast", data_aqicn); // debug: output everything stored in the object
+                            // console.error("AQICN2_forecast", data_aqicn); // debug: output everything stored in the object
+                            console.log('%c%s', 'color: #ea01ff', "🌐 AQICN2_forecast", data_aqicn); // debug: output everything stored in the object
+
                             // console.log("AQICN:", data_aqicn.data.aqi); // debug
 
                             //* NOTE: assumption: looks like API returns forecast for -2 days from the request day, day 0 = request day, and +4 days // update: depends on location, need to diff dates to course correct this 

@@ -24,7 +24,7 @@ function weatherBallon(lat, lng) {
 		owm_api_key +
 		"&units=metric" +
 		"&lang=pl";
-	console.log('%c%s', 'color: #0047ca', "Full API URL (5D/3H (all)):", owm_url); // debug; colored output 
+	console.log('%c%s', 'color: #0047ca', "🔗 Full API URL (5D/3H (all)):", owm_url); // debug; colored output 
 	fetch(owm_url)
 		// convert data to JSON
 		.then(function (resp) {
@@ -32,7 +32,8 @@ function weatherBallon(lat, lng) {
 		})
 		// get data to drawWeather function below
 		.then(function (owm_data) {
-			console.error("OpenWeatherMap - 5D/3H (all)", owm_data);
+			// console.error("OpenWeatherMap - 5D/3H (all)", owm_data); // debug: output everything stored in the object
+			console.log('%c%s', 'color: #ea01ff', "🌐 OpenWeatherMap - 5D/3H (all)", owm_data); // debug: output everything stored in the object
 			drawWeather(owm_data);
 		})
 		// catch any errors
@@ -395,4 +396,4 @@ if (navigator.onLine === false) {
 
 var autoRefreshLastUpdate = new Date(); // new date object (date + time)
 autoRefreshLastUpdate = autoRefreshLastUpdate.toTimeString().split(' ')[0] // toTimeString returns the complete time. We split it by space to get the time component only
-console.log('%c%s', 'color: #007531', "autoRefreshLastUpdate:", autoRefreshLastUpdate); // colored output 
+console.log('%c%s', 'color: #007531', "⏯️ autoRefreshLastUpdate:", autoRefreshLastUpdate); // colored output 

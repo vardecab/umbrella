@@ -14,7 +14,7 @@ function sunTimes(lat, lng, offset) {
 		lng +
 		"&formatted=0";
 	// NOTE: "&formatted=0" so the date is in UNIX
-	console.log('%c%s', 'color: #0047ca', "Sunrise Sunset URL:", ss_url); // debug, colored output
+	console.log('%c%s', 'color: #0047ca', "🔗 Sunrise Sunset URL:", ss_url); // debug, colored output
 
 	// grab data from URL
 	fetch(ss_url)
@@ -24,7 +24,8 @@ function sunTimes(lat, lng, offset) {
 		})
 		// use the data stored in object to do whatever
 		.then(function (ss_data) {
-			console.error("Sunrise Sunset", ss_data); // debug: output everything stored in the object
+			// console.error("Sunrise Sunset", ss_data); // debug: output everything stored in the object
+			console.log('%c%s', 'color: #ea01ff', "🌐 Sunrise Sunset", ss_data); // debug: output everything stored in the object
 
 			// 🌥️ first light
 
@@ -79,7 +80,7 @@ function getTimeZoneOffset(lat, lng) {
 		"&by=position" +
 		"&lat=" + lat +
 		"&lng=" + lng;
-	console.log('%c%s', 'color: #0047ca', "TimeZoneDB URL:", tzdbURL); // debug, colored output
+	console.log('%c%s', 'color: #0047ca', "🔗 TimeZoneDB URL:", tzdbURL); // debug, colored output
 
 	// grab data from URL
 	fetch(tzdbURL)
@@ -89,7 +90,8 @@ function getTimeZoneOffset(lat, lng) {
 		})
 		// use the data stored in object to do whatever
 		.then(function (tzdbData) {
-			console.error("TimeZoneDB", tzdbData); // debug: output everything stored in the object
+			// console.error("TimeZoneDB", tzdbData); // debug: output everything stored in the object
+			console.log('%c%s', 'color: #ea01ff', "🌐 TimeZoneDB", tzdbData); // debug: output everything stored in the object
 
 			// get GMT offset from the data
 			var offset = tzdbData.gmtOffset; // get GMT offset from the API; eg. 7200 means 120 minutes means 2 hours

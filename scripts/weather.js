@@ -319,24 +319,21 @@ function drawWeather(owm_data) {
 	var rain_volume = owm_data.list[0].rain["3h"]; // shown in 'mm'; volume for 3 hours
 	var rain_volume_in_html = document.getElementById("rain"); // put HTML element to a variable
 
-	rain_volume = rain_volume / 3; // rain volume from API is a sum from 3 hours so we need to divide to get hourly volume
-	rain_volume = rain_volume.toFixed(2);
+	// rain_volume = rain_volume / 3; // rain volume from API is a sum from 3 hours so we need to divide to get hourly volume // # TODO: think about this… compare with other sites, check levels
+	rain_volume = rain_volume.toFixed(2); // round the value
 
 	// FIX: seems that data from API is low and not realistic?
 	// NOTE: checked with other sources and seems correct… need some real-life examples
 
-	if (rain_volume < 2.5) { // light rain
-		// rain_volume_in_html.textContent += "💧 " + rain_volume + " " + "mm/hr";
-		rain_volume_in_html.textContent += "💧 lekki deszcz";
-	} else if ((rain_volume >= 2.5) & (rain_volume < 8)) { // moderate / heavy rain
-		// rain_volume_in_html.textContent += "💦 " + rain_volume + " " + "mm/hr";
-		rain_volume_in_html.textContent += "💦 spory deszcz";
-	} else if ((rain_volume >= 8) & (rain_volume < 50)) { // heavy rain / shower
-		// rain_volume_in_html.textContent += "🌧️ "  + rain_volume + " " + "mm/hr";
-		rain_volume_in_html.textContent += "🌧️ ulewa";
+	// TODO: added custom levels in 0.42, go to v0.39 for old levels
+	if (rain_volume < 1) { // rain
+		rain_volume_in_html.textContent += "💧 deszcz " + "(" + rain_volume + " " + "mm/hr)";
+	} else if ((rain_volume >= 1) & (rain_volume < 5)) { // moderate / heavy rain
+		rain_volume_in_html.textContent += "💦 ulewa " + "(" + rain_volume + " " + "mm/hr)";
+	} else if ((rain_volume >= 5) & (rain_volume < 50)) { // heavy rain / shower
+		rain_volume_in_html.textContent += "🌧️ potop " + "(" + rain_volume + " " + "mm/hr)";
 	} else if (rain_volume >= 50) { // violent rain / shower
-		// rain_volume_in_html.textContent += "⛈️⛈️⛈️ " + rain_volume + " " + "mm/hr";
-		rain_volume_in_html.textContent += "⛈️⛈️⛈️ potop";
+		rain_volume_in_html.textContent += "⛈️⛈️⛈️ armageddon " + "(" + rain_volume + " " + "mm/hr)";
 	} 
 	
 	// ❄️ snow levels // TODO

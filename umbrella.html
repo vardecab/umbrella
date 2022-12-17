@@ -11,12 +11,15 @@
 	<title>Umbrella</title>
 
 	<!-- --------- description --------- -->
-	<meta name="description" content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz." />
+	<meta name="description"
+		content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz." />
 
 	<!-- --------- Open Graph ---------- -->
 	<meta property="og:title" content="Umbrella" />
-	<meta property="og:description" content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz." />
-	<meta property="og:image" content="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png" />
+	<meta property="og:description"
+		content="Prosta strona z informacjami pogodowymi, która powie Ci, czy musisz wziąć parasol, wychodząc na zewnątrz." />
+	<meta property="og:image"
+		content="https://vardecab.github.io/umbrella/images/social-sharing/umbrella-facebook-ogimage-v2.png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="og:url" content="https://vardecab.github.io/umbrella/umbrella.html" />
@@ -52,28 +55,32 @@
 	<!-- ----- external libraries ------ -->
 	<script src="./scripts/libraries/moment.min.js"></script> <!-- time formats manipulation -->
 	<script src="./scripts/libraries/dayjs.min.js"></script> <!-- date & time library -->
-	<script src="./scripts/libraries/js.cookie.min.js"></script> <!-- lightweight JavaScript API for handling browser cookies -->
+	<script src="./scripts/libraries/js.cookie.min.js"></script>
+	<!-- lightweight JavaScript API for handling browser cookies -->
 	<script src="./scripts/libraries/jquery.slim.min.js"></script> <!-- jQuery for hide() and show() in allergy.js -->
 
 	<!-- -------- auto-refresh --------- -->
-	<meta http-equiv="refresh" content="900" /> <!-- auto refresh the website every x ms (/60 => min) to load a new forecast -->
+	<meta http-equiv="refresh" content="900" />
+	<!-- auto refresh the website every x ms (/60 => min) to load a new forecast -->
 </head>
 
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="twelve columns">
-				<img id="icon" title="Ikona pogody" src="./images/status/loading.svg" /> <!-- icon used while loading data -->
+				<img id="icon" title="Ikona pogody" src="./images/status/loading.svg" />
+				<!-- icon used while loading data -->
 
 				<div class="data_holder">
 					<div id="temperature" title="Średnia odczuwalna temperatura w ciągu najbliższych ~ 3 godzin"></div>
 				</div>
-				<div class="more_details">
+				<div class="more_details" id="ShowHide">
+					<!-- <div class="more_details" id="ShowHide" onclick="ShowHide()"> -->
 					<!-- - wind & pressure & humidity -- -->
 					<span id="wind" title="Prędkość wiatru:"></span>
 					<span id="air_pressure" title="Ciśnienie:"></span>
 					<span id="dew_point" title="Punkt rosy:"></span>
-					
+
 					<!-- --------- sun & moon ---------- -->
 					<br>
 					<span id="first_light" title="Pierwsze promienie słońca:">🌥️ </span>
@@ -89,7 +96,7 @@
 					<!-- ------------- UVI ------------- -->
 
 					<span id="uvi" title="Indeks UV:">🌤️ UVI: </span>
-					
+
 					<!-- <span id="temperature_next_6hrs" title="Kolejne 6 godzin:">🕡 </span> -->
 				</div>
 
@@ -99,7 +106,7 @@
 
 				<div id="clothes" title="Co by tu ubrać? 🤔"></div>
 
-				<div class="data_holder">
+				<div class="data_holder" id="ShowHide2">
 					<div id="air_quality" title="🤓 Dobre; 🤢 Złe; 🤬 Szkodliwe; ⚰️ RIP"></div>
 					<!-- <div id="air_quality"></div> -->
 				</div>
@@ -153,10 +160,19 @@
 	</div>
 
 	<script>
-		document
-			.querySelector("#location")
-			.addEventListener("click", manualFinder);
-		document.querySelector("#findme").addEventListener("click", findMe);
+		// be able to force more temperature details to show up and stop hiding
+		function ShowHide() {
+			var element = document.getElementById("ShowHide"); // assign value
+			if (element.style.display === "block") { // if visible then hide
+				element.style.display = "none";
+			} else { // if hidden then show
+				element.style.display = "block";
+			}
+		}
+		// add listeners so when elements are clicked the functions can start working
+		document.querySelector("#location").addEventListener("click", manualFinder); // manual location search
+		document.querySelector("#findme").addEventListener("click", findMe); // geolocation
+		document.querySelector("#temperature").addEventListener("click", ShowHide); // show/hide more temperature details
 	</script>
 </body>
 

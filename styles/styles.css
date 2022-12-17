@@ -63,7 +63,7 @@ body {
 .more_details {
 	margin-top: -2%;
 	margin-bottom: 2.5%;
-	display: none; /* *NOTE: disable to see all the details */ 
+	display: none; /* NOTE: disable to see all the details */
 }
 
 #umbrella,
@@ -170,7 +170,7 @@ a {
 /* Mobile phone, eg SGS5, iPhones */
 @media (min-width: 300px) and (max-width: 450px) {
 	#icon {
-		margin-top: 20%;
+		margin-top: 40%;
 	}
 	#umbrella {
 		margin-top: 15%;
@@ -226,6 +226,13 @@ a {
 @media (min-width: 1600px) {
 	#icon {
 		margin-top: 20%;
+	}
+}
+
+/* Arc on macOS + when text is bigger on mobile */
+@media (min-width: 300px) and (max-width: 500px) {
+	#icon {
+		margin-top: 30% !important;
 	}
 }
 

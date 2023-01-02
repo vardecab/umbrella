@@ -88,19 +88,26 @@ def getInfo(region, regionID, regionID_long):
         exit() # close script
     
     # compare local file with new data coming from the scraped website
-    if description is not None:
-        with open(f"allergens-description-{regionID_long}.txt", "r", encoding="utf-8") as file_read:  
-            description_local = file_read.read()
-        if description == description_local: 
-            print(f"No new conditions for {region}. Local file is up to date.") # status
-            changes = 0
-        else:
-            with open(f"allergens-description-{regionID_long}.txt", "w", encoding="utf-8") as file:
+    try: # try to compare the file with new info from the page
+        if description is not None:
+            with open(f"allergens-description-{regionID_long}.txt", "r", encoding="utf-8") as file_read:  
+                description_local = file_read.read()
+            if description == description_local: 
+                print(f"No new conditions for {region}. Local file is up to date.") # status
+                changes = 0
+            else:
+                with open(f"allergens-description-{regionID_long}.txt", "w", encoding="utf-8") as file:
+                    file.write(description)
+                print(f"Description for {region}: {description}")
+                # counter
+                changes = 1
+            return changes
+    except FileNotFoundError: # if file doesn't exist because we have added a new region do something else
+        print(f"File for region {region} didn't exist. Let's create it...")
+        with open(f"allergens-description-{regionID_long}.txt", "w", encoding="utf-8") as file:
+                print("File created.")
                 file.write(description)
-            print(f"Description for {region}: {description}")
-            # counter
-            changes = 1
-        return changes
+        print(f"Description for {region}: {description}")
     else:
         print("For some reason returned data is empty. Check if you can get the data manually.") # status
         errorNotification("description is 'None'; check the website manually.") # display notification
@@ -113,6 +120,7 @@ def getInfo(region, regionID, regionID_long):
 DS = getInfo('Dolny Slask','6','R6DS') 
 MZ = getInfo('Mazowsze','7','R7MZ')
 MP = getInfo('Malopolska','9','R9MP')
+PM = getInfo('Wybrzeze', '2', 'R2WY')
 
 # -------- show notifications -------- #
 

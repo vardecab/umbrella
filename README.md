@@ -36,6 +36,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.43: Added `Wybrzeże` to allergens/pollen logic;  
 - 0.42: Click to see more temperature details without element hiding.
 - 0.41.1: Fixed margins in some edge cases; changes to rain related stuff.
 - 0.41: Fixed geolocation issues.

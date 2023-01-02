@@ -44,10 +44,13 @@ function showPollen(voivodeship) {
 	} else if (voivodeship.includes("Lesser")) {
 		allergy_region = "R9MP";
 		checkPollen(allergy_region);
-	} else {
+	} else if (voivodeship.includes("Pomeranian")) {
+		allergy_region = "R2WY";
+		checkPollen(allergy_region);
+	}
+	// TODO: other 12 voivodeships
+	else {
 		console.log("Allergy: this region is not supported.");
 		$("#allergy").hide();
 	}
-
-	// TODO: other 13 voivodeships
 }

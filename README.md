@@ -36,6 +36,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.44: Changed emojis for sunrise & sunset.
 - 0.43.1: New library used for displaying Windows notifications.
 - 0.43: Added `Wybrzeże` to allergens/pollen logic.
 - 0.42: Click to see more temperature details without element hiding.

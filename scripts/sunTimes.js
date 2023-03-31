@@ -32,7 +32,7 @@ function sunTimes(lat, lng, offset) {
 			var first_light_utc = ss_data.results.civil_twilight_begin; // get data from API, it's UTC
 			var first_light_location = moment(first_light_utc).utcOffset(offset).format("H:mm"); // take UTC, add offset from TimeZoneDB, format nicely
 			console.log("First light UTC:", first_light_utc); // debug 
-			console.log("First light location:", first_light_location); // debug 
+			console.log("First light:", first_light_location); // debug 
 
 			var first_light_in_html = document.getElementById("first_light");
 			first_light_in_html.textContent += first_light_location; // add to the page

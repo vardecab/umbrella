@@ -129,6 +129,12 @@ def getInfo(region, regionID, regionID_long):
                 with open(f"allergens-description-{regionID_long}.txt", "w", encoding="utf-8") as file:
                     file.write(description)
                 print(f"Description for {region}: {description}")
+                
+                # NOTE: show a notification if there is pollen in a specific region
+                if regionID == 2: # WY
+                    if platform == "darwin":
+                        pync.notify(f'{region}: {description}', title='Umbrella', subtitle='PollenInfoAutoUpdate', open="https://github.com/vardecab/umbrella/tree/master/py", sound="", contentImage="icons/umbrella.png")
+                        
                 # counter
                 changes = 1
             return changes
@@ -147,7 +153,6 @@ def getInfo(region, regionID, regionID_long):
         exit()  # close script
 
 # --- regions defined for function --- #
-
 
 # NOTE: assigned to a variable to get # of changes, same with the other two
 DS = getInfo('Dolny Slask', '6', 'R6DS')

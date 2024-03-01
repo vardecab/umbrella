@@ -42,7 +42,7 @@ window.onload = function geoLocator() {
 			cookie_lat = Cookies.get("umbrella_coord_lat");
 
 			// API key which we use in the next piece
-			const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
+			const liq_api_key = "pk.eefd10f42ceaa935c889b114939968a2"; // well... no way to hide it ¯\_(ツ)_/¯
 
 			// we need to get city name from LocationIQ API
 			liqURL = "https://eu1.locationiq.com/v1/reverse.php?key=" +
@@ -159,7 +159,7 @@ window.onload = function geoLocator() {
 			}
 			// user typed something and hit OK; success - let's go
 			else if (query_input) {
-				const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
+				const liq_api_key = "pk.eefd10f42ceaa935c889b114939968a2"; // well... no way to hide it ¯\_(ツ)_/¯
 
 				// grab data from URL
 				fetch(
@@ -335,7 +335,7 @@ function manualFinder() { // globe icon
 	}
 	// user typed something and hit OK; success - let's go
 	else if (query_input) {
-		const liq_api_key = "a95509ae99d0ab"; // well... no way to hide it ¯\_(ツ)_/¯
+		const liq_api_key = "pk.eefd10f42ceaa935c889b114939968a2"; // well... no way to hide it ¯\_(ツ)_/¯
 
 		// grab data from URL
 		fetch(

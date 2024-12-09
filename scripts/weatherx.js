@@ -2,10 +2,14 @@
 /*          OWM One Call API          */
 /* ================================== */
 
+// https://openweathermap.org/forecast5
+// FIX: paid API
+// if not paid, 1) UVI and 2) dew point won't work
+
 /* -------- get data from API -------- */
 
 function weatherBallon2(lat, lng) {
-	const owm_api_key = "4541406d253305e837d9ff9e415c7551"; // well... no way to hide it ¯\_(ツ)_/¯
+	const owm_api_key = "70f56dba664fb89de2c0883d3ea17152"; // well... no way to hide it ¯\_(ツ)_/¯
 	// if (owm_api_key == "") {
 	//     window.alert("API key missing!");
 	//     console.error("API key missing!");

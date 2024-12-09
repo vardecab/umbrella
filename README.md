@@ -36,7 +36,8 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
-- 0.46: Disabled pollen information because API died.
+- 0.47: Disabled `UVI` and `dew point` information due to API problems.
+- 0.46: Disabled `pollen` information because API died.
 - 0.45: Added a local notification if there is pollen in the region; fixed LocationIQ API key so the whole thing can continue to work.
 - 0.44: Changed emojis for sunrise & sunset.
 - 0.43.1: New library used for displaying Windows notifications.

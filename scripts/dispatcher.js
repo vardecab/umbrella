@@ -130,7 +130,8 @@ window.onload = function geoLocator() {
 				});
 
 			weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
+			// FIX: API is now paid
+			// weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 			// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information? // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
@@ -256,7 +257,8 @@ window.onload = function geoLocator() {
 						// alert(liq_location); // debug
 
 						weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
+						// FIX: API is now paid
+						// weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 						// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
@@ -300,7 +302,8 @@ window.onload = function geoLocator() {
 		}
 
 		weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-		weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
+		// FIX: API is now paid
+		// weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 		// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
@@ -432,7 +435,8 @@ function manualFinder() { // globe icon
 				cookie_location_voivodeship = Cookies.get("umbrella_location_voivodeship");
 
 				weatherBallon(cookie_lat, cookie_lng); // pass coords to get weather info
-				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
+				// FIX: API is now paid
+				// weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
 				// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API

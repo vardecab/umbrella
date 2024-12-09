@@ -133,7 +133,7 @@ window.onload = function geoLocator() {
 			weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 			airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 			airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-			showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information?
+			// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information? // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
 		}
 
 		// if we can't geolocate then ask user for the location
@@ -259,7 +259,7 @@ window.onload = function geoLocator() {
 						weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 						airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 						airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-						showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
+						// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
 					});
 			}
 			// user hit Cancel / ESC - re-ask
@@ -303,7 +303,7 @@ window.onload = function geoLocator() {
 		weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 		airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 		airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-		showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
+		// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
 	}
 
 	// geolocation not supported in the browser
@@ -435,7 +435,7 @@ function manualFinder() { // globe icon
 				weatherBallon2(cookie_lat, cookie_lng); // pass coords to get UV index
 				airMask(cookie_lat, cookie_lng); // pass coords to get air quality info
 				airCrystalBall(cookie_lat, cookie_lng) // pass coords to get air quality forecast
-				showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information
+				// showPollen(cookie_location_voivodeship); // pass voivodeship to get allergy information // FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
 
 				location.reload(); // reload page
 			});

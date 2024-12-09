@@ -91,6 +91,8 @@ def pullData(soup):
 
 def getInfo(region, regionID, regionID_long):
 
+    # FIX: pylenia.pl is down, need to find replacement 
+
     # Dolny Śląsk
     page_url = f'http://pylenia.pl/search.html?r={regionID}&a=0&from={start_date_range}&to={end_date_range}&w=1'
     # print(page_url) # debug

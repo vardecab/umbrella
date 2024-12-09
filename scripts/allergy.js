@@ -6,6 +6,7 @@
 
 // scraper.py is getting data from https://www.claritine.pl/pl/prognoza-dla-alergikow/aktualna-prognoza-pylenia/
 // scraper2.py is getting data from http://pylenia.pl/
+// FIX: doesn't work as of late 2024, the website is down so we need to take the data from a different API
 
 function checkPollen(lID) {
 	//  get description

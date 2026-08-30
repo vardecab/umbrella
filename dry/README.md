@@ -28,8 +28,20 @@ Then: `≤ 50 → green`, `≤ 60 → amber`, else `red`.
 
 ## Location
 
-From Cloudflare's edge geolocation (`request.cf`). Override with `?lat=..&lon=..`.
-Falls back to Wrocław.
+In order of precedence:
+
+1. `?lat=..&lon=..` — one-off override
+2. `dry_loc` cookie — set by the **📍 GPS button** (bottom-right), remembered ~6 months
+3. Cloudflare edge geolocation (`request.cf`)
+4. Wrocław — fallback
+
+The 📍 button asks the browser for GPS, writes the cookie, and reloads. `?auto=1`
+clears the saved location and goes back to edge geo.
+
+## Look
+
+Solid full-screen colour, nothing else. `theme-color` + `viewport-fit=cover` make the
+iOS status-bar and home-indicator areas the same solid colour.
 
 ## Develop / deploy
 

@@ -103,6 +103,12 @@ async function computeDrying(lat, lon, key) {
 	const temp = Math.round(slot.main.feels_like); // °C feels-like
 	const clouds = Math.round(slot.clouds?.all ?? 100); // % cloud cover
 
+	const isDay = !!(
+		city.sunrise &&
+		city.sunset &&
+		slot.dt >= city.sunrise &&
+		slot.dt <= city.sunset
+	);
 	const sunBonus = sunBonusFor(slot, city); // RH points the sky is worth
 	const rain = rainLevel(slot); //  0 none · 1 drizzle risk · 2 real rain
 	const rainPenalty = rain === 1 ? 12 : 0;
@@ -132,9 +138,11 @@ async function computeDrying(lat, lon, key) {
 		wind,
 		temp,
 		clouds,
+		isDay,
 		sunBonus,
 		windBonus,
 		rain,
+		rainPenalty,
 		lat: round4(lat),
 		lon: round4(lon),
 	};
@@ -197,31 +205,56 @@ function shell(body, state, maxAge) {
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 0.55rem;
-		padding:
-			calc(env(safe-area-inset-top) + 2rem)
-			calc(env(safe-area-inset-right) + 1.5rem)
-			calc(env(safe-area-inset-bottom) + 2rem)
-			calc(env(safe-area-inset-left) + 1.5rem);
+		padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 		color: ${state.fg};
-		text-align: center;
 		-webkit-font-smoothing: antialiased;
 	}
-	.emoji { font-size: clamp(3.5rem, 22vw, 7rem); line-height: 1; }
-	.title { font-size: clamp(1.4rem, 7vw, 2.2rem); font-weight: 700; letter-spacing: -0.01em; }
-	.sub { font-size: clamp(0.9rem, 4vw, 1.1rem); opacity: 0.72; }
-	.meta {
-		margin-top: 1.3rem;
-		font-size: 0.82rem;
-		opacity: 0.62;
-		font-variant-numeric: tabular-nums;
-		line-height: 1.7;
+	main {
+		margin: auto; /* centres when it fits, scrolls from the top when it doesn't */
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+		max-width: 34rem;
+		padding: 2rem 1.25rem 5.5rem; /* bottom room so the GPS button clears the table */
+		box-sizing: border-box;
+		text-align: center;
 	}
-	.meta b { font-weight: 600; }
-	.meta a { color: inherit; }
+	.emoji { font-size: clamp(3.25rem, 20vw, 6rem); line-height: 1; }
+	.title { font-size: clamp(1.35rem, 6.5vw, 2rem); font-weight: 700; letter-spacing: -0.01em; }
+	.sub { font-size: clamp(0.9rem, 4vw, 1.05rem); opacity: 0.72; }
+
+	.tbl {
+		margin-top: 1.5rem;
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.82rem;
+		line-height: 1.4;
+	}
+	.tbl caption {
+		text-align: left;
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		opacity: 0.5;
+		padding-bottom: 0.35rem;
+	}
+	.tbl td {
+		padding: 0.5rem 0.5rem;
+		border-top: 1px solid rgba(0, 0, 0, 0.13);
+		vertical-align: top;
+		text-align: left;
+	}
+	.tbl td.m { font-weight: 700; white-space: nowrap; }
+	.tbl td.v { font-variant-numeric: tabular-nums; white-space: nowrap; }
+	.tbl td.w { opacity: 0.82; }
+	.tbl tr.sum td { border-top: 2px solid rgba(0, 0, 0, 0.32); font-weight: 700; }
+	.tbl tr.sum td.w { opacity: 1; font-weight: 600; }
+
+	.loc { margin-top: 1.1rem; font-size: 0.78rem; opacity: 0.55; }
+	.loc a { color: inherit; }
 
 	/* GPS button */
 	#gps {
@@ -248,7 +281,9 @@ function shell(body, state, maxAge) {
 </style>
 </head>
 <body>
+<main>
 ${body}
+</main>
 <button id="gps" type="button" aria-label="Użyj mojej lokalizacji GPS" title="Moja lokalizacja (GPS)">📍</button>
 <script>
 (function () {
@@ -275,28 +310,87 @@ ${body}
 }
 
 function renderPage(m, state, loc) {
-	const bits = [
-		`wilgotność <b>${m.humidity}%</b>`,
-		`wiatr <b>${m.wind} km/h</b>`,
-		`zachmurzenie <b>${m.clouds}%</b>`,
-		`odczuwalna <b>${m.temp}°</b>`,
+	const rows = [
+		humidityRow(m.humidity),
+		windRow(m.wind, m.windBonus),
+		sunRow(m.clouds, m.sunBonus, m.isDay),
+		tempRow(m.temp),
+		rainRow(m.rain, m.rainPenalty),
 	];
-	const guard =
-		m.rain === 2 ? " · 🌧️ deszcz" : m.rain === 1 ? " · 💧 możliwa mżawka" : "";
 
-	let where;
-	if (loc.source === "gps") where = `📍 ${m.lat}, ${m.lon} · <a href="?auto=1">auto</a>`;
+	const sumWhy =
+		`${m.humidity} − ${m.windBonus} (wiatr) − ${m.sunBonus} (słońce)` +
+		(m.rainPenalty ? ` + ${m.rainPenalty} (mżawka)` : "") +
+		` = ${m.effectiveRh}% &nbsp;·&nbsp; ≤50 dwór · ≤60 wolniej · &gt;60 dom`;
+
+	const body = rows
+		.map(([metric, value, why]) =>
+			`<tr><td class="m">${metric}</td><td class="v">${value}</td><td class="w">${why}</td></tr>`
+		)
+		.join("\n\t\t\t");
+
+	let where = "";
+	if (loc.source === "gps") where = `📍 ${m.lat}, ${m.lon} &nbsp;·&nbsp; <a href="?auto=1">auto</a>`;
 	else if (loc.source === "query") where = `${m.lat}, ${m.lon}`;
 	else if (loc.place) where = escapeHtml(loc.place);
-	else where = "";
 
 	return `	<div class="emoji">${state.emoji}</div>
 	<div class="title">${state.title}</div>
 	<div class="sub">${state.sub}</div>
-	<div class="meta">
-		efektywna wilgotność <b>${m.effectiveRh}%</b>${guard}<br>
-		${bits.join(" · ")}${where ? `<br>${where}` : ""}
-	</div>`;
+	<table class="tbl">
+		<caption>co się składa na wynik</caption>
+		<tbody>
+			${body}
+			<tr class="sum"><td class="m">Efektywnie</td><td class="v">${m.effectiveRh}%</td><td class="w">${sumWhy}</td></tr>
+		</tbody>
+	</table>
+	${where ? `<div class="loc">${where}</div>` : ""}`;
+}
+
+// each row: [metric, value, why-it-helps-or-hurts]
+function humidityRow(h) {
+	let why;
+	if (h <= 40) why = "🟩 sucho — powietrze łatwo chłonie wilgoć z prania";
+	else if (h <= 55) why = "🟩 w normie — pranie wyschnie";
+	else if (h <= 70) why = "🟨 wysoko — powietrze wolno przyjmuje wilgoć";
+	else why = "🟥 bardzo wysoko — powietrze jest niemal nasycone, pranie nie schnie";
+	return ["Wilgotność", `${h}%`, why];
+}
+
+function windRow(w, bonus) {
+	let why;
+	if (bonus === 0) why = "🟨 cisza — nie zdmuchuje wilgotnego powietrza znad prania";
+	else if (w <= 19) why = `🟩 lekki — odsuwa wilgotne powietrze od tkaniny (−${bonus})`;
+	else if (w <= 29) why = `🟩 umiarkowany — najlepszy do schnięcia (−${bonus})`;
+	else if (w <= 39) why = `🟩 świeży — schnie szybko, dobrze przypnij pranie (−${bonus})`;
+	else if (w <= 50) why = `🟨 silny — schnie szybko, ale może zrywać pranie (−${bonus})`;
+	else why = `🟥 wichura — pranie poleci ze sznurka (−${bonus})`;
+	return ["Wiatr", `${w} km/h`, why];
+}
+
+function sunRow(clouds, bonus, isDay) {
+	if (!isDay) return ["Słońce", "noc", "🌙 po zmroku słońce nie dosusza; może osiadać rosa"];
+	let why;
+	if (clouds < 20) why = `☀️ pełne słońce — nagrzewa mokrą tkaninę, parowanie rośnie (−${bonus})`;
+	else if (clouds < 50) why = `🌤️ sporo słońca — trochę dogrzewa pranie (−${bonus})`;
+	else if (clouds < 80) why = `⛅ przeważnie pochmurno — słońce pomaga minimalnie (−${bonus})`;
+	else why = "☁️ całkowite zachmurzenie — brak dosuszania słońcem";
+	return ["Słońce", `${clouds}% chmur`, why];
+}
+
+function tempRow(t) {
+	let why;
+	if (t < 3) why = "🥶 mróz — parowanie prawie ustaje (wymusza suszenie w domu)";
+	else if (t < 10) why = "🟨 chłodno — pranie schnie powoli";
+	else if (t < 18) why = "🟩 w porządku dla schnięcia";
+	else why = "🟩 ciepło — sprzyja parowaniu";
+	return ["Temperatura", `${t}°`, why];
+}
+
+function rainRow(level, penalty) {
+	if (level === 2) return ["Deszcz", "opady", "🟥 pada — pranie zmoknie (wymusza suszenie w domu)"];
+	if (level === 1) return ["Deszcz", "mżawka?", `🟨 możliwa mżawka — doliczany zapas do wilgotności (+${penalty})`];
+	return ["Deszcz", "brak", "🟩 bez opadów w najbliższych godzinach"];
 }
 
 function renderError(message) {

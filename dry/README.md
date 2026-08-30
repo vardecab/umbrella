@@ -40,8 +40,10 @@ clears the saved location and goes back to edge geo.
 
 ## Look
 
-Solid full-screen colour, nothing else. `theme-color` + `viewport-fit=cover` make the
-iOS status-bar and home-indicator areas the same solid colour.
+Solid full-screen colour + a small breakdown table (each metric, its value, and a
+plain-language line on why it helps or hurts, ending with the `effective humidity`
+arithmetic). `theme-color` + `viewport-fit=cover` make the iOS status-bar and
+home-indicator areas the same solid colour.
 
 ## Develop / deploy
 

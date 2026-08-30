@@ -36,6 +36,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.48: Added a laundry-drying tip 🧺 — averages forecasted humidity, wind and cloud cover from now to +6 h (near-term hours weighted more heavily) into an "effective humidity" and says whether to hang clothes outside, outside-but-slower, or inside. Rain/snow or near-freezing temps in the window override to "dry inside".
 - 0.47: Disabled `UVI` and `dew point` information due to API problems.
 - 0.46: Disabled `pollen` information because API died.
 - 0.45: Added a local notification if there is pollen in the region; fixed LocationIQ API key so the whole thing can continue to work.

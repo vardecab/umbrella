@@ -296,18 +296,114 @@ function drawWeather(owm_data) {
 		air_pressure_in_html.textContent += "👎🏼 " + air_pressure + " hPa";
 	}
 
-	// 🌫️ humidity 
+	// 🌫️ humidity + 🍃 wind + ☀️ sun — 🧺 can we hang the laundry outside to dry?
+	//
+	// Physics of drying wet fabric:
+	//  • Humidity  — clothes dry only while the air can still take on water vapour (low relative humidity).
+	//  • Wind      — moving air keeps sweeping the humid "boundary layer" off the fabric, so a breezy 65%
+	//                day dries about as well as a still 45% day. The benefit flattens out at higher speeds,
+	//                and strong wind blows clothes off the line, so we cap it.
+	//  • Sun       — direct sunlight heats the fabric above air temperature, raising the vapour pressure at
+	//                the surface → faster evaporation. Only helps in daylight; clear sky helps most.
+	//                (We use forecast cloud cover for this. UV index would be the wrong signal — it tracks
+	//                sunburn/fading, not warmth — and it isn't in the free OWM 5D/3H feed anyway.)
+	//
+	// We fold wind and sun into an "effective humidity":
+	//     effective_RH = weighted_humidity_avg − wind_bonus − sun_bonus   (floored at 5%)
+	// then run the traffic-light on that. Drying takes time, so we look from now until +6 h and weight the
+	// soonest 3-hr slot most.
 
-	// humidity = owm_data.list[0].main.humidity;
-	// var humidity_in_html = document.getElementById("humidity");
-	
-	// if (humidity >= 40 && humidity <= 60) {
-	// 	humidity_in_html.textContent += humidity + "%" + "🟩";
-	// } else if (humidity < 40) {
-	// 	humidity_in_html.textContent += humidity + "%" + "🔻";
-	// } else if (humidity > 60) {
-	// 	humidity_in_html.textContent += humidity + "%" + "🔺";
-	// }
+	var drying_window_hrs = 6; // how many hours ahead to look
+	var drying_horizon = Date.now() / 1000 + drying_window_hrs * 3600; // UNIX seconds; API 'dt' is also in seconds
+
+	// how many RH points a daylight slot's sky is "worth" (0 at night — no sun help after dark)
+	function dryingSunBonus(entry) {
+		var is_day = entry.dt >= owm_data.city.sunrise && entry.dt <= owm_data.city.sunset;
+		if (!is_day) return 0;
+		var clouds = parseFloat(entry.clouds.all); // % cloud cover, 0 = clear sky
+		if (clouds < 20) return 9; // sunny
+		if (clouds < 50) return 5; // partly cloudy
+		if (clouds < 80) return 2; // mostly cloudy
+		return 0; // overcast — no meaningful sun
+	}
+
+	var drying_humidities = []; // forecasted RH (%) per slot in the window
+	var drying_winds = []; // forecasted wind (km/h) per slot in the window
+	var drying_temps = []; // forecasted feels-like temp (°C) per slot in the window
+	var drying_suns = []; // per-slot sun bonus (RH points) in the window
+	var drying_rain_ahead = false; // any rain / snow expected in the window?
+
+	// OWM 5D/3H forecast: list[0] is the next 3-hourly slot (always in the future), then every +3 hrs
+	for (var d = 0; d < owm_data.list.length; d++) {
+		if (owm_data.list[d].dt > drying_horizon) break; // past the window, stop
+		drying_humidities.push(parseFloat(owm_data.list[d].main.humidity));
+		drying_winds.push(parseFloat(owm_data.list[d].wind.speed) * 3.6); // m/s -> km/h
+		drying_temps.push(parseFloat(owm_data.list[d].main.feels_like));
+		drying_suns.push(dryingSunBonus(owm_data.list[d]));
+		if (raining.includes(owm_data.list[d].weather[0].main) || snowing.includes(owm_data.list[d].weather[0].main)) {
+			drying_rain_ahead = true; // reuses the 'raining' / 'snowing' lists from Part 3
+		}
+		console.log(
+			"(drying) " + owm_data.list[d].dt_txt + " UTC: " +
+			owm_data.list[d].main.humidity + "% RH, " +
+			Math.round(parseFloat(owm_data.list[d].wind.speed) * 3.6) + " km/h wind, " +
+			owm_data.list[d].clouds.all + "% cloud"
+		); // debug
+	}
+	if (!drying_humidities.length) { // window too tight (next slot is >6 h away) — fall back to the nearest forecast
+		drying_humidities.push(parseFloat(owm_data.list[0].main.humidity));
+		drying_winds.push(parseFloat(owm_data.list[0].wind.speed) * 3.6);
+		drying_temps.push(parseFloat(owm_data.list[0].main.feels_like));
+		drying_suns.push(dryingSunBonus(owm_data.list[0]));
+	}
+
+	// weighted average: the soonest slot matters most (clothes get their "head start" in the first hours),
+	// weights are [N, N-1, … 1] for N slots (e.g. 2 slots => 2:1)
+	function dryingWeightedAvg(values) {
+		var sum = 0, weight_total = 0;
+		for (var i = 0; i < values.length; i++) {
+			var weight = values.length - i; // first slot heaviest
+			sum += values[i] * weight;
+			weight_total += weight;
+		}
+		return sum / weight_total;
+	}
+
+	var humidity_avg = Math.round(dryingWeightedAvg(drying_humidities));
+	var wind_avg = Math.round(dryingWeightedAvg(drying_winds));
+	var temp_avg = Math.round(dryingWeightedAvg(drying_temps));
+	var sun_bonus = Math.round(dryingWeightedAvg(drying_suns));
+
+	// how many RH points the wind is "worth" (Beaufort-ish bands, matching the wind display above)
+	var wind_bonus;
+	if (wind_avg < 6) wind_bonus = 0; // calm — no help, humidity rules
+	else if (wind_avg <= 19) wind_bonus = 6; // light breeze
+	else if (wind_avg <= 29) wind_bonus = 12; // moderate breeze — best drying
+	else if (wind_avg <= 39) wind_bonus = 16; // fresh breeze
+	else if (wind_avg <= 50) wind_bonus = 18; // strong breeze
+	else wind_bonus = 16; // near gale — capped; things blow off the line
+
+	var effective_rh = Math.max(5, humidity_avg - wind_bonus - sun_bonus); // floor so it can't go silly-low
+
+	console.log(
+		"Drying (now → +" + drying_window_hrs + "h): RH " + humidity_avg + "% − wind " + wind_bonus +
+		" (" + wind_avg + " km/h) − sun " + sun_bonus + " = effective " + effective_rh + "%" +
+		" | temp " + temp_avg + "°C" + (drying_rain_ahead ? " | rain ahead" : "")
+	); // debug
+
+	var drying_in_html = document.getElementById("drying");
+
+	if (drying_rain_ahead) { // wet from above beats any amount of drying
+		drying_in_html.textContent += "🧺 deszcz — susz w domu 🟥";
+	} else if (temp_avg < 3) { // near-freezing: evaporation basically stops
+		drying_in_html.textContent += "🧺 za zimno — schnie wolno (" + effective_rh + "%) 🟨";
+	} else if (effective_rh <= 50) { // ideal 30–50% window and anything drier / windier / sunnier
+		drying_in_html.textContent += "🧺 susz na dworze (" + effective_rh + "%) 🟩";
+	} else if (effective_rh <= 60) { // borderline
+		drying_in_html.textContent += "🧺 dwór, ale wolniej (" + effective_rh + "%) 🟨";
+	} else { // too humid, not enough wind or sun
+		drying_in_html.textContent += "🧺 susz w domu (" + effective_rh + "%) 🟥";
+	}
 	
 	// 📔 description
 

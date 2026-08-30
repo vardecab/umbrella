@@ -24,10 +24,24 @@ const FALLBACK = { lat: 51.11, lon: 17.03, label: "Wrocław" }; // umbrella's ho
 const COOKIE = "dry_loc";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 182; // ~6 months
 
+const FAVICON_SVG =
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+	'<text x="50" y="54" font-size="82" text-anchor="middle" dominant-baseline="central">🧺</text></svg>';
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
 		const cf = request.cf || {};
+
+		// 🧺 favicon
+		if (url.pathname === "/favicon.svg" || url.pathname === "/favicon.ico") {
+			return new Response(FAVICON_SVG, {
+				headers: {
+					"content-type": "image/svg+xml; charset=utf-8",
+					"cache-control": "public, max-age=604800",
+				},
+			});
+		}
 
 		// clear a saved GPS location
 		if (url.searchParams.has("auto")) {
@@ -224,7 +238,8 @@ function shell(body, state, maxAge) {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="${state.bg}">
 <meta name="description" content="Czy warto teraz suszyć pranie na zewnątrz? Jeden kolor: zielony = tak, żółty = wolno, czerwony = w domu.">
-<title>dry</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Dry</title>
 <meta http-equiv="refresh" content="${Math.min(maxAge, 900)}">
 <style>
 	html, body { margin: 0; background: ${state.bg}; }

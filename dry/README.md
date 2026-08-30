@@ -40,10 +40,12 @@ clears the saved location and goes back to edge geo.
 
 ## Look
 
-Solid full-screen colour + a small breakdown table (each metric, its value, and a
-plain-language line on why it helps or hurts, ending with the `effective humidity`
-arithmetic). `theme-color` + `viewport-fit=cover` make the iOS status-bar and
-home-indicator areas the same solid colour.
+Solid full-screen colour, a verdict line (🍃 outside / 🏠 indoors), and a red→green
+gauge whose knob sits at a 0–100 drying score (`100 − effective_RH`, clamped to the
+verdict's band; real rain pins it near 0). Tap the icon for a breakdown table — each
+metric, its value, a plain-language line on why it helps or hurts, the `effective
+humidity` arithmetic, and the last-update time. `theme-color` + `viewport-fit=cover`
+make the iOS status-bar and home-indicator areas the same solid colour.
 
 ## Develop / deploy
 

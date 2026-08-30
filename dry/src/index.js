@@ -143,8 +143,18 @@ async function computeDrying(lat, lon, key) {
 	else if (effectiveRh <= 60) verdict = "slow";
 	else verdict = "in";
 
+	// 0..100 position on the red→green scale (higher = better drying). Kept inside the
+	// verdict's band so the knob's zone always matches the headline.
+	let score = 100 - effectiveRh;
+	if (rain === 2) score = 6;
+	else if (verdict === "in") score = clamp(12, 34, score);
+	else if (verdict === "slow") score = temp < 3 ? 44 : clamp(38, 52, score);
+	else score = clamp(56, 95, score);
+	score = Math.round(score);
+
 	return {
 		verdict,
+		score,
 		effectiveRh,
 		humidity,
 		wind,
@@ -158,6 +168,10 @@ async function computeDrying(lat, lon, key) {
 		lat: round4(lat),
 		lon: round4(lon),
 	};
+}
+
+function clamp(min, max, v) {
+	return Math.max(min, Math.min(max, v));
 }
 
 // how many RH points a daylight slot's sky is worth (0 at night — no sun help after dark)
@@ -186,10 +200,10 @@ function rainLevel(slot) {
 // palette: "Sorbet" — the brightest of the candidates, readable at arm's length
 // emoji: 🍃 = hang it outside, 🏠 = dry it indoors
 const STATES = {
-	out: { bg: "#a7e8c4", fg: "#17513a", emoji: "🍃", title: "Susz na zewnątrz", sub: "wyschnie bez problemu" },
-	slow: { bg: "#ffe9a8", fg: "#6a5108", emoji: "🍃", title: "Na zewnątrz, ale wolniej", sub: "wyschnie, tylko dłużej" },
-	in: { bg: "#ffc2bd", fg: "#7a352f", emoji: "🏠", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
-	error: { bg: "#dde3e6", fg: "#3c4247", emoji: "🤷", title: "Brak danych", sub: "" },
+	out: { bg: "#a7e8c4", fg: "#17513a", knob: "#33b34a", emoji: "🍃", title: "Susz na zewnątrz", sub: "wyschnie bez problemu" },
+	slow: { bg: "#ffe9a8", fg: "#6a5108", knob: "#e9a72c", emoji: "🍃", title: "Na zewnątrz, ale wolniej", sub: "wyschnie, tylko dłużej" },
+	in: { bg: "#ffc2bd", fg: "#7a352f", knob: "#e0533b", emoji: "🏠", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
+	error: { bg: "#dde3e6", fg: "#3c4247", knob: "#8b9096", emoji: "🤷", title: "Brak danych", sub: "" },
 };
 
 function htmlResponse(body, state, maxAge) {
@@ -247,6 +261,45 @@ function shell(body, state, maxAge) {
 	.emoji:active { transform: scale(0.92); }
 	.title { font-size: clamp(1.35rem, 6.5vw, 2rem); font-weight: 700; letter-spacing: -0.01em; }
 	.sub { font-size: clamp(0.9rem, 4vw, 1.05rem); opacity: 0.72; }
+
+	/* red → green drying gauge */
+	.gauge {
+		position: relative;
+		width: min(21rem, 100%);
+		margin: 0.8rem 0 0.15rem;
+		padding: 5px;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.55);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+	}
+	.gauge__track {
+		height: 1.85rem;
+		border-radius: 999px;
+		background: linear-gradient(90deg, #e5402b 0%, #f0731d 24%, #f7c218 48%, #a9cf3a 70%, #33b34a 100%);
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+	}
+	.gauge__knob {
+		position: absolute;
+		top: 50%;
+		left: var(--pos, 50%);
+		width: 2.7rem;
+		height: 2.7rem;
+		margin: -1.35rem 0 0 -1.35rem;
+		border-radius: 50%;
+		background: #fff;
+		border: 5px solid var(--ring, #33b34a);
+		box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.12);
+		animation: knob-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+	}
+	@keyframes knob-in { from { left: 50%; opacity: 0; } }
+	.gauge__ends {
+		display: flex;
+		justify-content: space-between;
+		width: min(21rem, 100%);
+		padding: 0 0.15rem;
+		font-size: 0.9rem;
+		opacity: 0.5;
+	}
 
 	#panel[hidden] { display: none; }
 	#panel { width: 100%; }
@@ -306,6 +359,11 @@ function shell(body, state, maxAge) {
 	}
 	#gps:active { transform: translateX(-50%) scale(0.92); }
 	#gps[disabled] { opacity: 0.55; cursor: default; }
+
+	@media (prefers-reduced-motion: reduce) {
+		* { transition: none !important; }
+		.gauge__knob { animation: none; }
+	}
 </style>
 </head>
 <body>
@@ -377,6 +435,11 @@ function renderPage(m, state, loc) {
 	return `	<div class="emoji" id="toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="panel" title="Pokaż / ukryj szczegóły">${state.emoji}</div>
 	<div class="title">${state.title}</div>
 	<div class="sub">${state.sub}</div>
+	<div class="gauge" role="img" aria-label="Ocena schnięcia na zewnątrz: ${m.score} na 100">
+		<div class="gauge__track"></div>
+		<div class="gauge__knob" style="--pos:${m.score}%;--ring:${state.knob}"></div>
+	</div>
+	<div class="gauge__ends" aria-hidden="true"><span>🏠</span><span>🍃</span></div>
 	<div id="panel" hidden>
 		<table class="tbl">
 			<caption>co się składa na wynik</caption>

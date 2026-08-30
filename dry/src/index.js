@@ -256,27 +256,30 @@ function shell(body, state, maxAge) {
 	.loc { margin-top: 1.1rem; font-size: 0.78rem; opacity: 0.55; }
 	.loc a { color: inherit; }
 
-	/* GPS button */
+	/* GPS button — centered at the bottom */
 	#gps {
 		position: fixed;
-		right: calc(env(safe-area-inset-right) + 1rem);
+		left: 50%;
 		bottom: calc(env(safe-area-inset-bottom) + 1rem);
-		width: 3rem;
-		height: 3rem;
+		transform: translateX(-50%);
+		min-height: 2.75rem;
+		padding: 0 1.1rem;
 		border: 0;
-		border-radius: 50%;
+		border-radius: 999px;
 		background: ${state.pill};
 		color: ${state.fg};
-		font-size: 1.4rem;
+		font: inherit;
+		font-size: 0.9rem;
+		font-weight: 600;
 		line-height: 1;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		gap: 0.4rem;
 		-webkit-tap-highlight-color: transparent;
 		transition: transform .1s ease;
 	}
-	#gps:active { transform: scale(0.9); }
+	#gps:active { transform: translateX(-50%) scale(0.95); }
 	#gps[disabled] { opacity: 0.6; cursor: default; }
 </style>
 </head>
@@ -284,13 +287,14 @@ function shell(body, state, maxAge) {
 <main>
 ${body}
 </main>
-<button id="gps" type="button" aria-label="Użyj mojej lokalizacji GPS" title="Moja lokalizacja (GPS)">📍</button>
+<button id="gps" type="button" aria-label="Użyj mojej lokalizacji GPS">📍 Moja lokalizacja</button>
 <script>
 (function () {
 	var b = document.getElementById("gps");
+	var LABEL = "📍 Moja lokalizacja";
 	b.addEventListener("click", function () {
-		if (!navigator.geolocation) { flash("🚫"); return; }
-		b.disabled = true; b.textContent = "…";
+		if (!navigator.geolocation) { flash("🚫 Brak GPS"); return; }
+		b.disabled = true; b.textContent = "… szukam";
 		navigator.geolocation.getCurrentPosition(
 			function (p) {
 				var lat = p.coords.latitude.toFixed(4), lon = p.coords.longitude.toFixed(4);
@@ -298,11 +302,11 @@ ${body}
 					";path=/;max-age=${COOKIE_MAX_AGE};SameSite=Lax";
 				location.assign(location.pathname); // drop any ?lat override, let the cookie drive
 			},
-			function () { b.disabled = false; flash("🚫"); },
+			function () { b.disabled = false; flash("🚫 Brak dostępu"); },
 			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
 		);
 	});
-	function flash(t) { b.textContent = t; setTimeout(function () { b.textContent = "📍"; }, 2000); }
+	function flash(t) { b.textContent = t; setTimeout(function () { b.textContent = LABEL; }, 2000); }
 })();
 </script>
 </body>

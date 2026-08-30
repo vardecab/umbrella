@@ -172,10 +172,10 @@ function rainLevel(slot) {
 /* ---------------------------------- view ---------------------------------- */
 
 const STATES = {
-	out: { bg: "#33c06f", fg: "#08381f", pill: "rgba(8,56,31,.14)", emoji: "🧺", title: "Susz na dworze", sub: "wyschnie bez problemu" },
-	slow: { bg: "#f0b429", fg: "#452f00", pill: "rgba(69,47,0,.14)", emoji: "🧺", title: "Dwór, ale wolniej", sub: "wyschnie, tylko dłużej" },
-	in: { bg: "#e5484d", fg: "#4d0d0f", pill: "rgba(77,13,15,.16)", emoji: "🧺", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
-	error: { bg: "#8b9096", fg: "#1f2328", pill: "rgba(31,35,40,.16)", emoji: "🤷", title: "Brak danych", sub: "" },
+	out: { bg: "#bfe3cd", fg: "#22503a", emoji: "🧺", title: "Susz na dworze", sub: "wyschnie bez problemu" },
+	slow: { bg: "#f3e2ae", fg: "#5f4a17", emoji: "🧺", title: "Dwór, ale wolniej", sub: "wyschnie, tylko dłużej" },
+	in: { bg: "#f2c7c7", fg: "#743636", emoji: "🧺", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
+	error: { bg: "#d6d9dd", fg: "#3d4248", emoji: "🤷", title: "Brak danych", sub: "" },
 };
 
 function htmlResponse(body, state, maxAge) {
@@ -222,9 +222,20 @@ function shell(body, state, maxAge) {
 		box-sizing: border-box;
 		text-align: center;
 	}
-	.emoji { font-size: clamp(3.25rem, 20vw, 6rem); line-height: 1; }
+	.emoji {
+		font-size: clamp(3.25rem, 20vw, 6rem);
+		line-height: 1;
+		cursor: pointer;
+		user-select: none;
+		-webkit-tap-highlight-color: transparent;
+		transition: transform .1s ease;
+	}
+	.emoji:active { transform: scale(0.92); }
 	.title { font-size: clamp(1.35rem, 6.5vw, 2rem); font-weight: 700; letter-spacing: -0.01em; }
 	.sub { font-size: clamp(0.9rem, 4vw, 1.05rem); opacity: 0.72; }
+
+	#panel[hidden] { display: none; }
+	#panel { width: 100%; }
 
 	.tbl {
 		margin-top: 1.5rem;
@@ -256,45 +267,54 @@ function shell(body, state, maxAge) {
 	.loc { margin-top: 1.1rem; font-size: 0.78rem; opacity: 0.55; }
 	.loc a { color: inherit; }
 
-	/* GPS button — centered at the bottom */
+	/* location button — pin only, centered at the bottom */
 	#gps {
 		position: fixed;
 		left: 50%;
 		bottom: calc(env(safe-area-inset-bottom) + 1rem);
 		transform: translateX(-50%);
-		min-height: 2.75rem;
-		padding: 0 1.1rem;
+		width: 3rem;
+		height: 3rem;
 		border: 0;
-		border-radius: 999px;
-		background: ${state.pill};
+		border-radius: 50%;
+		background: rgba(0, 0, 0, 0.1);
 		color: ${state.fg};
-		font: inherit;
-		font-size: 0.9rem;
-		font-weight: 600;
+		font-size: 1.35rem;
 		line-height: 1;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
-		gap: 0.4rem;
+		justify-content: center;
 		-webkit-tap-highlight-color: transparent;
 		transition: transform .1s ease;
 	}
-	#gps:active { transform: translateX(-50%) scale(0.95); }
-	#gps[disabled] { opacity: 0.6; cursor: default; }
+	#gps:active { transform: translateX(-50%) scale(0.92); }
+	#gps[disabled] { opacity: 0.55; cursor: default; }
 </style>
 </head>
 <body>
 <main>
 ${body}
 </main>
-<button id="gps" type="button" aria-label="Użyj mojej lokalizacji GPS">📍 Moja lokalizacja</button>
+<button id="gps" type="button" aria-label="Użyj mojej lokalizacji GPS" title="Moja lokalizacja">📍</button>
 <script>
 (function () {
+	// tap the laundry icon to show / hide the breakdown
+	var icon = document.getElementById("toggle");
+	var panel = document.getElementById("panel");
+	if (icon && panel) {
+		var flip = function () { panel.hidden = !panel.hidden; icon.setAttribute("aria-expanded", String(!panel.hidden)); };
+		icon.addEventListener("click", flip);
+		icon.addEventListener("keydown", function (e) {
+			if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
+		});
+	}
+
+	// location button
 	var b = document.getElementById("gps");
-	var LABEL = "📍 Moja lokalizacja";
 	b.addEventListener("click", function () {
-		if (!navigator.geolocation) { flash("🚫 Brak GPS"); return; }
-		b.disabled = true; b.textContent = "… szukam";
+		if (!navigator.geolocation) { flash("🚫"); return; }
+		b.disabled = true; b.textContent = "…";
 		navigator.geolocation.getCurrentPosition(
 			function (p) {
 				var lat = p.coords.latitude.toFixed(4), lon = p.coords.longitude.toFixed(4);
@@ -302,11 +322,11 @@ ${body}
 					";path=/;max-age=${COOKIE_MAX_AGE};SameSite=Lax";
 				location.assign(location.pathname); // drop any ?lat override, let the cookie drive
 			},
-			function () { b.disabled = false; flash("🚫 Brak dostępu"); },
+			function () { b.disabled = false; flash("🚫"); },
 			{ enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
 		);
 	});
-	function flash(t) { b.textContent = t; setTimeout(function () { b.textContent = LABEL; }, 2000); }
+	function flash(t) { b.textContent = t; setTimeout(function () { b.textContent = "📍"; }, 2000); }
 })();
 </script>
 </body>
@@ -334,21 +354,23 @@ function renderPage(m, state, loc) {
 		.join("\n\t\t\t");
 
 	let where = "";
-	if (loc.source === "gps") where = `📍 ${m.lat}, ${m.lon} &nbsp;·&nbsp; <a href="?auto=1">auto</a>`;
-	else if (loc.source === "query") where = `${m.lat}, ${m.lon}`;
-	else if (loc.place) where = escapeHtml(loc.place);
+	if (loc.source === "gps") where = `📍 własna lokalizacja &nbsp;·&nbsp; <a href="?auto=1">auto</a>`;
+	else if (loc.source === "edge" && loc.place) where = escapeHtml(loc.place);
+	else if (loc.source === "fallback") where = escapeHtml(FALLBACK.label);
 
-	return `	<div class="emoji">${state.emoji}</div>
+	return `	<div class="emoji" id="toggle" role="button" tabindex="0" aria-expanded="false" aria-controls="panel" title="Pokaż / ukryj szczegóły">${state.emoji}</div>
 	<div class="title">${state.title}</div>
 	<div class="sub">${state.sub}</div>
-	<table class="tbl">
-		<caption>co się składa na wynik</caption>
-		<tbody>
-			${body}
-			<tr class="sum"><td class="m">Efektywnie</td><td class="v">${m.effectiveRh}%</td><td class="w">${sumWhy}</td></tr>
-		</tbody>
-	</table>
-	${where ? `<div class="loc">${where}</div>` : ""}`;
+	<div id="panel" hidden>
+		<table class="tbl">
+			<caption>co się składa na wynik</caption>
+			<tbody>
+				${body}
+				<tr class="sum"><td class="m">Efektywnie</td><td class="v">${m.effectiveRh}%</td><td class="w">${sumWhy}</td></tr>
+			</tbody>
+		</table>
+		${where ? `<div class="loc">${where}</div>` : ""}
+	</div>`;
 }
 
 // each row: [metric, value, why-it-helps-or-hurts]

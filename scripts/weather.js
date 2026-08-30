@@ -329,12 +329,11 @@ function drawWeather(owm_data) {
 	//                sunburn/fading, not warmth — and it isn't in the free OWM 5D/3H feed anyway.)
 	//
 	// We fold wind and sun into an "effective humidity":
-	//     effective_RH = weighted_humidity_avg − wind_bonus − sun_bonus   (floored at 5%)
-	// then run the traffic-light on that. Drying takes time, so we look from now until +6 h and weight the
-	// soonest 3-hr slot most.
+	//     effective_RH = humidity − wind_bonus − sun_bonus   (floored at 5%)
+	// then run the traffic-light on that. We only look at the next 3-hour forecast slot — the first
+	// hours from now, when the laundry does most of its drying and the forecast is most reliable.
 
-	var drying_window_hrs = 6; // how many hours ahead to look
-	var drying_horizon = Date.now() / 1000 + drying_window_hrs * 3600; // UNIX seconds; API 'dt' is also in seconds
+	var drying_now = owm_data.list[0]; // next 3-hourly forecast slot (always in the future)
 
 	// how many RH points a daylight slot's sky is "worth" (0 at night — no sun help after dark)
 	function dryingSunBonus(entry) {
@@ -360,59 +359,23 @@ function drawWeather(owm_data) {
 		return 0;
 	}
 
-	var drying_humidities = []; // forecasted RH (%) per slot in the window
-	var drying_winds = []; // forecasted wind (km/h) per slot in the window
-	var drying_temps = []; // forecasted feels-like temp (°C) per slot in the window
-	var drying_suns = []; // per-slot sun bonus (RH points) in the window
-	var drying_rain_hard = false; // real rain in the window -> hang inside regardless
-	var drying_rain_soft = false; // only a drizzle risk -> nudge toward inside, don't force it
+	var humidity_avg = Math.round(parseFloat(drying_now.main.humidity)); // % RH
+	var wind_avg = Math.round(parseFloat(drying_now.wind.speed) * 3.6); // m/s -> km/h
+	var temp_avg = Math.round(parseFloat(drying_now.main.feels_like)); // °C feels-like
+	var sun_bonus = dryingSunBonus(drying_now); // RH points the sky is worth
 
-	// OWM 5D/3H forecast: list[0] is the next 3-hourly slot (always in the future), then every +3 hrs
-	for (var d = 0; d < owm_data.list.length; d++) {
-		if (owm_data.list[d].dt > drying_horizon) break; // past the window, stop
-		drying_humidities.push(parseFloat(owm_data.list[d].main.humidity));
-		drying_winds.push(parseFloat(owm_data.list[d].wind.speed) * 3.6); // m/s -> km/h
-		drying_temps.push(parseFloat(owm_data.list[d].main.feels_like));
-		drying_suns.push(dryingSunBonus(owm_data.list[d]));
-		var slot_rain = dryingRainLevel(owm_data.list[d]);
-		if (slot_rain === 2) drying_rain_hard = true;
-		else if (slot_rain === 1) drying_rain_soft = true;
-		console.log(
-			"(drying) " + owm_data.list[d].dt_txt + " UTC: " +
-			owm_data.list[d].main.humidity + "% RH, " +
-			Math.round(parseFloat(owm_data.list[d].wind.speed) * 3.6) + " km/h wind, " +
-			owm_data.list[d].clouds.all + "% cloud, " +
-			Math.round((owm_data.list[d].pop || 0) * 100) + "% pop / " +
-			(((owm_data.list[d].rain && owm_data.list[d].rain["3h"]) || 0) +
-				((owm_data.list[d].snow && owm_data.list[d].snow["3h"]) || 0)).toFixed(2) + " mm"
-		); // debug
-	}
-	if (!drying_humidities.length) { // window too tight (next slot is >6 h away) — fall back to the nearest forecast
-		drying_humidities.push(parseFloat(owm_data.list[0].main.humidity));
-		drying_winds.push(parseFloat(owm_data.list[0].wind.speed) * 3.6);
-		drying_temps.push(parseFloat(owm_data.list[0].main.feels_like));
-		drying_suns.push(dryingSunBonus(owm_data.list[0]));
-		var fallback_rain = dryingRainLevel(owm_data.list[0]);
-		if (fallback_rain === 2) drying_rain_hard = true;
-		else if (fallback_rain === 1) drying_rain_soft = true;
-	}
+	var drying_rain_level = dryingRainLevel(drying_now);
+	var drying_rain_hard = drying_rain_level === 2; // real rain -> hang inside regardless
+	var drying_rain_soft = drying_rain_level === 1; // only a drizzle risk -> nudge toward inside
 
-	// weighted average: the soonest slot matters most (clothes get their "head start" in the first hours),
-	// weights are [N, N-1, … 1] for N slots (e.g. 2 slots => 2:1)
-	function dryingWeightedAvg(values) {
-		var sum = 0, weight_total = 0;
-		for (var i = 0; i < values.length; i++) {
-			var weight = values.length - i; // first slot heaviest
-			sum += values[i] * weight;
-			weight_total += weight;
-		}
-		return sum / weight_total;
-	}
-
-	var humidity_avg = Math.round(dryingWeightedAvg(drying_humidities));
-	var wind_avg = Math.round(dryingWeightedAvg(drying_winds));
-	var temp_avg = Math.round(dryingWeightedAvg(drying_temps));
-	var sun_bonus = Math.round(dryingWeightedAvg(drying_suns));
+	console.log(
+		"(drying) " + drying_now.dt_txt + " UTC: " +
+		drying_now.main.humidity + "% RH, " + wind_avg + " km/h wind, " +
+		drying_now.clouds.all + "% cloud, " +
+		Math.round((drying_now.pop || 0) * 100) + "% pop / " +
+		(((drying_now.rain && drying_now.rain["3h"]) || 0) +
+			((drying_now.snow && drying_now.snow["3h"]) || 0)).toFixed(2) + " mm"
+	); // debug
 
 	// how many RH points the wind is "worth" (Beaufort-ish bands, matching the wind display above)
 	var wind_bonus;
@@ -430,7 +393,7 @@ function drawWeather(owm_data) {
 	var effective_rh = Math.max(5, humidity_avg - wind_bonus - sun_bonus + rain_penalty); // floor so it can't go silly-low
 
 	console.log(
-		"Drying (now → +" + drying_window_hrs + "h): RH " + humidity_avg + "% − wind " + wind_bonus +
+		"Drying (next 3 h): RH " + humidity_avg + "% − wind " + wind_bonus +
 		" (" + wind_avg + " km/h) − sun " + sun_bonus + (rain_penalty ? " + drizzle " + rain_penalty : "") +
 		" = effective " + effective_rh + "%" +
 		" | temp " + temp_avg + "°C" + (drying_rain_hard ? " | RAIN — inside" : "")

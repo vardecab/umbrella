@@ -36,6 +36,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.49.1: Laundry tip now reads only the next 3-hour forecast slot for every metric (humidity, wind, sun, rain) instead of a weighted 6-hour average — simpler and focused on the hours that matter most right now.
 - 0.49: iOS Safari — the status-bar and bottom-toolbar areas now take the page's colour instead of showing white bars (`viewport-fit=cover`, opaque `background-color` on `html`/`body` kept in sync with the weather gradient via its midpoint, safe-area insets). Hid the GitHub link in the footer.
 - 0.48.1: Laundry tip is less trigger-happy about rain — it now weighs precipitation probability and volume (`pop` / mm) instead of the raw weather label, so a trace of forecasted rain no longer forces "dry inside". A real drizzle risk (`💧`) just nudges the estimate; only meaningful rain vetoes outdoor drying.
 - 0.48: Added a laundry-drying tip 🧺 — averages forecasted humidity, wind and cloud cover from now to +6 h (near-term hours weighted more heavily) into an "effective humidity" and says whether to hang clothes outside, outside-but-slower, or inside. Rain/snow or near-freezing temps in the window override to "dry inside".

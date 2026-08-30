@@ -248,20 +248,24 @@ function shell(body, state, maxAge) {
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
+		justify-content: safe center;
 		padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 		color: ${state.fg};
 		-webkit-font-smoothing: antialiased;
 	}
 	main {
-		margin: auto; /* centres when it fits, scrolls from the top when it doesn't */
+		margin: 0 auto;
+		/* extra mass below shifts the centred block ~1/4 up the page; the safe-center
+		   above falls back to top-aligned (scrollable) when content is tall */
+		margin-bottom: 25vh;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 0.5rem;
 		width: 100%;
 		max-width: 34rem;
-		padding: 2rem 1.25rem 5.5rem; /* bottom room so the GPS button clears the table */
+		padding: 2rem 1.25rem 3rem;
 		box-sizing: border-box;
 		text-align: center;
 	}

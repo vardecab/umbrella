@@ -186,8 +186,8 @@ function rainLevel(slot) {
 // palette: "Sorbet" — the brightest of the candidates, readable at arm's length
 // emoji: 🍃 = hang it outside, 🏠 = dry it indoors
 const STATES = {
-	out: { bg: "#a7e8c4", fg: "#17513a", emoji: "🍃", title: "Susz na dworze", sub: "wyschnie bez problemu" },
-	slow: { bg: "#ffe9a8", fg: "#6a5108", emoji: "🍃", title: "Dwór, ale wolniej", sub: "wyschnie, tylko dłużej" },
+	out: { bg: "#a7e8c4", fg: "#17513a", emoji: "🍃", title: "Susz na zewnątrz", sub: "wyschnie bez problemu" },
+	slow: { bg: "#ffe9a8", fg: "#6a5108", emoji: "🍃", title: "Na zewnątrz, ale wolniej", sub: "wyschnie, tylko dłużej" },
 	in: { bg: "#ffc2bd", fg: "#7a352f", emoji: "🏠", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
 	error: { bg: "#dde3e6", fg: "#3c4247", emoji: "🤷", title: "Brak danych", sub: "" },
 };
@@ -361,7 +361,7 @@ function renderPage(m, state, loc) {
 	const sumWhy =
 		`${m.humidity} − ${m.windBonus} (wiatr) − ${m.sunBonus} (słońce)` +
 		(m.rainPenalty ? ` + ${m.rainPenalty} (mżawka)` : "") +
-		` = ${m.effectiveRh}% &nbsp;·&nbsp; ≤50 dwór · ≤60 wolniej · &gt;60 dom`;
+		` = ${m.effectiveRh}% &nbsp;·&nbsp; ≤50 na zewnątrz · ≤60 wolniej · &gt;60 w domu`;
 
 	const body = rows
 		.map(([metric, value, why]) =>

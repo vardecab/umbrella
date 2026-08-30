@@ -184,10 +184,11 @@ function rainLevel(slot) {
 /* ---------------------------------- view ---------------------------------- */
 
 // palette: "Sorbet" — the brightest of the candidates, readable at arm's length
+// emoji: 🍃 = hang it outside, 🏠 = dry it indoors
 const STATES = {
-	out: { bg: "#a7e8c4", fg: "#17513a", emoji: "🧺", title: "Susz na dworze", sub: "wyschnie bez problemu" },
-	slow: { bg: "#ffe9a8", fg: "#6a5108", emoji: "🧺", title: "Dwór, ale wolniej", sub: "wyschnie, tylko dłużej" },
-	in: { bg: "#ffc2bd", fg: "#7a352f", emoji: "🧺", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
+	out: { bg: "#a7e8c4", fg: "#17513a", emoji: "🍃", title: "Susz na dworze", sub: "wyschnie bez problemu" },
+	slow: { bg: "#ffe9a8", fg: "#6a5108", emoji: "🍃", title: "Dwór, ale wolniej", sub: "wyschnie, tylko dłużej" },
+	in: { bg: "#ffc2bd", fg: "#7a352f", emoji: "🏠", title: "Susz w domu", sub: "na zewnątrz nie wyschnie" },
 	error: { bg: "#dde3e6", fg: "#3c4247", emoji: "🤷", title: "Brak danych", sub: "" },
 };
 

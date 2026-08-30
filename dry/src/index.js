@@ -284,11 +284,11 @@ function shell(body, state, maxAge) {
 		left: var(--pos, 50%);
 		width: 1.62rem;
 		height: 1.62rem;
-		margin: -0.81rem 0 0 -0.81rem;
+		transform: translate(-50%, -50%);
 		border-radius: 50%;
 		background: #fff;
 		border: 3px solid var(--ring, #33b34a);
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.12);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
 		animation: knob-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 	}
 	@keyframes knob-in { from { left: 50%; opacity: 0; } }

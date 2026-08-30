@@ -8,13 +8,34 @@
 
 /* === main styling === */
 
+/* <html> gets an OPAQUE background-color (not just the gradient image): iOS Safari
+   tints the status-bar / home-indicator / overscroll areas from the page's
+   background-*color*, and a gradient shorthand leaves that color transparent →
+   which iOS paints white. JS keeps this color in sync with the weather gradient.
+   Note: no `fixed` attachment here — it's unreliable on iOS and not needed. */
+html {
+	background-color: rgb(213, 213, 213); /* default (grey) — JS overrides per weather */
+	background-image: linear-gradient(
+		2deg,
+		rgba(198, 198, 198, 1) 40%,
+		rgba(228, 228, 228, 1) 60%
+	);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover !important;
+	-webkit-background-size: cover !important;
+	min-height: 100vh;
+}
+
 body {
-	background: linear-gradient(
-			2deg,
-			rgba(198, 198, 198, 1) 40%,
-			rgba(228, 228, 228, 1) 60%
-		)
-		no-repeat center center fixed;
+	background-color: rgb(213, 213, 213); /* same opaque fallback as <html> */
+	background-image: linear-gradient(
+		2deg,
+		rgba(198, 198, 198, 1) 40%,
+		rgba(228, 228, 228, 1) 60%
+	);
+	background-repeat: no-repeat;
+	background-position: center center;
 	background-size: cover !important;
 	-webkit-background-size: cover !important;
 	-moz-background-size: cover !important;
@@ -22,8 +43,10 @@ body {
 	font-family: "Mali", sans-serif;
 	color: #000;
 	text-align: center;
-	height: 100vh;
+	min-height: 100vh;
 	margin: 0;
+	/* keep content clear of the notch / status bar when the page fills the safe areas */
+	padding-top: env(safe-area-inset-top);
 }
 
 /* === styling specific elements === */
@@ -104,6 +127,8 @@ body {
 	overflow: hidden;
 	position: fixed;
 	bottom: 1%;
+	/* keep clear of the iOS home indicator when the page fills the safe areas */
+	bottom: calc(1% + env(safe-area-inset-bottom));
 	width: 100%;
 }
 

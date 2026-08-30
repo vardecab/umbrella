@@ -1,7 +1,8 @@
-# other 
+# other
 TODO
 .ds_store
 .vscode
+.wrangler
 
 # folders
 cities

@@ -166,6 +166,26 @@ function drawWeather(owm_data) {
 			"#BC85E7";
 	}
 
+	// iOS Safari paints BOTH the status-bar area and the bottom-toolbar area from a single value —
+	// the page background-*color* (it ignores theme-color here, and the gradient is only an *image*
+	// so it has no colour of its own → the bars would fall back to white). We can't tint the two
+	// bars separately, so we use the midpoint of the gradient's first and last stop: the top bar
+	// ends up a touch lighter than the gradient's top, the bottom a touch darker than its bottom,
+	// which is the least-noticeable compromise.
+	var drying_bg_stops = (document.body.style.backgroundImage || document.body.style.background || "")
+		.match(/rgba?\([^)]+\)/g); // every colour stop, e.g. ["rgba(255,241,114,1)", "rgba(255,249,191,1)"]
+	if (drying_bg_stops && drying_bg_stops.length) {
+		var drying_first = drying_bg_stops[0].match(/[\d.]+/g); // [r, g, b, a]
+		var drying_last = drying_bg_stops[drying_bg_stops.length - 1].match(/[\d.]+/g);
+		var drying_bar_color = "rgb(" +
+			Math.round((+drying_first[0] + +drying_last[0]) / 2) + "," +
+			Math.round((+drying_first[1] + +drying_last[1]) / 2) + "," +
+			Math.round((+drying_first[2] + +drying_last[2]) / 2) + ")";
+		document.documentElement.style.backgroundColor = drying_bar_color;
+		document.body.style.backgroundColor = drying_bar_color;
+		document.head.querySelector('meta[name="theme-color"]').content = drying_bar_color;
+	}
+
 	// debug start --->
 
 	// var data_update_number = 0;

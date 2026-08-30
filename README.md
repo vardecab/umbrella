@@ -15,6 +15,10 @@ It _doesn't_ show current weather outside - you can check it yourself by looking
 
 And it's kinda quick at that: [Pingdom report](https://tools.pingdom.com/#5bef88ed9f800000), [GTmetrix report](https://gtmetrix.com/reports/vardecab.github.io/snSxSCDL).
 
+### Spin-off: `dry`
+
+[`dry/`](dry/) is a tiny Cloudflare Worker that reuses the laundry-drying model and shows **nothing but a full-screen colour** — 🟩 hang it outside, 🟨 outside but slowly, 🟥 dry it inside. Live at <https://dry.heave.workers.dev>.
+
 ## Screenshots
 
 <!-- <img src="https://s5.gifyu.com/images/umbrella.gif" height="400"/> -->
@@ -36,6 +40,7 @@ Click [here](https://vardecab.github.io/umbrella/umbrella.html). For now it show
 
 ## Release History
 
+- 0.50: Spun out [`dry`](dry/) — a one-colour Cloudflare Worker version of the laundry tip (reuses the drying model; edge geolocation; live at https://dry.heave.workers.dev).
 - 0.49.1: Laundry tip now reads only the next 3-hour forecast slot for every metric (humidity, wind, sun, rain) instead of a weighted 6-hour average — simpler and focused on the hours that matter most right now.
 - 0.49: iOS Safari — the status-bar and bottom-toolbar areas now take the page's colour instead of showing white bars (`viewport-fit=cover`, opaque `background-color` on `html`/`body` kept in sync with the weather gradient via its midpoint, safe-area insets). Hid the GitHub link in the footer.
 - 0.48.1: Laundry tip is less trigger-happy about rain — it now weighs precipitation probability and volume (`pop` / mm) instead of the raw weather label, so a trace of forecasted rain no longer forces "dry inside". A real drizzle risk (`💧`) just nudges the estimate; only meaningful rain vetoes outdoor drying.

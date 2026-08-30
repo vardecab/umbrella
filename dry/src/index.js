@@ -74,8 +74,20 @@ export default {
 			);
 		}
 
+		const tz = cf.timezone || "Europe/Warsaw";
+		let updated;
+		try {
+			updated = new Intl.DateTimeFormat("pl-PL", {
+				timeZone: tz,
+				hour: "2-digit",
+				minute: "2-digit",
+			}).format(new Date());
+		} catch (_) {
+			updated = new Date().toISOString().slice(11, 16) + " UTC";
+		}
+
 		const state = STATES[model.verdict];
-		return htmlResponse(renderPage(model, state, { place, source }), state, 300);
+		return htmlResponse(renderPage(model, state, { place, source, updated }), state, 300);
 	},
 };
 
@@ -264,6 +276,8 @@ function shell(body, state, maxAge) {
 	.tbl td.w { opacity: 0.82; }
 	.tbl tr.sum td { border-top: 2px solid rgba(0, 0, 0, 0.32); font-weight: 700; }
 	.tbl tr.sum td.w { opacity: 1; font-weight: 600; }
+	.tbl tr.upd td { opacity: 0.6; font-size: 0.78rem; }
+	.tbl tr.upd td.m { font-weight: 600; }
 
 	.loc { margin-top: 1.1rem; font-size: 0.78rem; opacity: 0.55; }
 	.loc a { color: inherit; }
@@ -368,6 +382,7 @@ function renderPage(m, state, loc) {
 			<tbody>
 				${body}
 				<tr class="sum"><td class="m">Efektywnie</td><td class="v">${m.effectiveRh}%</td><td class="w">${sumWhy}</td></tr>
+				<tr class="upd"><td class="m">Aktualizacja</td><td class="v">${loc.updated}</td><td class="w">odświeża się automatycznie co ~5 min</td></tr>
 			</tbody>
 		</table>
 		${where ? `<div class="loc">${where}</div>` : ""}

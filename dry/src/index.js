@@ -265,15 +265,15 @@ function shell(body, state, maxAge) {
 	/* red → green drying gauge */
 	.gauge {
 		position: relative;
-		width: min(21rem, 100%);
+		width: min(16.8rem, 100%);
 		margin: 0.8rem 0 0.15rem;
-		padding: 5px;
+		padding: 4px;
 		border-radius: 999px;
 		background: rgba(255, 255, 255, 0.55);
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.6);
 	}
 	.gauge__track {
-		height: 1.85rem;
+		height: 1.48rem;
 		border-radius: 999px;
 		background: linear-gradient(90deg, #e5402b 0%, #f0731d 24%, #f7c218 48%, #a9cf3a 70%, #33b34a 100%);
 		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -282,22 +282,22 @@ function shell(body, state, maxAge) {
 		position: absolute;
 		top: 50%;
 		left: var(--pos, 50%);
-		width: 2.7rem;
-		height: 2.7rem;
-		margin: -1.35rem 0 0 -1.35rem;
+		width: 1.62rem;
+		height: 1.62rem;
+		margin: -0.81rem 0 0 -0.81rem;
 		border-radius: 50%;
 		background: #fff;
-		border: 5px solid var(--ring, #33b34a);
-		box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.12);
+		border: 3px solid var(--ring, #33b34a);
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.12);
 		animation: knob-in 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 	}
 	@keyframes knob-in { from { left: 50%; opacity: 0; } }
 	.gauge__ends {
 		display: flex;
 		justify-content: space-between;
-		width: min(21rem, 100%);
-		padding: 0 0.15rem;
-		font-size: 0.9rem;
+		width: min(16.8rem, 100%);
+		padding: 0 0.1rem;
+		font-size: 0.78rem;
 		opacity: 0.5;
 	}
 

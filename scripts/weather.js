@@ -327,11 +327,25 @@ function drawWeather(owm_data) {
 		return 0; // overcast — no meaningful sun
 	}
 
+	// rain guard — quantitative, not just the weather label. OWM often tags a slot "Rain" with a trace
+	// amount and a low chance, which shouldn't veto line-drying. Levels:
+	//   2 = real rain     -> hang inside no matter what
+	//   1 = drizzle risk   -> just a penalty on effective humidity, a sunny/windy hour can still win
+	//   0 = negligible     -> ignore
+	function dryingRainLevel(entry) {
+		var mm = ((entry.rain && entry.rain["3h"]) || 0) + ((entry.snow && entry.snow["3h"]) || 0); // mm over the 3-h slot
+		var pop = entry.pop || 0; // probability of precipitation, 0..1
+		if ((pop >= 0.5 && mm >= 0.5) || mm >= 1.5) return 2;
+		if (mm >= 0.2 || pop >= 0.6) return 1;
+		return 0;
+	}
+
 	var drying_humidities = []; // forecasted RH (%) per slot in the window
 	var drying_winds = []; // forecasted wind (km/h) per slot in the window
 	var drying_temps = []; // forecasted feels-like temp (°C) per slot in the window
 	var drying_suns = []; // per-slot sun bonus (RH points) in the window
-	var drying_rain_ahead = false; // any rain / snow expected in the window?
+	var drying_rain_hard = false; // real rain in the window -> hang inside regardless
+	var drying_rain_soft = false; // only a drizzle risk -> nudge toward inside, don't force it
 
 	// OWM 5D/3H forecast: list[0] is the next 3-hourly slot (always in the future), then every +3 hrs
 	for (var d = 0; d < owm_data.list.length; d++) {
@@ -340,14 +354,17 @@ function drawWeather(owm_data) {
 		drying_winds.push(parseFloat(owm_data.list[d].wind.speed) * 3.6); // m/s -> km/h
 		drying_temps.push(parseFloat(owm_data.list[d].main.feels_like));
 		drying_suns.push(dryingSunBonus(owm_data.list[d]));
-		if (raining.includes(owm_data.list[d].weather[0].main) || snowing.includes(owm_data.list[d].weather[0].main)) {
-			drying_rain_ahead = true; // reuses the 'raining' / 'snowing' lists from Part 3
-		}
+		var slot_rain = dryingRainLevel(owm_data.list[d]);
+		if (slot_rain === 2) drying_rain_hard = true;
+		else if (slot_rain === 1) drying_rain_soft = true;
 		console.log(
 			"(drying) " + owm_data.list[d].dt_txt + " UTC: " +
 			owm_data.list[d].main.humidity + "% RH, " +
 			Math.round(parseFloat(owm_data.list[d].wind.speed) * 3.6) + " km/h wind, " +
-			owm_data.list[d].clouds.all + "% cloud"
+			owm_data.list[d].clouds.all + "% cloud, " +
+			Math.round((owm_data.list[d].pop || 0) * 100) + "% pop / " +
+			(((owm_data.list[d].rain && owm_data.list[d].rain["3h"]) || 0) +
+				((owm_data.list[d].snow && owm_data.list[d].snow["3h"]) || 0)).toFixed(2) + " mm"
 		); // debug
 	}
 	if (!drying_humidities.length) { // window too tight (next slot is >6 h away) — fall back to the nearest forecast
@@ -355,6 +372,9 @@ function drawWeather(owm_data) {
 		drying_winds.push(parseFloat(owm_data.list[0].wind.speed) * 3.6);
 		drying_temps.push(parseFloat(owm_data.list[0].main.feels_like));
 		drying_suns.push(dryingSunBonus(owm_data.list[0]));
+		var fallback_rain = dryingRainLevel(owm_data.list[0]);
+		if (fallback_rain === 2) drying_rain_hard = true;
+		else if (fallback_rain === 1) drying_rain_soft = true;
 	}
 
 	// weighted average: the soonest slot matters most (clothes get their "head start" in the first hours),
@@ -383,24 +403,29 @@ function drawWeather(owm_data) {
 	else if (wind_avg <= 50) wind_bonus = 18; // strong breeze
 	else wind_bonus = 16; // near gale — capped; things blow off the line
 
-	var effective_rh = Math.max(5, humidity_avg - wind_bonus - sun_bonus); // floor so it can't go silly-low
+	// a drizzle risk (not real rain) just makes the air damper — add a few RH points, don't veto
+	var rain_penalty = drying_rain_soft ? 12 : 0;
+	var drizzle_note = drying_rain_soft ? " 💧" : "";
+
+	var effective_rh = Math.max(5, humidity_avg - wind_bonus - sun_bonus + rain_penalty); // floor so it can't go silly-low
 
 	console.log(
 		"Drying (now → +" + drying_window_hrs + "h): RH " + humidity_avg + "% − wind " + wind_bonus +
-		" (" + wind_avg + " km/h) − sun " + sun_bonus + " = effective " + effective_rh + "%" +
-		" | temp " + temp_avg + "°C" + (drying_rain_ahead ? " | rain ahead" : "")
+		" (" + wind_avg + " km/h) − sun " + sun_bonus + (rain_penalty ? " + drizzle " + rain_penalty : "") +
+		" = effective " + effective_rh + "%" +
+		" | temp " + temp_avg + "°C" + (drying_rain_hard ? " | RAIN — inside" : "")
 	); // debug
 
 	var drying_in_html = document.getElementById("drying");
 
-	if (drying_rain_ahead) { // wet from above beats any amount of drying
+	if (drying_rain_hard) { // real rain — wet from above beats any amount of drying
 		drying_in_html.textContent += "🧺 deszcz — susz w domu 🟥";
 	} else if (temp_avg < 3) { // near-freezing: evaporation basically stops
-		drying_in_html.textContent += "🧺 za zimno — schnie wolno (" + effective_rh + "%) 🟨";
+		drying_in_html.textContent += "🧺 za zimno — schnie wolno (" + effective_rh + "%)" + drizzle_note + " 🟨";
 	} else if (effective_rh <= 50) { // ideal 30–50% window and anything drier / windier / sunnier
-		drying_in_html.textContent += "🧺 susz na dworze (" + effective_rh + "%) 🟩";
+		drying_in_html.textContent += "🧺 susz na dworze (" + effective_rh + "%)" + drizzle_note + " 🟩";
 	} else if (effective_rh <= 60) { // borderline
-		drying_in_html.textContent += "🧺 dwór, ale wolniej (" + effective_rh + "%) 🟨";
+		drying_in_html.textContent += "🧺 dwór, ale wolniej (" + effective_rh + "%)" + drizzle_note + " 🟨";
 	} else { // too humid, not enough wind or sun
 		drying_in_html.textContent += "🧺 susz w domu (" + effective_rh + "%) 🟥";
 	}
